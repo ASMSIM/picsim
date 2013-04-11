@@ -14,8 +14,9 @@ import java.util.ArrayList;
  */
 public class Parser {
 
-	ArrayList<String> progLine = new ArrayList<String>();
-	
+	ArrayList<String> sourceLine = new ArrayList<String>();
+	ArrayList<Integer> asmProg = new ArrayList<Integer>();
+
 	private File file;
 
 	/**
@@ -33,18 +34,35 @@ public class Parser {
 			System.err.println("File: " + pathname + " not found!");
 			e.printStackTrace();
 		}
-		
-		
-		System.out.println("Debug DELME");
+
+		extractAssemblercode();
+
 	}
 
 	/**
-	 * Reads single line and puts its Content into the progLine Array
+	 * Extracts the Assemblercode from the String
+	 */
+	private void extractAssemblercode() {
+
+		for(String currentLine : sourceLine) {
+
+			if(!(currentLine.charAt(0) == ' ')) {
+				char[] dst = new char[9];
+
+				currentLine.getChars(0, 9, dst, 0);
+				System.out.println(dst);
+			}
+
+		}
+	}
+
+	/**
+	 * Reads single line and puts its Content into the progLine Arraylist
 	 * 
 	 * @param content
 	 */
-	private void readLine(String content) {
-		progLine.add(content);
+	private void fillArrayList(String content) {
+		sourceLine.add(content);
 	}
 
 	public void readFile() throws FileNotFoundException {
@@ -56,10 +74,9 @@ public class Parser {
 		try {
 			while((thisLine = buffReader.readLine()) != null) {
 				// TODO Insert Logger
-				System.out.println(thisLine);
 
 				// Reads Current Line and calls readline with its Content
-				readLine(thisLine);
+				fillArrayList(thisLine);
 			}
 
 		}
