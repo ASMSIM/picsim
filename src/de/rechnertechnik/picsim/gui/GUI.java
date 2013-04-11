@@ -1,24 +1,9 @@
 package de.rechnertechnik.picsim.gui;
 
 import javax.swing.JFrame;
-import javax.swing.JToolBar;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-
-import javax.swing.AbstractButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JInternalFrame;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.JEditorPane;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-
-import javax.swing.JTextPane;
 import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.JCheckBox;
@@ -28,7 +13,6 @@ import javax.swing.JMenuBar;
 public class GUI extends JFrame{
 	private JTable table;
 	private JTable table_1;
-	private JMenuBar menuBar;
 	
 	public static void main(String[] args) {
 		GUI gui = new GUI();
@@ -55,27 +39,44 @@ public class GUI extends JFrame{
 		getContentPane().add(table);
 		
 		
-		// Creates a menubar for a JFrame
-        JMenuBar menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
+		//Erstellen einer Menüleiste
+		JMenuBar menuBar = new JMenuBar();
+		
+		//Hinzufügen von Menüs
+		JMenu menuFile = 
+			new JMenu("Datei");
+		JMenu menuHelp = 
+			new JMenu("Hilfe");
+		
+		menuBar.add(menuFile);
+		menuBar.add(menuHelp);
         
-        // Define and add two drop down menu to the menubar
-        JMenu fileMenu = new JMenu("Datei");
-        JMenuItem helpMenu = new JMenuItem("Hilfe");
-        menuBar.add(fileMenu);
-        menuBar.add(helpMenu);
-        
-        // Create and add simple menu item to one of the drop down menu
-        
-        JMenuItem openAction = new JMenuItem("Öffnen");
-        JMenuItem exitAction = new JMenuItem("Beenden");
-        
-       
-     
-  
-        fileMenu.add(openAction);        
-        fileMenu.add(exitAction);
-        
+		
+		//Hinzufügen von Menüeinträgen in das Dateimenü
+
+		JMenuItem menuItemFileOpen = 
+			new JMenuItem("Öffnen");
+		JMenuItem menuItemFileExit = 
+			new JMenuItem("Beenden");
+		
+
+		menuFile.add(menuItemFileOpen);
+		menuFile.addSeparator();
+		menuFile.add(menuItemFileExit);
+		
+		
+		//Hinzufügen von Menüeinträgen in das Hilfemenü
+		JMenuItem menuItemHelpHelp = 
+			new JMenuItem("Hilfe");
+		
+		menuHelp.add(menuItemHelpHelp);
+		
+		//Hinzufügen der Menüleiste zum Frame
+		setJMenuBar(menuBar);
+
+
+		
+        /*
         openAction.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("Datei öffnen geklickt");
@@ -94,6 +95,7 @@ public class GUI extends JFrame{
                 System.out.println("Hilfe geklickt");
             }
         });
+        */
 	}
 
 	
