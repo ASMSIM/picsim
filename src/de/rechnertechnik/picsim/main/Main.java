@@ -14,8 +14,6 @@ public class Main {
 		System.out.println("#############################");
 
 		parser = new Parser("files/BA_Test.LST");
-		
-		System.out.println("END");
 
 	}
 }
