@@ -15,7 +15,7 @@ public class Main {
 		System.out.println("######## PICSIMULATOR #######");
 		System.out.println("#############################");
 
-		//parser = new Parser("files/BA_Test.LST");
+		parser = new Parser("res/BA_Test.LST");
 		prozessor = new Prozessor();
 		
 		

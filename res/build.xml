@@ -1,0 +1,31 @@
+<project default="sign">
+<target name="init">
+<mkdir dir="workspace/bin" />
+</target>
+<target name="compile" depends="init">
+<javac srcdir="workspace/src" destdir="workspace/bin" />
+</target>
+<target name="createJar" depends="compile">
+<jar destfile="workspace/Test_Dennis.jar" basedir="workspace/bin" update="yes">
+<fileset dir="workspace/resources" includes="**/*.*" excludes="**/*.jar" />
+<fileset dir="." includes="**/*.*" excludes="**/*.jar" />
+<manifest>
+<attribute name="Main-Class" value="aktuelleVersion.SpielStarten"/>
+</manifest>
+</jar>
+</target>
+
+
+<target name="sign" depends="createJar">
+<signjar destDir="workspace"
+alias="JJDIT" keystore=".keystore"
+storepass="fidu123"
+preservelastmodified="false">
+<path>
+<fileset dir="workspace" includes="**/*.jar" />
+</path>
+<flattenmapper/>
+</signjar>
+</target>
+
+</project>
