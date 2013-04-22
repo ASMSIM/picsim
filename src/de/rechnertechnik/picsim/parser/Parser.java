@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import de.rechnertechnik.picsim.logger.PIC_Logger;
+
 /**
  * 
  * @author Michael
@@ -47,13 +49,16 @@ public class Parser {
 		for(String currentLine : sourceLine) {
 
 			if(!(currentLine.charAt(0) == ' ')) {
-				char[] dst = new char[9];
-
-				currentLine.getChars(0, 9, dst, 0);
-				System.out.println(dst);
+				String dst = currentLine.substring(5, 9);
+//				System.out.println(dst);
+				Integer befehl = (int)Integer.parseInt(dst, 16);
+//				System.out.println(befehl);
+				asmProg.add(befehl);
 			}
 
 		}
+		
+		PIC_Logger.LOGGER.info("Finished Parsing");
 	}
 
 	/**
@@ -86,5 +91,11 @@ public class Parser {
 		}
 
 	}
+
+	public ArrayList<Integer> getAsmProg() {
+		return asmProg;
+	}
+	
+	
 
 }

@@ -13,7 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.rechnertechnik.picsim.commands.CommandRange;
-import de.rechnertechnik.picsim.commands.Commands;
+import de.rechnertechnik.picsim.commands.CommandTable;
 import de.rechnertechnik.picsim.commands.ECommands;
 
 public class CommandsTest {
@@ -36,7 +36,7 @@ public class CommandsTest {
 
 	@Test
 	public void test() {
-		Commands cmd = new Commands(ECommands.ADDWF);
+		CommandTable cmd = new CommandTable();
 
 		cmd.getAssemblerCommand().put(ECommands.ADDWF, new CommandRange(0x0700, 0x07FF));
 		cmd.getAssemblerCommand().put(ECommands.ANDWF, new CommandRange(0x0500, 0x05FF));
