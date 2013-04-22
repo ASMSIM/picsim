@@ -1,4 +1,6 @@
+de.rechnertechnik.picsim.commands
 de.rechnertechnik.picsim.gui
+de.rechnertechnik.picsim.logger
 de.rechnertechnik.picsim.main
 de.rechnertechnik.picsim.parser
 de.rechnertechnik.picsim.prozessor

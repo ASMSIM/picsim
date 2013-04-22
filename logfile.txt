@@ -1,0 +1,395 @@
+Apr 22, 2013 3:12:54 PM de.rechnertechnik.picsim.main.Main main
+INFO: Create Logger
+Apr 22, 2013 3:13:11 PM de.rechnertechnik.picsim.main.Main main
+INFO: Create Logger
+Apr 22, 2013 3:14:14 PM de.rechnertechnik.picsim.main.Main main
+INFO: Create Logger
+Apr 22, 2013 3:18:00 PM de.rechnertechnik.picsim.main.Main main
+INFO: Create Logger
+Apr 22, 2013 3:18:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: %1$x
+
+Apr 22, 2013 3:19:38 PM de.rechnertechnik.picsim.main.Main main
+INFO: Create Logger
+Apr 22, 2013 3:19:38 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 
+Apr 22, 2013 3:20:07 PM de.rechnertechnik.picsim.main.Main main
+INFO: Create Logger
+Apr 22, 2013 3:20:07 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 2817
+Apr 22, 2013 3:20:17 PM de.rechnertechnik.picsim.main.Main main
+INFO: Create Logger
+Apr 22, 2013 3:20:17 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 2817h
+Apr 22, 2013 3:20:26 PM de.rechnertechnik.picsim.main.Main main
+INFO: Create Logger
+Apr 22, 2013 3:20:26 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:25:02 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:32:58 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:34:14 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:34:14 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:34:14 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:34:49 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:34:49 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:34:49 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:34:49 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:36:31 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:36:31 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:36:31 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:36:31 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:37:45 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:37:45 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:37:45 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:37:45 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:37:56 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:37:56 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:37:56 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:37:56 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:38:11 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:38:11 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:38:11 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:38:11 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:44:34 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:44:34 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:44:34 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:44:34 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:44:47 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:44:47 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:44:47 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:44:47 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:47:24 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:47:25 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:47:25 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:47:25 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:49:28 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:49:28 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:49:28 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:49:28 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:50:59 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:50:59 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:50:59 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:50:59 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:51:30 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:51:30 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:51:30 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:51:30 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:51:39 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:51:39 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:51:39 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:51:39 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:54:04 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:54:04 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:54:04 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:54:04 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:54:09 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:54:09 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:54:09 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:54:09 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:54:18 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:54:18 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:54:18 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:54:18 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:54:31 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:54:31 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:54:31 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:54:31 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:54:48 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:54:49 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:54:49 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:54:49 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:55:03 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:55:03 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:55:03 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:55:03 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:55:14 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:55:14 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:55:14 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:55:14 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:55:20 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:55:20 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:55:20 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:55:20 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:56:44 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:56:44 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:56:44 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:56:44 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:58:21 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:58:21 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:58:21 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:58:21 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:58:46 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 3:58:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:58:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:58:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:58:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:59:02 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 3:59:02 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:59:02 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:59:02 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:59:02 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 3:59:04 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 3:59:05 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 3:59:05 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 3:59:05 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 3:59:05 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:06:22 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:06:22 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:06:22 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:06:22 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:06:22 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:06:50 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:06:50 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:06:50 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:06:50 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:06:50 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:08:46 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:08:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:08:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:08:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:08:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:09:19 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:09:20 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:09:20 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:09:20 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:09:20 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:09:32 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:09:32 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:09:32 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:09:32 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:09:32 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:10:24 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:10:24 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:10:24 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:10:24 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:10:24 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:10:37 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:10:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:10:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:10:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:10:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:11:08 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:11:08 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:11:08 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:11:08 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:11:08 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:11:28 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:11:28 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:11:28 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:11:28 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:11:28 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:12:00 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:12:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:12:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:12:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:12:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:12:57 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:16:44 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:18:02 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:18:32 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:18:42 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:18:42 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:18:42 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:18:42 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:18:42 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:19:32 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:19:32 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:19:32 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:19:32 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:19:32 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:19:49 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:19:49 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x3010
+Apr 22, 2013 4:20:25 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:20:25 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:20:25 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:20:25 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:20:25 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17
+Apr 22, 2013 4:20:51 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 22, 2013 4:20:51 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 22, 2013 4:20:51 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Apr 22, 2013 4:20:51 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Befehl: 0x2817
+Apr 22, 2013 4:20:51 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Parameter: 0x17

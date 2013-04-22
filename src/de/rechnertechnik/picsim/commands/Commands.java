@@ -1,6 +1,8 @@
 package de.rechnertechnik.picsim.commands;
 
 import java.util.HashMap;
+import de.rechnertechnik.*; 
+
 
 public class Commands {
 
