@@ -1,10 +1,6 @@
 package de.rechnertechnik.picsim.main;
 
-
-import java.util.logging.Level;
-
-import de.rechnertechnik.picsim.commands.CommandTable;
-import de.rechnertechnik.picsim.junit.CommandsTest;
+import de.rechnertechnik.picsim.commands.*;
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.parser.Parser;
 import de.rechnertechnik.picsim.prozessor.Prozessor;
