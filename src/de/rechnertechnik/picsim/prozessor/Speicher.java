@@ -80,4 +80,16 @@ public class Speicher {
 		return speicherZellen.length;
 	}
 
+	public void printDump() {
+		System.out.println("\nSpeicherdump:");
+		int lineCnt = 0;
+		for(int i = 0; i < SPEICHERGROESSE; i++) {
+			System.out.print(Integer.toHexString(speicherZellen[i].getValue()) + "\t");
+			lineCnt++;
+			if(lineCnt % 8 == 0)
+				System.out.println();
+		}
+
+	}
+
 }

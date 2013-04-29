@@ -29,6 +29,7 @@ public class Main {
 		parser = new Parser("res/BA_Test.LST");
 		programmSpeicher = new Programmspeicher(parser);					//Legt den Programm-Speicher an
 		ram = new Speicher();
+		programmSpeicher.printDump();
 		prozessor = new Prozessor(commandTable, programmSpeicher, ram);
 		
 		

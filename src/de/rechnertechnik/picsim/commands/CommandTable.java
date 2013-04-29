@@ -11,9 +11,6 @@ public class CommandTable {
 		//Load all Assembler Commands from PIC
 		assemblerCommand.put(ECommands.GOTO, new CommandRange(0x2800, 0x2FFF));
 		assemblerCommand.put(ECommands.ADDWF, new CommandRange(0x0700, 0x07FF));
-		
-
-		assemblerCommand.put(ECommands.ADDWF, new CommandRange(0x0700, 0x07FF));
 		assemblerCommand.put(ECommands.ANDWF, new CommandRange(0x0500, 0x05FF));
 		assemblerCommand.put(ECommands.CLRF, new CommandRange(0x0180, 0x01FF));
 		assemblerCommand.put(ECommands.CLRW, new CommandRange(0x0100, 0x017F));		

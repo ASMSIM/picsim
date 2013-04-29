@@ -50,14 +50,20 @@ public class Parser {
 
 			if(!(currentLine.charAt(0) == ' ')) {
 				String dst = currentLine.substring(5, 9);
-//				System.out.println(dst);
-				Integer befehl = (int)Integer.parseInt(dst, 16);
-//				System.out.println(befehl);
-				asmProg.add(befehl);
+				// System.out.println(dst);
+
+				String cmd_string_high = dst.substring(0, 2);
+				String cmd_string_low = dst.substring(2, 4);
+
+				Integer cmd_high = (int) Integer.parseInt(cmd_string_high, 16);
+				Integer cmd_low = (int) Integer.parseInt(cmd_string_low, 16);
+				
+				asmProg.add(cmd_high);
+				asmProg.add(cmd_low);
 			}
 
 		}
-		
+
 		PIC_Logger.LOGGER.info("Finished Parsing");
 	}
 
@@ -95,7 +101,5 @@ public class Parser {
 	public ArrayList<Integer> getAsmProg() {
 		return asmProg;
 	}
-	
-	
 
 }

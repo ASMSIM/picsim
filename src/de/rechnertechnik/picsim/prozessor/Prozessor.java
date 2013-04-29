@@ -45,7 +45,13 @@ public class Prozessor implements Runnable {
 				// TODO
 			}
 
-			Integer next = nextCommand();
+			String next_high = Integer.toHexString(nextCommand());
+			String next_low = Integer.toHexString(nextCommand());
+//			System.out.println(next_high);
+//			System.out.println(next_low);
+			Integer next = Integer.parseInt(next_high+""+next_low, 16);
+//			System.out.println(next);
+
 			PIC_Logger.LOGGER.log(Level.INFO, "Next command: 0x"
 					+ Integer.toHexString(next));
 
@@ -305,7 +311,7 @@ public class Prozessor implements Runnable {
 				System.out.println("Befehl nicht implementiert !");
 				this.stopProgram = true;
 			}
-			
+
 			try {
 				System.in.read();
 			}
@@ -322,8 +328,9 @@ public class Prozessor implements Runnable {
 		// TODO PROGRAM DUMMY
 		// READ COMMAND FROM FILE
 
+		Integer next = this.programmSpeicher.getZelle(pc);
+		pc++;
 		// System.out.println(this.memory.getZelle(0));
-		return this.programmSpeicher.getZelle(pc);
+		return next;
 	}
-
 }
