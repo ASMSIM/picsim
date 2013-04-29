@@ -54,7 +54,7 @@ public class Speicher {
 			speicherZellen[zelle].setWert(value);
 		}
 		catch(MemoryOutOfRangeException e) {
-			System.err.println("Wert liegt nicht zwischen 0 und 255!");
+			System.err.println("Wert liegt nicht zwischen 0 und 65535!");
 			throw new MemoryOutOfRangeException();
 		}
 	}

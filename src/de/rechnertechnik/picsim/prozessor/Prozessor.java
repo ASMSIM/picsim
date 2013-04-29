@@ -46,12 +46,7 @@ public class Prozessor implements Runnable {
 				// TODO
 			}
 
-			String next_high = Integer.toHexString(nextCommand());
-			pc++;
-			String next_low = Integer.toHexString(nextCommand());
-//			System.out.println(next_high);
-//			System.out.println(next_low);
-			Integer akt_Befehl = Integer.parseInt(next_high+""+next_low, 16);
+			Integer akt_Befehl = nextCommand();
 
 			PIC_Logger.LOGGER.log(Level.INFO, "Next command: 0x"
 					+ Integer.toHexString(akt_Befehl));
@@ -63,9 +58,8 @@ public class Prozessor implements Runnable {
 			if(akt_Befehl>= cmdTable.getAssemblerCommand().get(ECommands.GOTO).getFrom()) {
 				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.GOTO).getTo()) {
 					PIC_Logger.LOGGER.info("GOTO");
-					PIC_Logger.LOGGER.info("Befehl: 0x"+next_high+""+next_low);
 
-					pc = PIC_Befehle.asm_goto(next_high, next_low);
+					pc = PIC_Befehle.asm_goto(akt_Befehl);
 				}
 			}
 

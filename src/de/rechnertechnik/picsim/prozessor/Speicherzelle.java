@@ -11,7 +11,7 @@ public class Speicherzelle {
 
 
 	private void checkValid(Integer value) throws MemoryOutOfRangeException {
-		if (value > 255 || value < 0) {
+		if (value > 65535 || value < 0) {
 			throw new MemoryOutOfRangeException();
 		}
 	}
