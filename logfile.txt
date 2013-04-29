@@ -1496,3 +1496,11 @@ INFO: GOTO
 INFO: Next command: 0x303f
 06.05.2013 00:10:37 de.rechnertechnik.picsim.prozessor.Prozessor run
 INFO: Next command: 0x303f
+Apr 29, 2013 7:46:44 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Apr 29, 2013 7:46:45 PM de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+Apr 29, 2013 7:46:45 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Apr 29, 2013 7:46:45 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
