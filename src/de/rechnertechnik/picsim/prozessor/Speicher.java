@@ -17,54 +17,23 @@ public class Speicher {
 
 	public static int SPEICHERGROESSE = 200;
 
-	private Speicherzelle[] EPROM = new Speicherzelle[SPEICHERGROESSE];
-	private Parser parser;
+	protected Speicherzelle[] speicherZellen = new Speicherzelle[SPEICHERGROESSE];
 
-	//For Testing
-	public Speicher(){
-		initEPROM();
-	}
-	
-	public Speicher(Parser parser) {
-		this.parser = parser;
-
+	/**
+	 * Creates Memory and init with Zeros
+	 */
+	public Speicher() {
 		// Init Speicher mit 0
-		initEPROM();
-		loadProgramm();
-		PIC_Logger.LOGGER.info("Program loaded successfully!");
+		initSpeicher();
 	}
 
 	/**
-	 * Load Program file from Parser into Memory
+	 * Init the Memory with 0 in all Cells
 	 */
-	private void loadProgramm() {
-		ArrayList<Integer> asmProg = parser.getAsmProg();
-		
-		if(asmProg.size() >= SPEICHERGROESSE){
-			PIC_Logger.LOGGER.fine("Speicher zu klein!!");
-			System.exit(-1);
-		}
-		
-		
-		for(int i = 0; i < asmProg.size(); i++) {
-			try {
-				EPROM[i].setWert(asmProg.get(i));
-			}
-			catch(MemoryOutOfRangeException e) {
-				System.err.println("Programmladefehler!");
-				e.printStackTrace();
-			}
-		}
-
-	}
-
-	/**
-	 * Init the EPROM with 0 in all Cells
-	 */
-	private void initEPROM() {
+	protected void initSpeicher() {
 		for(int i = 0; i < SPEICHERGROESSE; i++) {
 			try {
-				EPROM[i] = new Speicherzelle(new Integer(0));
+				speicherZellen[i] = new Speicherzelle(new Integer(0));
 
 			}
 			catch(MemoryOutOfRangeException e) {
@@ -82,7 +51,7 @@ public class Speicher {
 	 */
 	public void setZelle(int zelle, int value) throws MemoryOutOfRangeException {
 		try {
-			EPROM[zelle].setWert(value);
+			speicherZellen[zelle].setWert(value);
 		}
 		catch(MemoryOutOfRangeException e) {
 			System.err.println("Wert liegt nicht zwischen 0 und 255!");
@@ -98,7 +67,7 @@ public class Speicher {
 	 */
 	public Integer getZelle(int i) {
 		try {
-			return EPROM[i].getValue();
+			return speicherZellen[i].getValue();
 		}
 		catch(ArrayIndexOutOfBoundsException e) {
 			System.err.println("Speicherbereich nicht vorhanden");
@@ -108,7 +77,7 @@ public class Speicher {
 	}
 
 	public Integer getAnzZellen() {
-		return EPROM.length;
+		return speicherZellen.length;
 	}
 
 }

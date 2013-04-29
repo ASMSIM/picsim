@@ -14,16 +14,18 @@ public class Prozessor implements Runnable {
 	private boolean stopProgram = false;
 	private boolean breakpoint = false;
 	private CommandTable cmdTable;
-	private Speicher memory;
+	private Programmspeicher programmSpeicher;
+	private Speicher ram;
 
 	/**
 	 * Programmcounter
 	 */
 	private Integer pc = 0;
 
-	public Prozessor(CommandTable cmdTable, Speicher memory) {
+	public Prozessor(CommandTable cmdTable, Programmspeicher programmSpeicher, Speicher ram) {
 		this.cmdTable = cmdTable;
-		this.memory = memory;
+		this.programmSpeicher = programmSpeicher;
+		this.ram = ram;
 
 		Thread runProgram = new Thread(this);
 		runProgram.start();
@@ -321,7 +323,7 @@ public class Prozessor implements Runnable {
 		// READ COMMAND FROM FILE
 
 		// System.out.println(this.memory.getZelle(0));
-		return this.memory.getZelle(pc);
+		return this.programmSpeicher.getZelle(pc);
 	}
 
 }
