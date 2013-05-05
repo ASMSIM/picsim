@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import de.rechnertechnik.picsim.commands.PIC_Befehle;
 import de.rechnertechnik.picsim.commands.CommandTable;
 import de.rechnertechnik.picsim.commands.ECommands;
-import de.rechnertechnik.picsim.junit.PIC_Befehlstest;
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.register.SpecialFunctionRegister;
 import de.rechnertechnik.picsim.register.Statusregister;
