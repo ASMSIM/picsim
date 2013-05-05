@@ -1252,3 +1252,247 @@ INFO: Program loaded successfully!
 INFO: Next command: 0x2817
 04.05.2013 21:04:11 de.rechnertechnik.picsim.prozessor.Prozessor run
 INFO: GOTO
+05.05.2013 22:44:17 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+05.05.2013 22:44:17 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+05.05.2013 22:44:17 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+05.05.2013 22:44:17 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+05.05.2013 22:44:32 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+05.05.2013 22:44:32 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+05.05.2013 22:44:32 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+05.05.2013 22:44:32 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+05.05.2013 22:44:34 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:44:36 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:44:36 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:44:37 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:44:37 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:44:49 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:44:49 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:44:49 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:44:49 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:46:33 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+05.05.2013 22:46:33 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+05.05.2013 22:46:33 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+05.05.2013 22:46:33 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+05.05.2013 22:46:41 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:46:44 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:06 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:06 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:06 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:06 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:08 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:08 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:08 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:08 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:09 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:09 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:09 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:09 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:10 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:10 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:10 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:10 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:10 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:10 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:10 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:10 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:11 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:11 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:11 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:11 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:11 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:13 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:13 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:48:13 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:49:16 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+05.05.2013 22:49:16 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+05.05.2013 22:49:16 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+05.05.2013 22:49:32 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+05.05.2013 22:49:35 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:52:06 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+05.05.2013 22:52:06 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+05.05.2013 22:52:06 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+05.05.2013 22:52:06 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+05.05.2013 22:52:36 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+05.05.2013 22:52:36 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+05.05.2013 22:52:36 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+05.05.2013 22:52:36 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+05.05.2013 22:52:43 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:52:45 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:52:46 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:52:46 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:52:47 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 22:52:48 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 23:01:09 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+05.05.2013 23:01:09 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+05.05.2013 23:01:09 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+05.05.2013 23:01:09 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+05.05.2013 23:01:15 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 23:01:16 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 23:01:18 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 23:01:18 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 23:07:10 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+05.05.2013 23:07:10 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+05.05.2013 23:07:10 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+05.05.2013 23:07:10 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+05.05.2013 23:07:14 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 23:07:24 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 23:23:12 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+05.05.2013 23:23:12 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+05.05.2013 23:23:12 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+05.05.2013 23:23:12 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+05.05.2013 23:23:20 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+05.05.2013 23:23:20 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+05.05.2013 23:23:20 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+05.05.2013 23:23:20 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+05.05.2013 23:23:22 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 23:23:26 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 23:23:26 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+05.05.2013 23:50:37 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+05.05.2013 23:50:37 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+05.05.2013 23:50:37 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+05.05.2013 23:50:37 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+06.05.2013 00:00:49 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+06.05.2013 00:00:49 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+06.05.2013 00:00:49 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+06.05.2013 00:00:49 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+06.05.2013 00:00:59 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+06.05.2013 00:01:00 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+06.05.2013 00:01:00 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+06.05.2013 00:01:00 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+06.05.2013 00:01:05 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+06.05.2013 00:01:05 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+06.05.2013 00:09:02 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+06.05.2013 00:09:02 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+06.05.2013 00:09:02 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+06.05.2013 00:09:02 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+06.05.2013 00:09:09 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+06.05.2013 00:09:15 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+06.05.2013 00:09:39 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+06.05.2013 00:10:15 de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+06.05.2013 00:10:15 de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+06.05.2013 00:10:15 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+06.05.2013 00:10:15 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+06.05.2013 00:10:21 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+06.05.2013 00:10:37 de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
