@@ -42,7 +42,7 @@ public class Speichertest {
 
 		//Speicher richtig initialisiert?
 		for (int i = 0; i < Speicher.SPEICHERGROESSE; i++) {
-			if (speicher.getZelle(i) != 0) {
+			if (speicher.getZelle(i).getValue() != 0) {
 				assertFalse(true);
 			}
 		}
@@ -52,10 +52,10 @@ public class Speichertest {
 			speicher.setZelle(0, 15);
 			speicher.setZelle(1, 40);
 			
-			if(speicher.getZelle(0) != 15){
+			if(speicher.getZelle(0).getValue() != 15){
 				assertFalse(true);
 			}
-			if(speicher.getZelle(1) != 40){
+			if(speicher.getZelle(1).getValue() != 40){
 				assertFalse(true);
 			}
 
