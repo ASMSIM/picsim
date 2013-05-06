@@ -25,7 +25,10 @@ public class Prozessor implements Runnable {
 	private Integer pc = 0;
 	
 	private SpecialFunctionRegister w = new SpecialFunctionRegister(0);
-	private Statusregister status = new Statusregister(0);
+	private Speicherzelle status = ram.getStatus(true);
+	
+	
+	
 	
 	
 	
@@ -317,12 +320,18 @@ public class Prozessor implements Runnable {
 	}
 
 
-	public Statusregister getStatus() {
-		return status;
+	public Integer getStatus() {
+		return status.getValue();
 	}
 
-	public void setStatus(Statusregister status) {
-		this.status = status;
+	public void setStatus(Integer value) {
+		try {
+			this.status.setWert(value);
+		}
+		catch(MemoryOutOfRangeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

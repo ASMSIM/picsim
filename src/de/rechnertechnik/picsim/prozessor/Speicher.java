@@ -15,7 +15,7 @@ import de.rechnertechnik.picsim.parser.Parser;
  */
 public class Speicher {
 
-	public static int SPEICHERGROESSE = 200;
+	public static int SPEICHERGROESSE = 300;
 
 	protected Speicherzelle[] speicherZellen = new Speicherzelle[SPEICHERGROESSE];
 
@@ -75,6 +75,20 @@ public class Speicher {
 		}
 		return -1;
 	}
+	
+	
+	
+	/**
+	 * Gibt das Statusregister zurück
+	 * 
+	 * @param bank1 true=bank1, false=bank2
+	 * @return
+	 */
+	public Speicherzelle getStatus(boolean bank1){
+		if(bank1) return speicherZellen[0x03];
+		else return speicherZellen[0x83];
+	}
+	
 
 	public Integer getAnzZellen() {
 		return speicherZellen.length;

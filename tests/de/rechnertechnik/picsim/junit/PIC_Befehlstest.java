@@ -40,10 +40,9 @@ public class PIC_Befehlstest {
 		command = 0x303f;
 		result = PIC_Befehle.getOpcodeFromToBit(command, 0, 7);
 		System.out.println(Integer.toHexString(result));
-		assertTrue("Befehl 0x2817 erwarte k=23 ...true", result==23);
+		assertTrue("Befehl 0x3f erwarte k=3f ...true", result==0x3f);
 		
 		
-		assertFalse(true);
 	}
 
 

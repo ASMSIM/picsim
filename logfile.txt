@@ -1496,3 +1496,87 @@ INFO: GOTO
 INFO: Next command: 0x303f
 06.05.2013 00:10:37 de.rechnertechnik.picsim.prozessor.Prozessor run
 INFO: Next command: 0x303f
+Mai 06, 2013 12:47:37 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Mai 06, 2013 12:47:37 PM de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+Mai 06, 2013 12:47:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Mai 06, 2013 12:47:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Mai 06, 2013 12:47:44 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:47:45 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:47:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:47:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:47:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:47:46 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:47:52 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:47:52 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:47:52 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:47:52 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:47:52 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:49:19 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Mai 06, 2013 12:49:19 PM de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+Mai 06, 2013 12:49:19 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Mai 06, 2013 12:49:19 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Mai 06, 2013 12:49:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:49:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:49:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:49:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:49:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:49:37 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:49:49 PM de.rechnertechnik.picsim.parser.Parser extractAssemblercode
+INFO: Finished Parsing
+Mai 06, 2013 12:49:49 PM de.rechnertechnik.picsim.prozessor.Programmspeicher <init>
+INFO: Program loaded successfully!
+Mai 06, 2013 12:49:49 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x2817
+Mai 06, 2013 12:49:49 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: GOTO
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
+Mai 06, 2013 12:50:00 PM de.rechnertechnik.picsim.prozessor.Prozessor run
+INFO: Next command: 0x303f
