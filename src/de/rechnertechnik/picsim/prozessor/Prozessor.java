@@ -109,6 +109,8 @@ public class Prozessor implements Runnable, IProzessor {
 			}
 
 			else if(isIntegerCommand(ECommands.COMF, akt_Befehl)) {
+				PIC_Logger.logger.info("-> COMF");
+				PIC_Befehle.asm_comf(akt_Befehl, this);
 				System.out.println("COMF");
 			}
 
