@@ -65,15 +65,15 @@ public class Speicher {
 	 * @param i
 	 * @return
 	 */
-	public Integer getZelle(int i) {
+	public Speicherzelle getZelle(int i) {
 		try {
-			return speicherZellen[i].getValue();
+			return speicherZellen[i];
 		}
 		catch(ArrayIndexOutOfBoundsException e) {
 			System.err.println("Speicherbereich nicht vorhanden");
 			e.printStackTrace();
 		}
-		return -1;
+		return null;
 	}
 	
 	
@@ -89,7 +89,19 @@ public class Speicher {
 		else return speicherZellen[0x83];
 	}
 	
-
+ 
+	/**
+	 * Gibt den Programmcounter zurück
+	 * 
+	 * @param bank1 true=bank1, false=bank2
+	 * @return
+	 */
+	public Speicherzelle getPCL(boolean bank1) {
+		if(bank1) return speicherZellen[0x02];
+		else return speicherZellen[0x82];
+	}
+	
+	
 	public Integer getAnzZellen() {
 		return speicherZellen.length;
 	}
