@@ -3,6 +3,7 @@ package de.rechnertechnik.picsim.gui;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JViewport;
 
 
 import javax.swing.JTable;
@@ -21,6 +22,8 @@ import javax.swing.event.TableModelListener;
 
 import java.awt.Color;
 import java.awt.BorderLayout;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -540,6 +543,7 @@ public class GUI extends JFrame implements IGUI{
 		Text_inp.setRowSelectionInterval(fokus, fokus);
 		
 	}
+	
 
 	@Override
 	public void setFocus(Integer fokus) {
