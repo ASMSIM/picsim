@@ -5,6 +5,7 @@ import de.rechnertechnik.picsim.prozessor.MemoryOutOfRangeException;
 import de.rechnertechnik.picsim.prozessor.Prozessor;
 import de.rechnertechnik.picsim.prozessor.Speicherzelle;
 import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
+import de.rechnertechnik.picsim.register.SpecialFunctionRegister;
 import de.rechnertechnik.picsim.stringhex.StringHex;
 
 public class PIC_Befehle {
@@ -27,6 +28,54 @@ public class PIC_Befehle {
 		cpu.incPC();
 	}
 
+	/**
+	 * CLRF 00 0001 1fff ffff
+	 * 
+	 * @param befehl
+	 * @param cpu
+	 */
+	
+	public static void asm_clrf(Integer befehl, Prozessor cpu){
+		
+		Speicherzelle status = cpu.getStatus();
+		
+		Integer f = getOpcodeFromToBit(befehl, 0, 7);
+		try {
+			cpu.getRam().getZelle(f).setWert(0);
+		} catch (MemoryOutOfRangeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		status.setBit(bits.Z);
+		cpu.incPC();
+	}
+	
+	/**
+	 * ANDWF 00 0101 dfff ffff
+	 * 
+	 * @param befehl
+	 * @param cpu
+	 */
+	public static void asm_andwf(Integer befehl, Prozessor cpu) {
+		Integer w = cpu.getW().getWert();
+		Integer f = getOpcodeFromToBit(befehl, 0, 7);
+		Integer erg = w & f;
+		
+		if(getOpcodeFromToBit(befehl, 8, 8) == 1){			
+			try {
+				cpu.getRam().getZelle(f).setWert(erg);
+			} catch (MemoryOutOfRangeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {			
+			cpu.getW().setWert(erg);
+		}
+			
+		
+	}
+	
 	/**
 	 * BSF 01 01bb bfff ffff
 	 * 
@@ -216,7 +265,8 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_addwf(Integer akt_Befehl, Prozessor cpu) {
-
+		
+		
 	}
 
 }

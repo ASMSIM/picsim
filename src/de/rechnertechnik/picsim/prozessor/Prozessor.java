@@ -86,17 +86,20 @@ public class Prozessor implements Runnable, IProzessor {
 			//ADDWF
 			else if(isIntegerCommand(ECommands.ADDWF, akt_Befehl)) {
 				System.out.println("ADDWF");
-				
+				PIC_Logger.logger.info("-> ADDWF");
+				PIC_Befehle.asm_addwf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.ANDWF, akt_Befehl)) {
 				System.out.println("ANDWF");
-				// TODO ANDWF
+				PIC_Logger.logger.info("-> ANDWF");
+				PIC_Befehle.asm_andwf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.CLRF, akt_Befehl)) {
 				System.out.println("CLRF");
-				// TODO CLRF
+				PIC_Logger.logger.info("-> CLRF");
+				PIC_Befehle.asm_clrf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.CLRW, akt_Befehl)) {
