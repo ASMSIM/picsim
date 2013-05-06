@@ -7,34 +7,42 @@ import java.util.logging.Logger;
 import de.rechnertechnik.picsim.commands.PIC_Befehle;
 import de.rechnertechnik.picsim.commands.CommandTable;
 import de.rechnertechnik.picsim.commands.ECommands;
+import de.rechnertechnik.picsim.gui.IGUI;
+import de.rechnertechnik.picsim.gui.IProzessor;
 import de.rechnertechnik.picsim.logger.PIC_Logger;
+import de.rechnertechnik.picsim.parser.Parser;
 import de.rechnertechnik.picsim.register.SpecialFunctionRegister;
 import de.rechnertechnik.picsim.register.Statusregister;
 
-public class Prozessor implements Runnable {
+public class Prozessor implements Runnable, IProzessor {
 
 	private boolean stopProgram = false;
 	private boolean breakpoint = false;
 	private CommandTable cmdTable;
 	private Programmspeicher programmSpeicher;
 	private Speicher ram;
-
+	private IGUI gui;
+	
 	/**
 	 * Programmcounter
 	 */
 	private Speicherzelle pc;
 	private Speicherzelle status;
 	private SpecialFunctionRegister w = new SpecialFunctionRegister(0);
-
+	private Parser parser;
 	
 	
-	public Prozessor(CommandTable cmdTable, Programmspeicher programmSpeicher, Speicher ram) {
+	public Prozessor(CommandTable cmdTable, Programmspeicher programmSpeicher, Speicher ram, IGUI gui, Parser parser) {
 		this.cmdTable = cmdTable;
 		this.programmSpeicher = programmSpeicher;
 		this.ram = ram;
-
+		this.gui = gui;
+		this.parser = parser;
+		
 		status = ram.getStatus(true);
 		pc = ram.getPCL(true);
+		
+		gui.showSourcecode(parser.getSourceLine());
 		
 		
 		Thread runProgram = new Thread(this);
@@ -311,5 +319,10 @@ public class Prozessor implements Runnable {
 		Integer next = programmSpeicher.getZelle(pc.getValue()).getValue();
 		// System.out.println(this.memory.getZelle(0));
 		return next;
+	}
+
+	@Override
+	public void nextStep() {
+		System.out.println("Next step");
 	}
 }

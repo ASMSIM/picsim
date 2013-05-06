@@ -95,6 +95,10 @@ public class Parser {
 	public ArrayList<Integer> getAsmProg() {
 		return asmProg;
 	}
+
+	public ArrayList<String> getSourceLine() {
+		return sourceLine;
+	}
 	
 	
 

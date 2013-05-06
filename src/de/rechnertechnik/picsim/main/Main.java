@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import de.rechnertechnik.picsim.commands.*;
 import de.rechnertechnik.picsim.gui.GUI;
+import de.rechnertechnik.picsim.gui.IProzessor;
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.parser.Parser;
 import de.rechnertechnik.picsim.prozessor.Programmspeicher;
@@ -28,6 +29,8 @@ public class Main {
 		System.out.println("######## PICSIMULATOR #######");
 		System.out.println("#############################");
 
+		GUI gui = new GUI();
+		
 		// Init
 		PIC_Logger.initLogger("logfile.txt");
 		commandTable = new CommandTable();
@@ -37,18 +40,19 @@ public class Main {
 															// an
 		ram = new Speicher();
 		programmSpeicher.printDump();
-		prozessor = new Prozessor(commandTable, programmSpeicher, ram);
+		prozessor = new Prozessor(commandTable, programmSpeicher, ram, gui , parser);
 
 		// GUI öffnen
-		showGUI();
+		showGUI(gui, prozessor);
+		gui.connectProzessor(prozessor);
 
 	}
 
 	/**
 	 * Init the GUI with Size and Position
 	 */
-	private static void showGUI() {
-		GUI gui = new GUI();
+	private static void showGUI(GUI gui, IProzessor prozessor) {
+	
 
 		// Zentrierung / Breite & Hoehe des Fensters
 		Dimension main_window_size = new Dimension(1000, 700);

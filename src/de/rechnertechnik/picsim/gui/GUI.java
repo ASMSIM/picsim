@@ -11,30 +11,43 @@ import java.awt.GridBagLayout;
 import javax.swing.JScrollPane;
 import java.awt.GridBagConstraints;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.JPanel;
 import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
+import javax.swing.event.TableModelListener;
+
 import java.awt.Color;
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 
 
-public class GUI extends JFrame{
+public class GUI extends JFrame implements IGUI{
+	
 	private JTable Text_inp;
 	private JTable RegATab;
 	private JTable RegCTab;
 	private JTable RegBTab;
 	private JTable SpeicherTab;
+	private IProzessor prozessor;
 	
-	public static void main(String[] args) {
-		GUI gui = new GUI();
-		gui.setBounds(100, 100, 1000,700);
-		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gui.setVisible(true);
+	
+	
+//	public static void main(String[] args) {
+//		GUI gui = new GUI();
+//		gui.setBounds(100, 100, 1000,700);
+//		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		gui.setVisible(true);
+//	}
+	
+	public void connectProzessor(IProzessor prozessor){
+		this.prozessor = prozessor;
 	}
-	
 	
 	public GUI() {
 		
@@ -406,6 +419,11 @@ public class GUI extends JFrame{
 		panel.add(plzHalter, gbc_plzHalter);
 		
 		JButton btnStepIn = new JButton("Step In");
+		btnStepIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				prozessor.nextStep();
+			}
+		});
 		GridBagConstraints gbc_btnStepIn = new GridBagConstraints();
 		gbc_btnStepIn.insets = new Insets(0, 0, 5, 5);
 		gbc_btnStepIn.gridx = 0;
@@ -469,7 +487,7 @@ public class GUI extends JFrame{
 				"NR", ""
 			}
 		));
-		Text_inp.getColumnModel().getColumn(0).setPreferredWidth(28);
+		Text_inp.getColumnModel().getColumn(0).setPreferredWidth(10);
 		Text_inp.getColumnModel().getColumn(1).setPreferredWidth(521);
 		TextPanel.setViewportView(Text_inp);
 
@@ -495,5 +513,28 @@ public class GUI extends JFrame{
             }
         });
         */
+	}
+
+
+
+	@Override
+	public void showSourcecode(ArrayList<String> sourceLine) {
+
+			DefaultTableModel model = new DefaultTableModel();
+			Object[][] zeilen = new Object[sourceLine.size()][sourceLine.size()];
+			
+		for(int i=0; i<sourceLine.size(); i++){
+			zeilen[i][0] = i+1;
+			zeilen[i][1] = sourceLine.get(i); 
+		}
+		
+		
+		Text_inp.setModel(new DefaultTableModel(
+				zeilen,
+				new String[] {
+					"NR", ""
+				}
+			));
+		
 	}
 }
