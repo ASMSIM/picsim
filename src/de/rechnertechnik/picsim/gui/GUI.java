@@ -518,7 +518,8 @@ public class GUI extends JFrame implements IGUI{
 
 
 	@Override
-	public void showSourcecode(ArrayList<String> sourceLine) {
+	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus) {
+		System.out.println(fokus);
 
 			DefaultTableModel model = new DefaultTableModel();
 			Object[][] zeilen = new Object[sourceLine.size()][sourceLine.size()];
@@ -536,5 +537,12 @@ public class GUI extends JFrame implements IGUI{
 				}
 			));
 		
+		Text_inp.setRowSelectionInterval(fokus, fokus);
+		
+	}
+
+	@Override
+	public void setFocus(Integer fokus) {
+		Text_inp.setRowSelectionInterval(fokus, fokus);
 	}
 }

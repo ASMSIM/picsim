@@ -42,7 +42,8 @@ public class Prozessor implements Runnable, IProzessor {
 		status = ram.getStatus(true);
 		pc = ram.getPCL(true);
 		
-		gui.showSourcecode(parser.getSourceLine());
+		//Init und Fokus auf 1. Zeile
+		gui.showSourcecode(parser.getSourceLine(),parser.getCommand_source_line().get(0));
 		
 		
 		Thread runProgram = new Thread(this);
@@ -54,13 +55,17 @@ public class Prozessor implements Runnable, IProzessor {
 	 */
 	@Override
 	public void run() {
-		// TODO CREATE
 
 		// INIT
 		while(!stopProgram) {
 
-			if(breakpoint) {
-				// TODO
+			while(breakpoint) {
+				try {
+					Thread.sleep(200);
+				}
+				catch(InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 
 			Integer akt_Befehl = nextCommand();
@@ -231,14 +236,15 @@ public class Prozessor implements Runnable, IProzessor {
 				this.stopProgram = true;
 			}
 
-			try {
-				// Zu Testzwecken -> Enter = nä Befehl!
-				System.in.read();
-			}
-			catch(IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			breakpoint = true;
+//			try {
+//				// Zu Testzwecken -> Enter = nä Befehl!
+//				System.in.read();
+//			}
+//			catch(IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 
 		}
 
@@ -318,11 +324,14 @@ public class Prozessor implements Runnable, IProzessor {
 
 		Integer next = programmSpeicher.getZelle(pc.getValue()).getValue();
 		// System.out.println(this.memory.getZelle(0));
+		
+		gui.setFocus(parser.getCommand_source_line().get(pc.getValue()));
+		
 		return next;
 	}
 
 	@Override
 	public void nextStep() {
-		System.out.println("Next step");
+		breakpoint = false;
 	}
 }

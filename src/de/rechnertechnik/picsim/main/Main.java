@@ -39,7 +39,7 @@ public class Main {
 															// Programm-Speicher
 															// an
 		ram = new Speicher();
-		programmSpeicher.printDump();
+//		programmSpeicher.printDump();
 		prozessor = new Prozessor(commandTable, programmSpeicher, ram, gui , parser);
 
 		// GUI öffnen
