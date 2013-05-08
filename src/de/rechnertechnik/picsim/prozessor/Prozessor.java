@@ -1,6 +1,7 @@
 package de.rechnertechnik.picsim.prozessor;
 
 import java.io.IOException;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +31,10 @@ public class Prozessor implements Runnable, IProzessor {
 	private Speicherzelle status;
 	private SpecialFunctionRegister w = new SpecialFunctionRegister(0);
 	private Parser parser;
+	private Stack<Integer> stack = new Stack<Integer>();
+	
+	
+	
 
 	public Prozessor(CommandTable cmdTable, Programmspeicher programmSpeicher, Speicher ram, IGUI gui, Parser parser) {
 		this.cmdTable = cmdTable;
@@ -183,6 +188,7 @@ public class Prozessor implements Runnable, IProzessor {
 
 			else if(isIntegerCommand(ECommands.CALL, akt_Befehl)) {
 				System.out.println("CALL");
+				PIC_Befehle.asm_call(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.CLRWDT, akt_Befehl)) {
@@ -258,6 +264,17 @@ public class Prozessor implements Runnable, IProzessor {
 		}
 	}
 
+	
+	
+	public Stack<Integer> getStack() {
+		return stack;
+	}
+	
+	
+	public Speicherzelle getPc() {
+		return pc;
+	}
+	
 	/**
 	 * Sets the PCL
 	 * 

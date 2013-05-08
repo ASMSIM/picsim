@@ -178,4 +178,30 @@ public class PIC_Befehle {
 		return k;
 	}
 
+	
+	/*
+	 * CALL Befehl
+	 * 
+	 * 10 0kkk kkkk kkkk
+	 * 
+	 */
+	public static void asm_call(Integer akt_Befehl, Prozessor cpu) {
+		
+		//Extrahiere K
+		Integer k = getOpcodeFromToBit(akt_Befehl, 0, 10);
+		
+		//Push PC + 1 auf Stack
+		Integer pc_inc = cpu.getPc().getValue() + 1;
+		cpu.getStack().push(pc_inc);
+		
+		//PC auf K Wert setzen
+		try {
+			cpu.getPc().setWert(k);
+		}
+		catch(MemoryOutOfRangeException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 }
