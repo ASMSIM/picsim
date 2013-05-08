@@ -15,7 +15,7 @@ public class Programmspeicher extends Speicher {
 		this.parser = parser;
 
 		loadProgramm();
-		PIC_Logger.LOGGER.info("Program loaded successfully!");
+		PIC_Logger.logger.info("Program loaded successfully!");
 	}
 	
 	
@@ -26,7 +26,7 @@ public class Programmspeicher extends Speicher {
 		ArrayList<Integer> asmProg = parser.getAsmProg();
 		
 		if(asmProg.size() >= SPEICHERGROESSE){
-			PIC_Logger.LOGGER.fine("Speicher zu klein!!");
+			PIC_Logger.logger.fine("Speicher zu klein!!");
 			System.exit(-1);
 		}
 		

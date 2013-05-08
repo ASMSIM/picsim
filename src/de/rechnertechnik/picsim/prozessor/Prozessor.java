@@ -22,7 +22,7 @@ public class Prozessor implements Runnable, IProzessor {
 	private Programmspeicher programmSpeicher;
 	private Speicher ram;
 	private IGUI gui;
-	
+
 	/**
 	 * Programmcounter
 	 */
@@ -30,22 +30,20 @@ public class Prozessor implements Runnable, IProzessor {
 	private Speicherzelle status;
 	private SpecialFunctionRegister w = new SpecialFunctionRegister(0);
 	private Parser parser;
-	
-	
+
 	public Prozessor(CommandTable cmdTable, Programmspeicher programmSpeicher, Speicher ram, IGUI gui, Parser parser) {
 		this.cmdTable = cmdTable;
 		this.programmSpeicher = programmSpeicher;
 		this.ram = ram;
 		this.gui = gui;
 		this.parser = parser;
-		
+
 		status = ram.getStatus(true);
 		pc = ram.getPCL(true);
-		
-		//Init und Fokus auf 1. Zeile
-		gui.showSourcecode(parser.getSourceLine(),parser.getCommand_source_line().get(0));
-		
-		
+
+		// Init und Fokus auf 1. Zeile
+		gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0));
+
 		Thread runProgram = new Thread(this);
 		runProgram.start();
 	}
@@ -70,12 +68,12 @@ public class Prozessor implements Runnable, IProzessor {
 
 			Integer akt_Befehl = nextCommand();
 
-			PIC_Logger.LOGGER.log(Level.INFO, "Next command: 0x"
+			PIC_Logger.logger.log(Level.INFO, "Next command: 0x"
 					+ Integer.toHexString(akt_Befehl));
 
 			if(isIntegerCommand(ECommands.GOTO, akt_Befehl)) {
 				System.out.println("GOTO");
-				//Programmcounter
+				// Programmcounter
 				setPCL(PIC_Befehle.asm_goto(akt_Befehl));
 			}
 
@@ -96,10 +94,8 @@ public class Prozessor implements Runnable, IProzessor {
 
 			else if(isIntegerCommand(ECommands.CLRW, akt_Befehl)) {
 				System.out.println("CLRW");
-				ram.printDump();
+				PIC_Logger.logger.info("-> CLRW");
 				PIC_Befehle.asm_clrw(akt_Befehl, this);
-				ram.printDump();
-				incPC();
 			}
 
 			else if(isIntegerCommand(ECommands.COMF, akt_Befehl)) {
@@ -133,8 +129,6 @@ public class Prozessor implements Runnable, IProzessor {
 			else if(isIntegerCommand(ECommands.MOVWF, akt_Befehl)) {
 				System.out.println("MOVWF");
 				PIC_Befehle.asm_movwf(akt_Befehl, this);
-				PIC_Logger.LOGGER.info("W: "+Integer.toHexString(w.getWert()));
-				incPC();
 			}
 
 			else if(isIntegerCommand(ECommands.NOP, akt_Befehl)) {
@@ -164,13 +158,11 @@ public class Prozessor implements Runnable, IProzessor {
 			else if(isIntegerCommand(ECommands.BCF, akt_Befehl)) {
 				System.out.println("BCF");
 				PIC_Befehle.asm_bcf(akt_Befehl, this);
-				incPC();
 			}
 
 			else if(isIntegerCommand(ECommands.BSF, akt_Befehl)) {
 				System.out.println("BSF");
 				PIC_Befehle.asm_bsf(akt_Befehl, this);
-				incPC();
 			}
 
 			else if(isIntegerCommand(ECommands.BTFSC, akt_Befehl)) {
@@ -204,7 +196,6 @@ public class Prozessor implements Runnable, IProzessor {
 			else if(isIntegerCommand(ECommands.MOVLW, akt_Befehl)) {
 				System.out.println("MOVLW");
 				PIC_Befehle.asm_movlw(akt_Befehl, this);
-				incPC();
 			}
 
 			else if(isIntegerCommand(ECommands.RETFIE, akt_Befehl)) {
@@ -237,31 +228,18 @@ public class Prozessor implements Runnable, IProzessor {
 			}
 
 			breakpoint = true;
-//			try {
-//				// Zu Testzwecken -> Enter = nä Befehl!
-//				System.in.read();
-//			}
-//			catch(IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-
 		}
 
 	}
 
-	
-	
-	
-	private void incPC() {
-		setPCL(pc.getValue()+1);
+	public void incPC() {
+		setPCL(pc.getValue() + 1);
 	}
-	
+
 	public Speicher getRam() {
 		return ram;
 	}
-	
-	
+
 	public SpecialFunctionRegister getW() {
 		return w;
 	}
@@ -279,15 +257,14 @@ public class Prozessor implements Runnable, IProzessor {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	/**
 	 * Sets the PCL
 	 * 
 	 * @param value
 	 */
-	private void setPCL(Integer value){
-		
+	private void setPCL(Integer value) {
+
 		try {
 			pc.setWert(value);
 		}
@@ -296,9 +273,6 @@ public class Prozessor implements Runnable, IProzessor {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
 
 	/**
 	 * Testet, ob einen Integerwert auf einen bestimmten Befehl. Liefert true,
@@ -318,15 +292,16 @@ public class Prozessor implements Runnable, IProzessor {
 
 	}
 
-	private Integer nextCommand() {
-		// TODO PROGRAM DUMMY
-		// READ COMMAND FROM FILE
 
+	/**
+	 * Holt den naechsten Befehl, auf den der PCL zeigt
+	 * @return
+	 */
+	private Integer nextCommand() {
 		Integer next = programmSpeicher.getZelle(pc.getValue()).getValue();
-		// System.out.println(this.memory.getZelle(0));
-		
+
 		gui.setFocus(parser.getCommand_source_line().get(pc.getValue()));
-		
+
 		return next;
 	}
 

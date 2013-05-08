@@ -64,7 +64,7 @@ public class Parser {
 
 		}
 
-		PIC_Logger.LOGGER.info("Finished Parsing");
+		PIC_Logger.logger.info("Finished Parsing");
 	}
 
 	/**

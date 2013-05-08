@@ -23,6 +23,7 @@ public class PIC_Befehle {
 	 */
 	public static void asm_movlw(Integer befehl, Prozessor cpu) {
 		cpu.getW().setWert(getOpcodeFromToBit(befehl, 0, 7));
+		cpu.incPC();
 	}
 
 	/**
@@ -37,14 +38,14 @@ public class PIC_Befehle {
 
 		Integer adresse = getOpcodeFromToBit(befehl, 0, 6);
 
-		PIC_Logger.LOGGER.info("BitNr: " + bitNr + "\nAdresse: " + adresse);
+		PIC_Logger.logger.info("BitNr: " + bitNr + "\nAdresse: " + adresse);
 
 		Integer setValue = (int) Math.pow(2, bitNr);
-		PIC_Logger.LOGGER.info("Bitvalue: " + setValue);
+		PIC_Logger.logger.info("Bitvalue: " + setValue);
 
 		Speicherzelle workingCell = cpu.getRam().getZelle(adresse);
 
-		PIC_Logger.LOGGER.info("Wert vorher: 0x"
+		PIC_Logger.logger.info("Wert vorher: 0x"
 				+ Integer.toHexString(workingCell.getValue()));
 		try {
 			workingCell.setWert(workingCell.getValue() | setValue);
@@ -54,56 +55,52 @@ public class PIC_Befehle {
 			e.printStackTrace();
 		}
 
-		PIC_Logger.LOGGER.info("Wert nacher: 0x"
+		PIC_Logger.logger.info("Wert nacher: 0x"
 				+ Integer.toHexString(workingCell.getValue()));
+		cpu.incPC();
 	}
 
-	
-	
-	
-	public static void asm_clrw(Integer befehl, Prozessor cpu){
+	public static void asm_clrw(Integer befehl, Prozessor cpu) {
 		cpu.getW().setWert(0);
 		Speicherzelle status = cpu.getStatus();
-		
+
 		try {
-			status.setWert(status.getValue() | (int)Math.pow(2, 2));
+			status.setWert(status.getValue() | (int) Math.pow(2, 2));
 		}
 		catch(MemoryOutOfRangeException e) {
 			e.printStackTrace();
 		}
-		
+
+		cpu.incPC();
+
 	}
-	
-	
-	
-	
+
 	/**
 	 * BCF 01 00bb bfff ffff
 	 * 
 	 * @param befehl
 	 * @param cpu
 	 */
-	public static void asm_bcf(Integer befehl, Prozessor cpu){
+	public static void asm_bcf(Integer befehl, Prozessor cpu) {
 		Integer bitNr = getOpcodeFromToBit(befehl, 7, 9);
 		bitNr = bitNr >> 7;
 
 		Integer adresse = getOpcodeFromToBit(befehl, 0, 6);
 
-		PIC_Logger.LOGGER.info("BitNr: " + bitNr + "\nAdresse: " + adresse);
+		PIC_Logger.logger.info("BitNr: " + bitNr + "\nAdresse: " + adresse);
 
-		Integer setValue = new Integer(0xFF); 
-		
-		//Minus !
-		setValue = setValue -(int) Math.pow(2, bitNr);
-		PIC_Logger.LOGGER.info("Bitvalue: " + setValue);
+		Integer setValue = new Integer(0xFF);
+
+		// Minus !
+		setValue = setValue - (int) Math.pow(2, bitNr);
+		PIC_Logger.logger.info("Bitvalue: " + setValue);
 
 		Speicherzelle workingCell = cpu.getRam().getZelle(adresse);
-		
-		
-		PIC_Logger.LOGGER.info("Wert vorher: 0x"
+
+		PIC_Logger.logger.info("Wert vorher: 0x"
 				+ Integer.toHexString(workingCell.getValue()));
 		try {
-			//Verunden
+			// Verunden
 			workingCell.setWert(workingCell.getValue() & setValue);
 		}
 		catch(MemoryOutOfRangeException e) {
@@ -111,16 +108,16 @@ public class PIC_Befehle {
 			e.printStackTrace();
 		}
 
-		PIC_Logger.LOGGER.info("Wert nacher: 0x"
+		PIC_Logger.logger.info("Wert nacher: 0x"
 				+ Integer.toHexString(workingCell.getValue()));
+
+		cpu.incPC();
 	}
-	
-	
-	
+
 	/**
 	 * MOVWF Wert aus W in F speichern
 	 * 
-	 *	00 0000 1fff ffff 
+	 * 00 0000 1fff ffff
 	 * 
 	 * @param befehl
 	 * @param cpu
@@ -128,15 +125,21 @@ public class PIC_Befehle {
 	public static void asm_movwf(Integer befehl, Prozessor cpu) {
 		Integer adresse = getOpcodeFromToBit(befehl, 0, 6);
 		Speicherzelle workingCell = cpu.getRam().getZelle(adresse);
-		
-		PIC_Logger.LOGGER.info("Adresse: " + adresse + "\nZelleninhalt: " + workingCell.getValue());
-		
+
+		PIC_Logger.logger.info("Adresse: " + adresse + "\nZelleninhalt: "
+				+ workingCell.getValue());
+
 		try {
 			workingCell.setWert(cpu.getW().getWert());
 		}
 		catch(MemoryOutOfRangeException e) {
 			e.printStackTrace();
 		}
+
+		PIC_Logger.logger.info("W: "
+				+ Integer.toHexString(cpu.getW().getWert()));
+
+		cpu.incPC();
 	}
 
 	/**
@@ -169,7 +172,7 @@ public class PIC_Befehle {
 		int k = opcode & 0x3fff;
 		k = opcode & operand;
 
-		PIC_Logger.LOGGER.info("Extrahierter Hexwert: "
+		PIC_Logger.logger.info("Extrahierter Hexwert: "
 				+ Integer.toHexString(k));
 
 		return k;
