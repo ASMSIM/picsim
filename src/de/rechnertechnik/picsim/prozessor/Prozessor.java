@@ -7,36 +7,45 @@ import java.util.logging.Logger;
 import de.rechnertechnik.picsim.commands.PIC_Befehle;
 import de.rechnertechnik.picsim.commands.CommandTable;
 import de.rechnertechnik.picsim.commands.ECommands;
-import de.rechnertechnik.picsim.junit.PIC_Befehlstest;
+import de.rechnertechnik.picsim.gui.IGUI;
+import de.rechnertechnik.picsim.gui.IProzessor;
 import de.rechnertechnik.picsim.logger.PIC_Logger;
+import de.rechnertechnik.picsim.parser.Parser;
 import de.rechnertechnik.picsim.register.SpecialFunctionRegister;
 import de.rechnertechnik.picsim.register.Statusregister;
 
-public class Prozessor implements Runnable {
+public class Prozessor implements Runnable, IProzessor {
 
 	private boolean stopProgram = false;
 	private boolean breakpoint = false;
 	private CommandTable cmdTable;
 	private Programmspeicher programmSpeicher;
 	private Speicher ram;
-
+	private IGUI gui;
+	
 	/**
 	 * Programmcounter
 	 */
-	private Integer pc = 0;
-	
+	private Speicherzelle pc;
+	private Speicherzelle status;
 	private SpecialFunctionRegister w = new SpecialFunctionRegister(0);
-	private Statusregister status = new Statusregister(0);
+	private Parser parser;
 	
 	
-	
-	
-
-	public Prozessor(CommandTable cmdTable, Programmspeicher programmSpeicher, Speicher ram) {
+	public Prozessor(CommandTable cmdTable, Programmspeicher programmSpeicher, Speicher ram, IGUI gui, Parser parser) {
 		this.cmdTable = cmdTable;
 		this.programmSpeicher = programmSpeicher;
 		this.ram = ram;
-
+		this.gui = gui;
+		this.parser = parser;
+		
+		status = ram.getStatus(true);
+		pc = ram.getPCL(true);
+		
+		//Init und Fokus auf 1. Zeile
+		gui.showSourcecode(parser.getSourceLine(),parser.getCommand_source_line().get(0));
+		
+		
 		Thread runProgram = new Thread(this);
 		runProgram.start();
 	}
@@ -46,13 +55,17 @@ public class Prozessor implements Runnable {
 	 */
 	@Override
 	public void run() {
-		// TODO CREATE
 
 		// INIT
 		while(!stopProgram) {
 
-			if(breakpoint) {
-				// TODO
+			while(breakpoint) {
+				try {
+					Thread.sleep(200);
+				}
+				catch(InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 
 			Integer akt_Befehl = nextCommand();
@@ -61,9 +74,9 @@ public class Prozessor implements Runnable {
 					+ Integer.toHexString(akt_Befehl));
 
 			if(isIntegerCommand(ECommands.GOTO, akt_Befehl)) {
-				PIC_Logger.LOGGER.info("GOTO");
-
-				pc = PIC_Befehle.asm_goto(akt_Befehl);
+				System.out.println("GOTO");
+				//Programmcounter
+				setPCL(PIC_Befehle.asm_goto(akt_Befehl));
 			}
 
 			else if(isIntegerCommand(ECommands.ADDWF, akt_Befehl)) {
@@ -83,248 +96,209 @@ public class Prozessor implements Runnable {
 
 			else if(isIntegerCommand(ECommands.CLRW, akt_Befehl)) {
 				System.out.println("CLRW");
+				ram.printDump();
+				PIC_Befehle.asm_clrw(akt_Befehl, this);
+				ram.printDump();
+				incPC();
 			}
-			
+
 			else if(isIntegerCommand(ECommands.COMF, akt_Befehl)) {
 				System.out.println("COMF");
 			}
-			
+
 			else if(isIntegerCommand(ECommands.DECF, akt_Befehl)) {
 				System.out.println("DECF");
 			}
 
-
-			//TODO !!! BEFEHLE ABÄNDERN!!!
-			
-			
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.DECFSZ).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.DECFSZ).getTo()) {
-					System.out.println("DECFSZ");
-					// TODO DECFSZ
-				}
+			else if(isIntegerCommand(ECommands.DECFSZ, akt_Befehl)) {
+				System.out.println("DECFSZ");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.INCF).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.INCF).getTo()) {
-					System.out.println("INCF");
-					// TODO INCF
-				}
+			else if(isIntegerCommand(ECommands.INCF, akt_Befehl)) {
+				System.out.println("INCF");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.INCFSZ).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.INCFSZ).getTo()) {
-					System.out.println("INCFSZ");
-					// TODO INCFSZ
-				}
+			else if(isIntegerCommand(ECommands.INCFSZ, akt_Befehl)) {
+				System.out.println("INCFSZ");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.IORWF).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.IORWF).getTo()) {
-					System.out.println("IORWF");
-					// TODO IORWF
-				}
+			else if(isIntegerCommand(ECommands.IORWF, akt_Befehl)) {
+				System.out.println("IORWF");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.MOVF).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.MOVF).getTo()) {
-					System.out.println("MOVF");
-					// TODO MOVF
-				}
+			else if(isIntegerCommand(ECommands.MOVF, akt_Befehl)) {
+				System.out.println("MOVF");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.MOVWF).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.MOVWF).getTo()) {
-					System.out.println("MOVWF");
-					// TODO MOVWF
-				}
+			else if(isIntegerCommand(ECommands.MOVWF, akt_Befehl)) {
+				System.out.println("MOVWF");
+				PIC_Befehle.asm_movwf(akt_Befehl, this);
+				PIC_Logger.LOGGER.info("W: "+Integer.toHexString(w.getWert()));
+				incPC();
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.NOP).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.NOP).getTo()) {
-					System.out.println("NOP");
-					// TODO NOP
-				}
+			else if(isIntegerCommand(ECommands.NOP, akt_Befehl)) {
+				System.out.println("NOP");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.RLF).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.RLF).getTo()) {
-					System.out.println("RLF");
-					// TODO RLF
-				}
+			else if(isIntegerCommand(ECommands.RLF, akt_Befehl)) {
+				System.out.println("RLF");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.RRF).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.RRF).getTo()) {
-					System.out.println("RRF");
-					// TODO RRF
-				}
+			else if(isIntegerCommand(ECommands.RRF, akt_Befehl)) {
+				System.out.println("RRF");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.SUBWF).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.SUBWF).getTo()) {
-					System.out.println("SUBWF");
-					// TODO SUBWF
-				}
+			else if(isIntegerCommand(ECommands.SUBWF, akt_Befehl)) {
+				System.out.println("SUBWF");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.SWAPF).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.SWAPF).getTo()) {
-					System.out.println("SWAPF");
-					// TODO SWAPF
-				}
+			else if(isIntegerCommand(ECommands.SWAPF, akt_Befehl)) {
+				System.out.println("SWAPF");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.XORWF).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.XORWF).getTo()) {
-					System.out.println("XORWF");
-					// TODO XORWF
-				}
+			else if(isIntegerCommand(ECommands.XORWF, akt_Befehl)) {
+				System.out.println("XORWF");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.BCF).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.BCF).getTo()) {
-					System.out.println("BCF");
-					// TODO BCF
-				}
+			else if(isIntegerCommand(ECommands.BCF, akt_Befehl)) {
+				System.out.println("BCF");
+				PIC_Befehle.asm_bcf(akt_Befehl, this);
+				incPC();
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.BSF).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.BSF).getTo()) {
-					System.out.println("BSF");
-					// TODO BSF
-				}
+			else if(isIntegerCommand(ECommands.BSF, akt_Befehl)) {
+				System.out.println("BSF");
+				PIC_Befehle.asm_bsf(akt_Befehl, this);
+				incPC();
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.BTFSC).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.BTFSC).getTo()) {
-					System.out.println("BTFSC");
-					// TODO BTFSC
-				}
+			else if(isIntegerCommand(ECommands.BTFSC, akt_Befehl)) {
+				System.out.println("BTFSC");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.BTFSS).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.BTFSS).getTo()) {
-					System.out.println("BTFSS");
-					// TODO BTFSS
-				}
+			else if(isIntegerCommand(ECommands.BTFSS, akt_Befehl)) {
+				System.out.println("BTFSS");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.ADDLW).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.ADDLW).getTo()) {
-					System.out.println("ADDLW");
-					// TODO ADDLW
-				}
+			else if(isIntegerCommand(ECommands.ADDLW, akt_Befehl)) {
+				System.out.println("ADDLW");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.ANDLW).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.ANDLW).getTo()) {
-					System.out.println("ANDLW");
-					// TODO ANDLW
-				}
+			else if(isIntegerCommand(ECommands.ANDLW, akt_Befehl)) {
+				System.out.println("ANDLW");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.CALL).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.CALL).getTo()) {
-					System.out.println("CALL");
-					// TODO CALL
-				}
+			else if(isIntegerCommand(ECommands.CALL, akt_Befehl)) {
+				System.out.println("CALL");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.CLRWDT).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.CLRWDT).getTo()) {
-					System.out.println("CLRWDT");
-					// TODO CLRWDT
-				}
+			else if(isIntegerCommand(ECommands.CLRWDT, akt_Befehl)) {
+				System.out.println("CLRWDT");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.IORLW).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.IORLW).getTo()) {
-					System.out.println("IORLW");
-					// TODO IORLW
-				}
+			else if(isIntegerCommand(ECommands.IORLW, akt_Befehl)) {
+				System.out.println("IORLW");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.MOVLW).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.MOVLW).getTo()) {
-					System.out.println("MOVLW");
-					PIC_Befehle.asm_movlw(akt_Befehl, this);
-				}
+			else if(isIntegerCommand(ECommands.MOVLW, akt_Befehl)) {
+				System.out.println("MOVLW");
+				PIC_Befehle.asm_movlw(akt_Befehl, this);
+				incPC();
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.RETFIE).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.RETFIE).getTo()) {
-					System.out.println("RETFIE");
-					// TODO RETFIE
-				}
+			else if(isIntegerCommand(ECommands.RETFIE, akt_Befehl)) {
+				System.out.println("RETFIE");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.RETLW).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.RETLW).getTo()) {
-					System.out.println("RETLW");
-					// TODO RETLW
-				}
+			else if(isIntegerCommand(ECommands.RETLW, akt_Befehl)) {
+				System.out.println("RETLW");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.RETURN).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.RETURN).getTo()) {
-					System.out.println("RETURN");
-					// TODO RETURN
-				}
+			else if(isIntegerCommand(ECommands.RETURN, akt_Befehl)) {
+				System.out.println("RETURN");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.SLEEP).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.SLEEP).getTo()) {
-					System.out.println("SLEEP");
-					// TODO SLEEP
-				}
+			else if(isIntegerCommand(ECommands.SLEEP, akt_Befehl)) {
+				System.out.println("SLEEP");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.SUBLW).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.SUBLW).getTo()) {
-					System.out.println("SUBLW");
-					// TODO SUBLW
-				}
+			else if(isIntegerCommand(ECommands.SUBLW, akt_Befehl)) {
+				System.out.println("SUBLW");
 			}
 
-			if(akt_Befehl >= cmdTable.getAssemblerCommand().get(ECommands.XORLW).getFrom()) {
-				if(akt_Befehl <= cmdTable.getAssemblerCommand().get(ECommands.XORLW).getTo()) {
-					System.out.println("XORLW");
-					// TODO XORLW
-				}
+			else if(isIntegerCommand(ECommands.XORLW, akt_Befehl)) {
+				System.out.println("XORLW");
 			}
 
-			// System.out.println("Befehl nicht implementiert !");
-			// this.stopProgram = true;
+			else {
+				System.out.println("Befehl nicht implementiert !");
+				this.stopProgram = true;
+			}
 
-			try {
-				// Zu Testzwecken -> Enter = nä Befehl!
-				System.in.read();
-			}
-			catch(IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			breakpoint = true;
+//			try {
+//				// Zu Testzwecken -> Enter = nä Befehl!
+//				System.in.read();
+//			}
+//			catch(IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 
 		}
 
 	}
-	
-	
-	
-	
 
+	
+	
+	
+	private void incPC() {
+		setPCL(pc.getValue()+1);
+	}
+	
+	public Speicher getRam() {
+		return ram;
+	}
+	
+	
 	public SpecialFunctionRegister getW() {
 		return w;
 	}
 
-
-	public Statusregister getStatus() {
+	public Speicherzelle getStatus() {
 		return status;
 	}
 
-	public void setStatus(Statusregister status) {
-		this.status = status;
+	public void setStatus(Integer value) {
+		try {
+			this.status.setWert(value);
+		}
+		catch(MemoryOutOfRangeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	
+	
+	/**
+	 * Sets the PCL
+	 * 
+	 * @param value
+	 */
+	private void setPCL(Integer value){
+		
+		try {
+			pc.setWert(value);
+		}
+		catch(MemoryOutOfRangeException e) {
+			System.err.println("Upps Memory Overflow!");
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 
 	/**
 	 * Testet, ob einen Integerwert auf einen bestimmten Befehl. Liefert true,
@@ -348,8 +322,16 @@ public class Prozessor implements Runnable {
 		// TODO PROGRAM DUMMY
 		// READ COMMAND FROM FILE
 
-		Integer next = this.programmSpeicher.getZelle(pc);
+		Integer next = programmSpeicher.getZelle(pc.getValue()).getValue();
 		// System.out.println(this.memory.getZelle(0));
+		
+		gui.setFocus(parser.getCommand_source_line().get(pc.getValue()));
+		
 		return next;
+	}
+
+	@Override
+	public void nextStep() {
+		breakpoint = false;
 	}
 }

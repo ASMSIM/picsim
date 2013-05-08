@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 
@@ -18,6 +19,7 @@ public class Parser {
 
 	ArrayList<String> sourceLine = new ArrayList<String>();
 	ArrayList<Integer> asmProg = new ArrayList<Integer>();
+	HashMap<Integer, Integer> command_source_line = new HashMap<Integer, Integer>();
 
 	private File file;
 
@@ -46,18 +48,22 @@ public class Parser {
 	 */
 	private void extractAssemblercode() {
 
-		for(String currentLine : sourceLine) {
+		for(int i = 0; i < sourceLine.size(); i++) {
 
-			if(!(currentLine.charAt(0) == ' ')) {
-				String dst = currentLine.substring(5, 9);
-//				System.out.println(dst);
-				Integer befehl = (int)Integer.parseInt(dst, 16);
-				System.out.println(befehl);
+			if(!(sourceLine.get(i).charAt(0) == ' ')) {
+				
+				
+				String dst = sourceLine.get(i).substring(5, 9);
+				// System.out.println(dst);
+				Integer befehl = (int) Integer.parseInt(dst, 16);
+				// System.out.println(befehl);
 				asmProg.add(befehl);
+				
+				command_source_line.put(asmProg.size()-1, i);
 			}
 
 		}
-		
+
 		PIC_Logger.LOGGER.info("Finished Parsing");
 	}
 
@@ -91,11 +97,22 @@ public class Parser {
 		}
 
 	}
+	
+	
+	
+	
+	
+
+	public HashMap<Integer, Integer> getCommand_source_line() {
+		return command_source_line;
+	}
 
 	public ArrayList<Integer> getAsmProg() {
 		return asmProg;
 	}
-	
-	
+
+	public ArrayList<String> getSourceLine() {
+		return sourceLine;
+	}
 
 }
