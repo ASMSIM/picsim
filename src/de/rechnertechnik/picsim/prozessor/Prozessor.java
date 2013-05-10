@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.rechnertechnik.picsim.commands.PIC_Befehle;
-import de.rechnertechnik.picsim.commands.CommandTable;
+import de.rechnertechnik.picsim.commands.BefehlAdressraumZuordnung;
 import de.rechnertechnik.picsim.commands.ECommands;
 import de.rechnertechnik.picsim.gui.IGUI;
 import de.rechnertechnik.picsim.gui.IProzessor;
@@ -19,7 +19,7 @@ public class Prozessor implements Runnable, IProzessor {
 
 	private boolean stopProgram = false;
 	private boolean breakpoint = false;
-	private CommandTable cmdTable;
+	private BefehlAdressraumZuordnung cmdTable;
 	private Programmspeicher programmSpeicher;
 	private Speicher ram;
 	private IGUI gui;
@@ -36,7 +36,7 @@ public class Prozessor implements Runnable, IProzessor {
 	
 	
 
-	public Prozessor(CommandTable cmdTable, Programmspeicher programmSpeicher, Speicher ram, IGUI gui, Parser parser) {
+	public Prozessor(BefehlAdressraumZuordnung cmdTable, Programmspeicher programmSpeicher, Speicher ram, IGUI gui, Parser parser) {
 		this.cmdTable = cmdTable;
 		this.programmSpeicher = programmSpeicher;
 		this.ram = ram;
@@ -76,15 +76,17 @@ public class Prozessor implements Runnable, IProzessor {
 			PIC_Logger.logger.log(Level.INFO, "Next command: 0x"
 					+ Integer.toHexString(akt_Befehl));
 
+			
+			//GOTO
 			if(isIntegerCommand(ECommands.GOTO, akt_Befehl)) {
 				System.out.println("GOTO");
-				// Programmcounter
 				setPCL(PIC_Befehle.asm_goto(akt_Befehl));
 			}
 
+			//ADDWF
 			else if(isIntegerCommand(ECommands.ADDWF, akt_Befehl)) {
 				System.out.println("ADDWF");
-				// TODO ADDWF
+				PIC_Logger.logger.info("ADDWF");
 			}
 
 			else if(isIntegerCommand(ECommands.ANDWF, akt_Befehl)) {

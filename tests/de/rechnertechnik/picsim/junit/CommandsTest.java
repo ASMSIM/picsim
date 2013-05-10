@@ -12,8 +12,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.rechnertechnik.picsim.commands.CommandRange;
-import de.rechnertechnik.picsim.commands.CommandTable;
+import de.rechnertechnik.picsim.commands.Adressraum;
+import de.rechnertechnik.picsim.commands.BefehlAdressraumZuordnung;
 import de.rechnertechnik.picsim.commands.ECommands;
 
 public class CommandsTest {
@@ -36,45 +36,45 @@ public class CommandsTest {
 
 	@Test
 	public void test() {
-		CommandTable cmd = new CommandTable();
+		BefehlAdressraumZuordnung cmd = new BefehlAdressraumZuordnung();
 
-		cmd.getAssemblerCommand().put(ECommands.ADDWF, new CommandRange(0x0700, 0x07FF));
-		cmd.getAssemblerCommand().put(ECommands.ANDWF, new CommandRange(0x0500, 0x05FF));
-		cmd.getAssemblerCommand().put(ECommands.CLRF, new CommandRange(0x0180, 0x01FF));
-		cmd.getAssemblerCommand().put(ECommands.CLRW, new CommandRange(0x0100, 0x017F));		
-		cmd.getAssemblerCommand().put(ECommands.COMF, new CommandRange(0x0900, 0x09FF));
-		cmd.getAssemblerCommand().put(ECommands.DECF, new CommandRange(0x0300, 0x03FF));
-		cmd.getAssemblerCommand().put(ECommands.DECFSZ, new CommandRange(0x0B00, 0x0BFF));
-		cmd.getAssemblerCommand().put(ECommands.INCF, new CommandRange(0x0A00, 0x0AFF));
-		cmd.getAssemblerCommand().put(ECommands.INCFSZ, new CommandRange(0x0F00, 0x0FFF));
-		cmd.getAssemblerCommand().put(ECommands.IORWF, new CommandRange(0x0400, 0x04FF));
-		cmd.getAssemblerCommand().put(ECommands.MOVF, new CommandRange(0x0800, 0x08FF));
-		cmd.getAssemblerCommand().put(ECommands.MOVWF, new CommandRange(0x0080, 0x00FF));
-		cmd.getAssemblerCommand().put(ECommands.NOP, new CommandRange(0x0000, 0x0060));		// !!!!!
-		cmd.getAssemblerCommand().put(ECommands.RLF, new CommandRange(0x0D00, 0x0DFF));	
-		cmd.getAssemblerCommand().put(ECommands.RRF, new CommandRange(0x0C00, 0x0CFF));
-		cmd.getAssemblerCommand().put(ECommands.SUBWF, new CommandRange(0x0200, 0x02FF));
-		cmd.getAssemblerCommand().put(ECommands.SWAPF, new CommandRange(0x0E00, 0x0EFF));
-		cmd.getAssemblerCommand().put(ECommands.XORWF, new CommandRange(0x0600, 0x06FF));
+		cmd.getAssemblerCommand().put(ECommands.ADDWF, new Adressraum(0x0700, 0x07FF));
+		cmd.getAssemblerCommand().put(ECommands.ANDWF, new Adressraum(0x0500, 0x05FF));
+		cmd.getAssemblerCommand().put(ECommands.CLRF, new Adressraum(0x0180, 0x01FF));
+		cmd.getAssemblerCommand().put(ECommands.CLRW, new Adressraum(0x0100, 0x017F));		
+		cmd.getAssemblerCommand().put(ECommands.COMF, new Adressraum(0x0900, 0x09FF));
+		cmd.getAssemblerCommand().put(ECommands.DECF, new Adressraum(0x0300, 0x03FF));
+		cmd.getAssemblerCommand().put(ECommands.DECFSZ, new Adressraum(0x0B00, 0x0BFF));
+		cmd.getAssemblerCommand().put(ECommands.INCF, new Adressraum(0x0A00, 0x0AFF));
+		cmd.getAssemblerCommand().put(ECommands.INCFSZ, new Adressraum(0x0F00, 0x0FFF));
+		cmd.getAssemblerCommand().put(ECommands.IORWF, new Adressraum(0x0400, 0x04FF));
+		cmd.getAssemblerCommand().put(ECommands.MOVF, new Adressraum(0x0800, 0x08FF));
+		cmd.getAssemblerCommand().put(ECommands.MOVWF, new Adressraum(0x0080, 0x00FF));
+		cmd.getAssemblerCommand().put(ECommands.NOP, new Adressraum(0x0000, 0x0060));		// !!!!!
+		cmd.getAssemblerCommand().put(ECommands.RLF, new Adressraum(0x0D00, 0x0DFF));	
+		cmd.getAssemblerCommand().put(ECommands.RRF, new Adressraum(0x0C00, 0x0CFF));
+		cmd.getAssemblerCommand().put(ECommands.SUBWF, new Adressraum(0x0200, 0x02FF));
+		cmd.getAssemblerCommand().put(ECommands.SWAPF, new Adressraum(0x0E00, 0x0EFF));
+		cmd.getAssemblerCommand().put(ECommands.XORWF, new Adressraum(0x0600, 0x06FF));
 		
-		cmd.getAssemblerCommand().put(ECommands.BCF, new CommandRange(0x1000, 0x13FF));
-		cmd.getAssemblerCommand().put(ECommands.BSF, new CommandRange(0x1400, 0x17FF));
-		cmd.getAssemblerCommand().put(ECommands.BTFSC, new CommandRange(0x1800, 0x1BFF));
-		cmd.getAssemblerCommand().put(ECommands.BTFSS, new CommandRange(0x1C00, 0x1FFF));
+		cmd.getAssemblerCommand().put(ECommands.BCF, new Adressraum(0x1000, 0x13FF));
+		cmd.getAssemblerCommand().put(ECommands.BSF, new Adressraum(0x1400, 0x17FF));
+		cmd.getAssemblerCommand().put(ECommands.BTFSC, new Adressraum(0x1800, 0x1BFF));
+		cmd.getAssemblerCommand().put(ECommands.BTFSS, new Adressraum(0x1C00, 0x1FFF));
 		
-		cmd.getAssemblerCommand().put(ECommands.ADDLW, new CommandRange(0x3E00, 0x3FFF));
-		cmd.getAssemblerCommand().put(ECommands.ANDLW, new CommandRange(0x3900, 0x39FF));
-		cmd.getAssemblerCommand().put(ECommands.CALL, new CommandRange(0x2000, 0x27FF));
-		cmd.getAssemblerCommand().put(ECommands.CLRWDT, new CommandRange(0x0064, 0x0064)); 
-		cmd.getAssemblerCommand().put(ECommands.GOTO, new CommandRange(0x2800, 0x2FFF));
-		cmd.getAssemblerCommand().put(ECommands.IORLW, new CommandRange(0x3800, 0x38FF));
-		cmd.getAssemblerCommand().put(ECommands.MOVLW, new CommandRange(0x3000, 0x33FF));
-		cmd.getAssemblerCommand().put(ECommands.RETFIE, new CommandRange(0x0009, 0x0009));
-		cmd.getAssemblerCommand().put(ECommands.RETLW, new CommandRange(0x3400, 0x37FF));
-		cmd.getAssemblerCommand().put(ECommands.RETURN, new CommandRange(0x0008, 0x0008));
-		cmd.getAssemblerCommand().put(ECommands.SLEEP, new CommandRange(0x0063, 0x0063));
-		cmd.getAssemblerCommand().put(ECommands.SUBLW, new CommandRange(0x3C00, 0x3DFF));
-		cmd.getAssemblerCommand().put(ECommands.XORLW, new CommandRange(0x3A00, 0x3AFF));
+		cmd.getAssemblerCommand().put(ECommands.ADDLW, new Adressraum(0x3E00, 0x3FFF));
+		cmd.getAssemblerCommand().put(ECommands.ANDLW, new Adressraum(0x3900, 0x39FF));
+		cmd.getAssemblerCommand().put(ECommands.CALL, new Adressraum(0x2000, 0x27FF));
+		cmd.getAssemblerCommand().put(ECommands.CLRWDT, new Adressraum(0x0064, 0x0064)); 
+		cmd.getAssemblerCommand().put(ECommands.GOTO, new Adressraum(0x2800, 0x2FFF));
+		cmd.getAssemblerCommand().put(ECommands.IORLW, new Adressraum(0x3800, 0x38FF));
+		cmd.getAssemblerCommand().put(ECommands.MOVLW, new Adressraum(0x3000, 0x33FF));
+		cmd.getAssemblerCommand().put(ECommands.RETFIE, new Adressraum(0x0009, 0x0009));
+		cmd.getAssemblerCommand().put(ECommands.RETLW, new Adressraum(0x3400, 0x37FF));
+		cmd.getAssemblerCommand().put(ECommands.RETURN, new Adressraum(0x0008, 0x0008));
+		cmd.getAssemblerCommand().put(ECommands.SLEEP, new Adressraum(0x0063, 0x0063));
+		cmd.getAssemblerCommand().put(ECommands.SUBLW, new Adressraum(0x3C00, 0x3DFF));
+		cmd.getAssemblerCommand().put(ECommands.XORLW, new Adressraum(0x3A00, 0x3AFF));
 		
 		// int in_befehl = 0x2817;
 

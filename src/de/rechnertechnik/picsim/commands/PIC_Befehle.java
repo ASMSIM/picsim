@@ -65,6 +65,8 @@ public class PIC_Befehle {
 		Speicherzelle status = cpu.getStatus();
 
 		try {
+			
+			// Zero Flag
 			status.setWert(status.getValue() | (int) Math.pow(2, 2));
 		}
 		catch(MemoryOutOfRangeException e) {
@@ -100,7 +102,7 @@ public class PIC_Befehle {
 		PIC_Logger.logger.info("Wert vorher: 0x"
 				+ Integer.toHexString(workingCell.getValue()));
 		try {
-			// Verunden
+			// Verunden und dadurch Bit loeschen
 			workingCell.setWert(workingCell.getValue() & setValue);
 		}
 		catch(MemoryOutOfRangeException e) {
@@ -201,6 +203,22 @@ public class PIC_Befehle {
 		catch(MemoryOutOfRangeException e) {
 			e.printStackTrace();
 		}
+		
+	}
+
+	
+	/**
+	 * ADDWF Befehl
+	 * 
+	 * 	00 0111 dfff ffff
+	 * 
+	 * Status: C, DC, Z
+	 * 
+	 * 
+	 * @param akt_Befehl
+	 * @param cpu
+	 */
+	public static void asm_addwf(Integer akt_Befehl, Prozessor cpu) {
 		
 	}
 

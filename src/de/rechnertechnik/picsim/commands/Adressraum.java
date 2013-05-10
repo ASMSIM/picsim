@@ -1,12 +1,12 @@
 package de.rechnertechnik.picsim.commands;
 
-public class CommandRange {
+public class Adressraum {
 
 	private Integer from;
 	private Integer to;
 	
 	
-	public CommandRange(Integer from, Integer to) {
+	public Adressraum(Integer from, Integer to) {
 		this.from = from;
 		this.to = to;
 	}

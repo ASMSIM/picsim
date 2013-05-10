@@ -19,7 +19,7 @@ public class Main {
 	private static Parser parser;
 	private static Prozessor prozessor;
 	private static PIC_Logger logger;
-	private static CommandTable commandTable;
+	private static BefehlAdressraumZuordnung commandTable;
 	private static Programmspeicher programmSpeicher;
 	private static Speicher ram;
 
@@ -29,22 +29,25 @@ public class Main {
 		System.out.println("######## PICSIMULATOR #######");
 		System.out.println("#############################");
 
-		GUI gui = new GUI();
-		
 		// Init
+		GUI gui = new GUI();
 		PIC_Logger.initLogger("logfile.txt");
-		commandTable = new CommandTable();
-		parser = new Parser("res/BA_Test.LST");
+		commandTable = new BefehlAdressraumZuordnung();
+		parser = new Parser("res/BA_Test.LST"); // TODO mit GUI öffnen
+												// verknüpfen
 		programmSpeicher = new Programmspeicher(parser); // Legt den
-															// Programm-Speicher
-															// an
+															// Programmspeicher
+															// an und befüllt
+															// diesen mit dem
+															// Programmcode
+
 		ram = new Speicher();
-//		programmSpeicher.printDump();
-		prozessor = new Prozessor(commandTable, programmSpeicher, ram, gui , parser);
+		// programmSpeicher.printDump();
+		prozessor = new Prozessor(commandTable, programmSpeicher, ram, gui, parser);
 
 		// GUI öffnen
 		showGUI(gui, prozessor);
-		gui.connectProzessor(prozessor);
+		gui.connectProzessor(prozessor);	//Interfaceverknüpfung
 
 	}
 
@@ -52,7 +55,6 @@ public class Main {
 	 * Init the GUI with Size and Position
 	 */
 	private static void showGUI(GUI gui, IProzessor prozessor) {
-	
 
 		// Zentrierung / Breite & Hoehe des Fensters
 		Dimension main_window_size = new Dimension(1000, 700);
