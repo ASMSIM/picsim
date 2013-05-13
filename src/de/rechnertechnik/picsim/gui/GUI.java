@@ -56,11 +56,14 @@ public class GUI extends JFrame implements IGUI{
 //		gui.setVisible(true);
 //	}
 	
+	
+	
 	public void connectProzessor(IProzessor prozessor){
 		this.prozessor = prozessor;
 	}
 	
 	public GUI() {
+		
 		
 		
 		//Erstellen einer Menüleiste
@@ -128,16 +131,16 @@ public class GUI extends JFrame implements IGUI{
 		JPanel RegisterPanel = new JPanel();
 		RegisterPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagConstraints gbc_RegisterPanel = new GridBagConstraints();
+		gbc_RegisterPanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_RegisterPanel.gridwidth = 2;
 		gbc_RegisterPanel.gridheight = 2;
 		gbc_RegisterPanel.anchor = GridBagConstraints.NORTH;
-		gbc_RegisterPanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_RegisterPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_RegisterPanel.gridx = 2;
 		gbc_RegisterPanel.gridy = 1;
 		getContentPane().add(RegisterPanel, gbc_RegisterPanel);
 		GridBagLayout gbl_RegisterPanel = new GridBagLayout();
-		gbl_RegisterPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_RegisterPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 24, 0, 0};
 		gbl_RegisterPanel.rowHeights = new int[]{0, 43, 43, 38, 0};
 		gbl_RegisterPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_RegisterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -154,13 +157,14 @@ public class GUI extends JFrame implements IGUI{
 		JScrollPane RegAPanel = new JScrollPane();
 		GridBagConstraints gbc_RegAPanel = new GridBagConstraints();
 		gbc_RegAPanel.fill = GridBagConstraints.BOTH;
-		gbc_RegAPanel.gridwidth = 6;
+		gbc_RegAPanel.gridwidth = 5;
 		gbc_RegAPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_RegAPanel.gridx = 1;
 		gbc_RegAPanel.gridy = 1;
 		RegisterPanel.add(RegAPanel, gbc_RegAPanel);
 		
 		RegATab = new JTable();
+		RegATab.setEnabled(false);
 		RegATab.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null, null, null},
@@ -171,27 +175,36 @@ public class GUI extends JFrame implements IGUI{
 		));
 		RegATab.getColumnModel().getColumn(0).setPreferredWidth(20);
 		RegATab.getColumnModel().getColumn(0).setMinWidth(20);
+		RegATab.getColumnModel().getColumn(0).setMaxWidth(20);
 		RegATab.getColumnModel().getColumn(1).setPreferredWidth(20);
 		RegATab.getColumnModel().getColumn(1).setMinWidth(20);
+		RegATab.getColumnModel().getColumn(1).setMaxWidth(20);
 		RegATab.getColumnModel().getColumn(2).setPreferredWidth(20);
 		RegATab.getColumnModel().getColumn(2).setMinWidth(20);
+		RegATab.getColumnModel().getColumn(2).setMaxWidth(20);
 		RegATab.getColumnModel().getColumn(3).setPreferredWidth(20);
 		RegATab.getColumnModel().getColumn(3).setMinWidth(20);
+		RegATab.getColumnModel().getColumn(3).setMaxWidth(20);
 		RegATab.getColumnModel().getColumn(4).setPreferredWidth(20);
 		RegATab.getColumnModel().getColumn(4).setMinWidth(20);
+		RegATab.getColumnModel().getColumn(4).setMaxWidth(20);
 		RegATab.getColumnModel().getColumn(5).setPreferredWidth(20);
 		RegATab.getColumnModel().getColumn(5).setMinWidth(20);
+		RegATab.getColumnModel().getColumn(5).setMaxWidth(20);
 		RegATab.getColumnModel().getColumn(6).setPreferredWidth(20);
 		RegATab.getColumnModel().getColumn(6).setMinWidth(20);
+		RegATab.getColumnModel().getColumn(6).setMaxWidth(20);
 		RegATab.getColumnModel().getColumn(7).setPreferredWidth(20);
 		RegATab.getColumnModel().getColumn(7).setMinWidth(20);
+		RegATab.getColumnModel().getColumn(7).setMaxWidth(20);
 		RegATab.getColumnModel().getColumn(8).setPreferredWidth(20);
 		RegATab.getColumnModel().getColumn(8).setMinWidth(20);
+		RegATab.getColumnModel().getColumn(8).setMaxWidth(20);
 		RegAPanel.setViewportView(RegATab);
 		
 		JScrollPane RegBPanel = new JScrollPane();
 		GridBagConstraints gbc_RegBPanel = new GridBagConstraints();
-		gbc_RegBPanel.gridwidth = 6;
+		gbc_RegBPanel.gridwidth = 5;
 		gbc_RegBPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_RegBPanel.fill = GridBagConstraints.BOTH;
 		gbc_RegBPanel.gridx = 1;
@@ -199,44 +212,8 @@ public class GUI extends JFrame implements IGUI{
 		RegisterPanel.add(RegBPanel, gbc_RegBPanel);
 		
 		RegBTab = new JTable();
+		RegBTab.setEnabled(false);
 		RegBTab.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"RC", "7", "6", "5", "4", "3", "2", "1", "0"
-			}
-		));
-		RegBTab.getColumnModel().getColumn(0).setPreferredWidth(20);
-		RegBTab.getColumnModel().getColumn(0).setMinWidth(20);
-		RegBTab.getColumnModel().getColumn(1).setPreferredWidth(20);
-		RegBTab.getColumnModel().getColumn(1).setMinWidth(20);
-		RegBTab.getColumnModel().getColumn(2).setPreferredWidth(20);
-		RegBTab.getColumnModel().getColumn(2).setMinWidth(20);
-		RegBTab.getColumnModel().getColumn(3).setPreferredWidth(20);
-		RegBTab.getColumnModel().getColumn(3).setMinWidth(20);
-		RegBTab.getColumnModel().getColumn(4).setPreferredWidth(20);
-		RegBTab.getColumnModel().getColumn(4).setMinWidth(20);
-		RegBTab.getColumnModel().getColumn(5).setPreferredWidth(20);
-		RegBTab.getColumnModel().getColumn(5).setMinWidth(20);
-		RegBTab.getColumnModel().getColumn(6).setPreferredWidth(20);
-		RegBTab.getColumnModel().getColumn(6).setMinWidth(20);
-		RegBTab.getColumnModel().getColumn(7).setPreferredWidth(20);
-		RegBTab.getColumnModel().getColumn(7).setMinWidth(20);
-		RegBTab.getColumnModel().getColumn(8).setPreferredWidth(20);
-		RegBTab.getColumnModel().getColumn(8).setMinWidth(20);
-		RegBPanel.setViewportView(RegBTab);
-		
-		JScrollPane RegCPanel = new JScrollPane();
-		GridBagConstraints gbc_RegCPanel = new GridBagConstraints();
-		gbc_RegCPanel.gridwidth = 6;
-		gbc_RegCPanel.fill = GridBagConstraints.BOTH;
-		gbc_RegCPanel.gridx = 1;
-		gbc_RegCPanel.gridy = 3;
-		RegisterPanel.add(RegCPanel, gbc_RegCPanel);
-		
-		RegCTab = new JTable();
-		RegCTab.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null, null, null},
 			},
@@ -244,24 +221,80 @@ public class GUI extends JFrame implements IGUI{
 				"RB", "7", "6", "5", "4", "3", "2", "1", "0"
 			}
 		));
+		RegBTab.getColumnModel().getColumn(0).setPreferredWidth(20);
+		RegBTab.getColumnModel().getColumn(0).setMinWidth(20);
+		RegBTab.getColumnModel().getColumn(0).setMaxWidth(20);
+		RegBTab.getColumnModel().getColumn(1).setPreferredWidth(20);
+		RegBTab.getColumnModel().getColumn(1).setMinWidth(20);
+		RegBTab.getColumnModel().getColumn(1).setMaxWidth(20);
+		RegBTab.getColumnModel().getColumn(2).setPreferredWidth(20);
+		RegBTab.getColumnModel().getColumn(2).setMinWidth(20);
+		RegBTab.getColumnModel().getColumn(2).setMaxWidth(20);
+		RegBTab.getColumnModel().getColumn(3).setPreferredWidth(20);
+		RegBTab.getColumnModel().getColumn(3).setMinWidth(20);
+		RegBTab.getColumnModel().getColumn(3).setMaxWidth(20);
+		RegBTab.getColumnModel().getColumn(4).setPreferredWidth(20);
+		RegBTab.getColumnModel().getColumn(4).setMinWidth(20);
+		RegBTab.getColumnModel().getColumn(4).setMaxWidth(20);
+		RegBTab.getColumnModel().getColumn(5).setPreferredWidth(20);
+		RegBTab.getColumnModel().getColumn(5).setMinWidth(20);
+		RegBTab.getColumnModel().getColumn(5).setMaxWidth(20);
+		RegBTab.getColumnModel().getColumn(6).setPreferredWidth(20);
+		RegBTab.getColumnModel().getColumn(6).setMinWidth(20);
+		RegBTab.getColumnModel().getColumn(6).setMaxWidth(20);
+		RegBTab.getColumnModel().getColumn(7).setPreferredWidth(20);
+		RegBTab.getColumnModel().getColumn(7).setMinWidth(20);
+		RegBTab.getColumnModel().getColumn(7).setMaxWidth(20);
+		RegBTab.getColumnModel().getColumn(8).setPreferredWidth(20);
+		RegBTab.getColumnModel().getColumn(8).setMinWidth(20);
+		RegBTab.getColumnModel().getColumn(8).setMaxWidth(20);
+		RegBPanel.setViewportView(RegBTab);
+		
+		JScrollPane RegCPanel = new JScrollPane();
+		GridBagConstraints gbc_RegCPanel = new GridBagConstraints();
+		gbc_RegCPanel.gridwidth = 5;
+		gbc_RegCPanel.fill = GridBagConstraints.BOTH;
+		gbc_RegCPanel.gridx = 1;
+		gbc_RegCPanel.gridy = 3;
+		RegisterPanel.add(RegCPanel, gbc_RegCPanel);
+		
+		RegCTab = new JTable();
+		RegCTab.setEnabled(false);
+		RegCTab.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"RC", "7", "6", "5", "4", "3", "2", "1", "0"
+			}
+		));
 		RegCTab.getColumnModel().getColumn(0).setPreferredWidth(20);
 		RegCTab.getColumnModel().getColumn(0).setMinWidth(20);
+		RegCTab.getColumnModel().getColumn(0).setMaxWidth(20);
 		RegCTab.getColumnModel().getColumn(1).setPreferredWidth(20);
 		RegCTab.getColumnModel().getColumn(1).setMinWidth(20);
+		RegCTab.getColumnModel().getColumn(1).setMaxWidth(20);
 		RegCTab.getColumnModel().getColumn(2).setPreferredWidth(20);
 		RegCTab.getColumnModel().getColumn(2).setMinWidth(20);
+		RegCTab.getColumnModel().getColumn(2).setMaxWidth(20);
 		RegCTab.getColumnModel().getColumn(3).setPreferredWidth(20);
 		RegCTab.getColumnModel().getColumn(3).setMinWidth(20);
+		RegCTab.getColumnModel().getColumn(3).setMaxWidth(20);
 		RegCTab.getColumnModel().getColumn(4).setPreferredWidth(20);
 		RegCTab.getColumnModel().getColumn(4).setMinWidth(20);
+		RegCTab.getColumnModel().getColumn(4).setMaxWidth(20);
 		RegCTab.getColumnModel().getColumn(5).setPreferredWidth(20);
 		RegCTab.getColumnModel().getColumn(5).setMinWidth(20);
+		RegCTab.getColumnModel().getColumn(5).setMaxWidth(20);
 		RegCTab.getColumnModel().getColumn(6).setPreferredWidth(20);
 		RegCTab.getColumnModel().getColumn(6).setMinWidth(20);
+		RegCTab.getColumnModel().getColumn(6).setMaxWidth(20);
 		RegCTab.getColumnModel().getColumn(7).setPreferredWidth(20);
 		RegCTab.getColumnModel().getColumn(7).setMinWidth(20);
+		RegCTab.getColumnModel().getColumn(7).setMaxWidth(20);
 		RegCTab.getColumnModel().getColumn(8).setPreferredWidth(20);
 		RegCTab.getColumnModel().getColumn(8).setMinWidth(20);
+		RegCTab.getColumnModel().getColumn(8).setMaxWidth(20);
 		RegCPanel.setViewportView(RegCTab);
 		
 		JPanel PlatzhalterRegSp = new JPanel();
@@ -291,8 +324,7 @@ public class GUI extends JFrame implements IGUI{
 		SpeicherPanel.add(SpeicherScrPanel, BorderLayout.CENTER);
 		
 		SpeicherTab = new JTable();
-		SpeicherTab.setColumnSelectionAllowed(true);
-		SpeicherTab.setCellSelectionEnabled(true);
+		SpeicherTab.setEnabled(false);
 		SpeicherTab.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"00", null, null, null, null, null, null, null, null},
@@ -334,22 +366,31 @@ public class GUI extends JFrame implements IGUI{
 		));
 		SpeicherTab.getColumnModel().getColumn(0).setPreferredWidth(30);
 		SpeicherTab.getColumnModel().getColumn(0).setMinWidth(30);
+		SpeicherTab.getColumnModel().getColumn(0).setMaxWidth(30);
 		SpeicherTab.getColumnModel().getColumn(1).setPreferredWidth(30);
 		SpeicherTab.getColumnModel().getColumn(1).setMinWidth(30);
+		SpeicherTab.getColumnModel().getColumn(1).setMaxWidth(30);
 		SpeicherTab.getColumnModel().getColumn(2).setPreferredWidth(30);
 		SpeicherTab.getColumnModel().getColumn(2).setMinWidth(30);
+		SpeicherTab.getColumnModel().getColumn(2).setMaxWidth(30);
 		SpeicherTab.getColumnModel().getColumn(3).setPreferredWidth(30);
 		SpeicherTab.getColumnModel().getColumn(3).setMinWidth(30);
+		SpeicherTab.getColumnModel().getColumn(3).setMaxWidth(30);
 		SpeicherTab.getColumnModel().getColumn(4).setPreferredWidth(30);
 		SpeicherTab.getColumnModel().getColumn(4).setMinWidth(30);
+		SpeicherTab.getColumnModel().getColumn(4).setMaxWidth(30);
 		SpeicherTab.getColumnModel().getColumn(5).setPreferredWidth(30);
 		SpeicherTab.getColumnModel().getColumn(5).setMinWidth(30);
+		SpeicherTab.getColumnModel().getColumn(5).setMaxWidth(30);
 		SpeicherTab.getColumnModel().getColumn(6).setPreferredWidth(30);
 		SpeicherTab.getColumnModel().getColumn(6).setMinWidth(30);
+		SpeicherTab.getColumnModel().getColumn(6).setMaxWidth(30);
 		SpeicherTab.getColumnModel().getColumn(7).setPreferredWidth(30);
 		SpeicherTab.getColumnModel().getColumn(7).setMinWidth(30);
+		SpeicherTab.getColumnModel().getColumn(7).setMaxWidth(30);
 		SpeicherTab.getColumnModel().getColumn(8).setPreferredWidth(30);
 		SpeicherTab.getColumnModel().getColumn(8).setMinWidth(30);
+		SpeicherTab.getColumnModel().getColumn(8).setMaxWidth(30);
 		SpeicherScrPanel.setViewportView(SpeicherTab);
 		
 		JPanel PlatzhalterSpSch = new JPanel();
@@ -740,6 +781,14 @@ public class GUI extends JFrame implements IGUI{
 
 		
 		Text_inp.setRowSelectionInterval(fokus, fokus);
+		
+		Text_inp.getTableHeader().setReorderingAllowed(false);
+		RegATab.getTableHeader().setReorderingAllowed(false);
+		RegBTab.getTableHeader().setReorderingAllowed(false);
+		RegCTab.getTableHeader().setReorderingAllowed(false);
+		SpeicherTab.getTableHeader().setReorderingAllowed(false);
+		
+	
 		
 	}
 	

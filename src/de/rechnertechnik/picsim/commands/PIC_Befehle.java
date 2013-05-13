@@ -29,6 +29,54 @@ public class PIC_Befehle {
 	}
 
 	/**
+	 * CLRF 00 0001 1fff ffff
+	 * 
+	 * @param befehl
+	 * @param cpu
+	 */
+	
+	public static void asm_clrf(Integer befehl, Prozessor cpu){
+		
+		Speicherzelle status = cpu.getStatus();
+		
+		Integer f = getOpcodeFromToBit(befehl, 0, 7);
+		try {
+			cpu.getRam().getZelle(f).setWert(0);
+		} catch (MemoryOutOfRangeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		status.setBit(bits.Z);
+		cpu.incPC();
+	}
+	
+	/**
+	 * ANDWF 00 0101 dfff ffff
+	 * 
+	 * @param befehl
+	 * @param cpu
+	 */
+	public static void asm_andwf(Integer befehl, Prozessor cpu) {
+		Integer w = cpu.getW().getWert();
+		Integer f = getOpcodeFromToBit(befehl, 0, 7);
+		Integer erg = w & f;
+		
+		if(getOpcodeFromToBit(befehl, 8, 8) == 1){			
+			try {
+				cpu.getRam().getZelle(f).setWert(erg);
+			} catch (MemoryOutOfRangeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {			
+			cpu.getW().setWert(erg);
+		}
+			
+		
+	}
+	
+	/**
 	 * BSF 01 01bb bfff ffff
 	 * 
 	 * @param befehl
@@ -66,15 +114,13 @@ public class PIC_Befehle {
 		cpu.getW().setWert(0);
 		Speicherzelle status = cpu.getStatus();
 
-		PIC_Logger.logger.info("Status before: "
-				+ Integer.toHexString(cpu.getStatus().getValue()));
-
+		PIC_Logger.logger.info("Status before: "+Integer.toHexString(cpu.getStatus().getValue()));
+		
 		// Zero Flag
 		// status.setWert(status.getValue() | (int) Math.pow(2, 2));
 		status.setBit(bits.Z);
-
-		PIC_Logger.logger.info("Status after: "
-				+ Integer.toHexString(cpu.getStatus().getValue()));
+		
+		PIC_Logger.logger.info("Status after: "+Integer.toHexString(cpu.getStatus().getValue()));
 
 		cpu.incPC();
 
@@ -220,7 +266,8 @@ public class PIC_Befehle {
 	 */
 	public static void asm_addwf(Integer akt_Befehl, Prozessor cpu) {
 	}
-
+		
+		
 	/**
 	 * 
 	 * XORLW
