@@ -86,7 +86,7 @@ public class Prozessor implements Runnable, IProzessor {
 			//ADDWF
 			else if(isIntegerCommand(ECommands.ADDWF, akt_Befehl)) {
 				System.out.println("ADDWF");
-				PIC_Logger.logger.info("ADDWF");
+				
 			}
 
 			else if(isIntegerCommand(ECommands.ANDWF, akt_Befehl)) {

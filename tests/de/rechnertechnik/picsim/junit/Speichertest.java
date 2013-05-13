@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import de.rechnertechnik.picsim.prozessor.MemoryOutOfRangeException;
 import de.rechnertechnik.picsim.prozessor.Speicher;
+import de.rechnertechnik.picsim.prozessor.Speicherzelle;
+import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
 
 public class Speichertest {
 
@@ -70,20 +72,24 @@ public class Speichertest {
 		
 
 	}
-
+	
 	@Test
-	public void testSpeicher() {
-		fail("Not yet implemented");
+	public void testSetBit() throws MemoryOutOfRangeException{
+		Speicherzelle zelle = new Speicherzelle(0xFF);
+		zelle.clearBit(0);
+		assertEquals((int)0xFE, (int)zelle.getValue());
+		zelle.clearBit(7);
+		assertEquals((int)0x7E, (int)zelle.getValue());
+		zelle.clearBit(1);
+		assertEquals((int)0x7C, (int)zelle.getValue());
+		
+		zelle.setWert(0xff);
+		zelle.clearBit(bits.Z);
+		assertEquals((int)0xFB,(int)zelle.getValue());
+		zelle.setBit(bits.Z);
+		assertEquals((int)0xFF,(int)zelle.getValue());
+		
 	}
 
-	@Test
-	public void testSetZelle() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetZelle() {
-		fail("Not yet implemented");
-	}
 
 }

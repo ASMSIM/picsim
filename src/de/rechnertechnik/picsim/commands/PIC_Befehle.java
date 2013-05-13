@@ -4,6 +4,7 @@ import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.prozessor.MemoryOutOfRangeException;
 import de.rechnertechnik.picsim.prozessor.Prozessor;
 import de.rechnertechnik.picsim.prozessor.Speicherzelle;
+import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
 import de.rechnertechnik.picsim.stringhex.StringHex;
 
 public class PIC_Befehle {
@@ -64,14 +65,13 @@ public class PIC_Befehle {
 		cpu.getW().setWert(0);
 		Speicherzelle status = cpu.getStatus();
 
-		try {
-			
-			// Zero Flag
-			status.setWert(status.getValue() | (int) Math.pow(2, 2));
-		}
-		catch(MemoryOutOfRangeException e) {
-			e.printStackTrace();
-		}
+		PIC_Logger.logger.info("Status before: "+Integer.toHexString(cpu.getStatus().getValue()));
+		
+		// Zero Flag
+		// status.setWert(status.getValue() | (int) Math.pow(2, 2));
+		status.setBit(bits.Z);
+		
+		PIC_Logger.logger.info("Status after: "+Integer.toHexString(cpu.getStatus().getValue()));
 
 		cpu.incPC();
 
@@ -180,37 +180,34 @@ public class PIC_Befehle {
 		return k;
 	}
 
-	
 	/*
 	 * CALL Befehl
 	 * 
 	 * 10 0kkk kkkk kkkk
-	 * 
 	 */
 	public static void asm_call(Integer akt_Befehl, Prozessor cpu) {
-		
-		//Extrahiere K
+
+		// Extrahiere K
 		Integer k = getOpcodeFromToBit(akt_Befehl, 0, 10);
-		
-		//Push PC + 1 auf Stack
+
+		// Push PC + 1 auf Stack
 		Integer pc_inc = cpu.getPc().getValue() + 1;
 		cpu.getStack().push(pc_inc);
-		
-		//PC auf K Wert setzen
+
+		// PC auf K Wert setzen
 		try {
 			cpu.getPc().setWert(k);
 		}
 		catch(MemoryOutOfRangeException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	
 	/**
 	 * ADDWF Befehl
 	 * 
-	 * 	00 0111 dfff ffff
+	 * 00 0111 dfff ffff
 	 * 
 	 * Status: C, DC, Z
 	 * 
@@ -219,7 +216,7 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_addwf(Integer akt_Befehl, Prozessor cpu) {
-		
+
 	}
 
 }
