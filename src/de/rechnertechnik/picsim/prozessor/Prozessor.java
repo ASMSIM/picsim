@@ -197,11 +197,13 @@ public class Prozessor implements Runnable, IProzessor {
 			}
 
 			else if(isIntegerCommand(ECommands.CLRWDT, akt_Befehl)) {
-				System.out.println("CLRWDT");
+				System.out.println("CLRWDT: TODO");
+				PIC_Befehle.asm_clrwdt(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.IORLW, akt_Befehl)) {
 				System.out.println("IORLW");
+				PIC_Befehle.asm_iorlw(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.MOVLW, akt_Befehl)) {
@@ -210,19 +212,22 @@ public class Prozessor implements Runnable, IProzessor {
 			}
 
 			else if(isIntegerCommand(ECommands.RETFIE, akt_Befehl)) {
-				System.out.println("RETFIE");
+				System.out.println("RETFIE: TODO");
 			}
 
 			else if(isIntegerCommand(ECommands.RETLW, akt_Befehl)) {
 				System.out.println("RETLW");
+				PIC_Befehle.asm_retlw(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.RETURN, akt_Befehl)) {
 				System.out.println("RETURN");
+				PIC_Befehle.asm_return(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.SLEEP, akt_Befehl)) {
-				System.out.println("SLEEP");
+				System.out.println("SLEEP: TODO");
+				PIC_Befehle.asm_sleep(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.SUBLW, akt_Befehl)) {

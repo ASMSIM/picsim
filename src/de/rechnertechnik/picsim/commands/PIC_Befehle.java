@@ -300,7 +300,7 @@ public class PIC_Befehle {
 		// Check Zero Flag, setZero
 		if(w.getWert() == 0) {
 			PIC_Logger.logger.info("[XORLW]: SetZeroflag");
-			cpu.getStatus().setBit(bits.Z);
+			checkZero(cpu);
 		}
 
 		// PC++
@@ -344,17 +344,141 @@ public class PIC_Befehle {
 	private static void setStatus(SpecialFunctionRegister w, Prozessor cpu) {
 		if(w.getWert() > 255) {
 			// Ueberlauf abfangen
-			w.setWert(w.getWert() - 256);
-			cpu.getStatus().setBit(bits.C);
+			checkC(w, cpu);
 		}
 		else if(w.getWert() < 0) {
 			// Ueberlauf abfangen
-			w.setWert(w.getWert() + 256);
-			cpu.getStatus().setBit(bits.DC);
+			checkDC(w, cpu);
 		}
 		else if(w.getWert() == 0) {
-			cpu.getStatus().setBit(bits.Z);
+			checkZero(cpu);
 		}
+	}
+
+	/**
+	 * Check W and set Zero bit
+	 * @param cpu
+	 */
+	private static void checkZero(Prozessor cpu) {
+		cpu.getStatus().setBit(bits.Z);
+	}
+
+	/**
+	 * Check w and set DC bit
+	 * @param w
+	 * @param cpu
+	 */
+	private static void checkDC(SpecialFunctionRegister w, Prozessor cpu) {
+		// Ueberlauf abfangen
+		w.setWert(w.getWert() + 256);
+		cpu.getStatus().setBit(bits.DC);
+	}
+
+	/**
+	 * Check W and set C Bit
+	 * @param w
+	 * @param cpu
+	 */
+	private static void checkC(SpecialFunctionRegister w, Prozessor cpu) {
+		
+		w.setWert(w.getWert() - 256);
+		cpu.getStatus().setBit(bits.C);
+	}
+
+	
+	
+	
+	
+	/**
+	 * SLEEP
+	 * 
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_sleep(Integer akt_Befehl, Prozessor cpu) {
+		//TODO implement
+		cpu.incPC();
+	}
+
+	/**
+	 * RETURN
+	 * 
+	 * @param akt_Befehl
+	 * @param cpu
+	 */
+	public static void asm_return(Integer akt_Befehl, Prozessor cpu) {
+		
+		//Hole PC
+		Speicherzelle pc = cpu.getPc();
+		
+		try {
+			pc.setWert(cpu.getStack().pop());
+		}
+		catch(MemoryOutOfRangeException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * RETLW
+	 * 
+	 * 11 01xx kkkk kkkk
+	 * 
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_retlw(Integer akt_Befehl, Prozessor cpu) {
+		
+		// Extrahiere K
+		Integer k = getOpcodeFromToBit(akt_Befehl, 0, 7);
+		
+		//Hole W
+		SpecialFunctionRegister w = cpu.getW();
+		
+		//K in W
+		w.setWert(k);
+		
+		//Normaler Return
+		asm_return(akt_Befehl, cpu);
+	}
+
+	/**
+	 * IORLW
+	 * 
+	 * 11 1000 kkkk kkkk
+	 * 
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_iorlw(Integer akt_Befehl, Prozessor cpu) {
+
+		// Extrahiere K
+		Integer k = getOpcodeFromToBit(akt_Befehl, 0, 7);
+		
+		//Hole W
+		SpecialFunctionRegister w = cpu.getW();
+		
+		//OR
+		w.setWert(w.getWert() | k);
+		
+		//Zero bit
+		checkZero(cpu);
+		
+		//PC++
+		cpu.incPC();
+		
+	}
+
+	
+	/**
+	 * CLRWDT
+	 * 
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_clrwdt(Integer akt_Befehl, Prozessor cpu) {
+		//TODO NOT IMPLEMENTED
+		cpu.incPC();
 	}
 
 }
