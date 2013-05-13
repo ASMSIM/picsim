@@ -161,10 +161,12 @@ public class Prozessor implements Runnable, IProzessor {
 
 			else if(isIntegerCommand(ECommands.SWAPF, akt_Befehl)) {
 				System.out.println("SWAPF");
+				PIC_Befehle.asm_swapf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.XORWF, akt_Befehl)) {
 				System.out.println("XORWF");
+				PIC_Befehle.asm_xorwf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.BCF, akt_Befehl)) {
@@ -179,6 +181,8 @@ public class Prozessor implements Runnable, IProzessor {
 
 			else if(isIntegerCommand(ECommands.BTFSC, akt_Befehl)) {
 				System.out.println("BTFSC");
+				PIC_Befehle.asm_btfsc(akt_Befehl, this);
+				
 			}
 
 			else if(isIntegerCommand(ECommands.BTFSS, akt_Befehl)) {

@@ -19,9 +19,11 @@ import de.rechnertechnik.picsim.gui.GUI;
 import de.rechnertechnik.picsim.gui.IProzessor;
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.parser.Parser;
+import de.rechnertechnik.picsim.prozessor.MemoryOutOfRangeException;
 import de.rechnertechnik.picsim.prozessor.Programmspeicher;
 import de.rechnertechnik.picsim.prozessor.Prozessor;
 import de.rechnertechnik.picsim.prozessor.Speicher;
+import de.rechnertechnik.picsim.prozessor.Speicherzelle;
 
 public class PIC_Befehlstest {
 
@@ -30,18 +32,18 @@ public class PIC_Befehlstest {
 	private static BefehlAdressraumZuordnung commandTable;
 	private static Programmspeicher programmSpeicher;
 	private static Speicher ram;
-	
+	private static PIC_Logger logger;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		
 
 		System.out.println("#############################");
-		System.out.println("######## PICSIMULATOR #######");
+		System.out.println("######## PICTESTCASE #######");
 		System.out.println("#############################");
 
 		// Init
 		GUI gui = new GUI();
-		PIC_Logger.initLogger();
+		PIC_Logger.initLogger("testlog.txt");
 		commandTable = new BefehlAdressraumZuordnung();
 		parser = new Parser("res/BA_Test.LST"); // TODO mit GUI öffnen
 												// verknüpfen
@@ -107,8 +109,35 @@ public class PIC_Befehlstest {
 	}
 
 	@Test
-	public void asm_xorlw() {
-//		PIC_Befehle.asm_xorlw(0x, cpu)
+	public void asm_swapf() {
+		
+		//Akkutest
+		Speicherzelle zelle = ram.getZelle(0);
+		try {
+			zelle.setWert(0x1F);
+		}
+		catch(MemoryOutOfRangeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		PIC_Befehle.asm_swapf(0x0600, prozessor);
+		assertEquals(0xF1, (int)prozessor.getW().getWert());
+		
+		
+		//Registertest
+		zelle = ram.getZelle(0);
+		try {
+			zelle.setWert(0x1F);
+		}
+		catch(MemoryOutOfRangeException e) {
+			e.printStackTrace();
+		}
+		
+		PIC_Befehle.asm_swapf(0x0680, prozessor);
+		assertEquals(0xF1, (int)zelle.getValue());
+		
+		
 	}
 	
 

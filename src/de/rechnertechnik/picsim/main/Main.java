@@ -26,9 +26,6 @@ public class Main {
 	public static void main(String[] args) {
 
 		
-		Integer test = new Integer(0);
-		test -=4;
-		System.out.println(test);
 		
 		System.out.println("#############################");
 		System.out.println("######## PICSIMULATOR #######");
