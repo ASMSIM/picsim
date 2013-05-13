@@ -116,26 +116,38 @@ public class Prozessor implements Runnable, IProzessor {
 
 			else if(isIntegerCommand(ECommands.DECF, akt_Befehl)) {
 				System.out.println("DECF");
+				PIC_Logger.logger.info("-> DECF");
+				PIC_Befehle.asm_decf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.DECFSZ, akt_Befehl)) {
 				System.out.println("DECFSZ");
+				PIC_Logger.logger.info("-> DECFSZ");
+				PIC_Befehle.asm_decfsz(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.INCF, akt_Befehl)) {
 				System.out.println("INCF");
+				PIC_Logger.logger.info("-> INCF");
+				PIC_Befehle.asm_incf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.INCFSZ, akt_Befehl)) {
 				System.out.println("INCFSZ");
+				PIC_Logger.logger.info("-> INCFSZ");
+				PIC_Befehle.asm_incfsz(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.IORWF, akt_Befehl)) {
 				System.out.println("IORWF");
+				PIC_Logger.logger.info("-> IORWF");
+				PIC_Befehle.asm_iorwf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.MOVF, akt_Befehl)) {
 				System.out.println("MOVF");
+				PIC_Logger.logger.info("-> MOVF");
+				PIC_Befehle.asm_movf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.MOVWF, akt_Befehl)) {
@@ -145,10 +157,14 @@ public class Prozessor implements Runnable, IProzessor {
 
 			else if(isIntegerCommand(ECommands.NOP, akt_Befehl)) {
 				System.out.println("NOP");
+				PIC_Logger.logger.info("-> NOP");
+				PIC_Befehle.asm_nop(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.RLF, akt_Befehl)) {
 				System.out.println("RLF");
+				PIC_Logger.logger.info("-> RLF");
+				PIC_Befehle.asm_rlf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.RRF, akt_Befehl)) {

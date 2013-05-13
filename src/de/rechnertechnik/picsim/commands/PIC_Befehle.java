@@ -61,7 +61,7 @@ public class PIC_Befehle {
 	public static void asm_andwf(Integer befehl, Prozessor cpu) {
 		Integer w = cpu.getW().getWert();
 		Integer f = getOpcodeFromToBit(befehl, 0, 7);
-		Integer erg = w & f;
+		Integer erg = w & cpu.getRam().getZelle(f).getValue();
 
 		if(getOpcodeFromToBit(befehl, 8, 8) == 1) {
 			try {
@@ -272,32 +272,32 @@ public class PIC_Befehle {
 	 */
 	public static void asm_addwf(Integer akt_Befehl, Prozessor cpu) {
 
-		// Komponenten auslesen
-		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7);
-		SpecialFunctionRegister w = cpu.getW();
-		Integer result = f + w.getWert();
+		
 
-		// Speicherort abfragen
-		if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1) {
-			try {
-				// in f Register speichern
-				cpu.getRam().getZelle(f).setWert(result);
-			}
-			catch(MemoryOutOfRangeException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else {
-			// in w Register speichern
-			cpu.getW().setWert(result);
-		}
-
-		// Status setzen DC, Z, C
-		setStatus(w, cpu);
-
-		// PC ++
-		cpu.incPC();
+				//Komponenten auslesen
+				Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7);
+				SpecialFunctionRegister w = cpu.getW();
+				Integer result = cpu.getRam().getZelle(f).getValue() + w.getWert();
+				
+				//Speicherort abfragen
+				if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1){			
+					try {
+						//in f Register speichern
+						cpu.getRam().getZelle(f).setWert(result);
+					} catch (MemoryOutOfRangeException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					//in w Register speichern
+					cpu.getW().setWert(result);
+				}
+				
+				// Status setzen DC, Z, C
+				setStatus(w, cpu);
+				
+				//PC ++
+				cpu.incPC();
 	}
 
 	/**
@@ -309,27 +309,224 @@ public class PIC_Befehle {
 	 */
 	public static void asm_comf(Integer akt_Befehl, Prozessor cpu) {
 
-		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7);
-		Integer result = 255 - f;
+		
 
-		// Speicherort abfragen
-		if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1) {
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7);
+		Integer result = 255 - cpu.getRam().getZelle(f).getValue();
+		
+		//Speicherort abfragen
+		if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1){			
 			try {
-				// in f Register speichern
+				//in f Register speichern
 				cpu.getRam().getZelle(f).setWert(result);
-			}
-			catch(MemoryOutOfRangeException e) {
+				checkZero(cpu,cpu.getRam().getZelle(f));
+			} catch (MemoryOutOfRangeException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		else {
-			// in w Register speichern
+		} else {
+			//in w Register speichern
 			cpu.getW().setWert(result);
+			checkZero(cpu, cpu.getW());
 		}
+		
+		
 		cpu.incPC();
 	}
 
+	
+	
+	/**
+	 * 
+	 * DECF 00 0011 dfff ffff
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_decf(Integer akt_Befehl, Prozessor cpu) {
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7); 
+		Integer result = cpu.getRam().getZelle(f).getValue() -1;
+		
+		//Speicherort abfragen
+				if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1){			
+					try {
+						//in f Register speichern
+						cpu.getRam().getZelle(f).setWert(result);
+						checkZero(cpu,cpu.getRam().getZelle(f));
+					} catch (MemoryOutOfRangeException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					//in w Register speichern
+					cpu.getW().setWert(result);
+					checkZero(cpu,cpu.getW());
+				}
+				
+				
+				cpu.incPC();
+	}
+
+	/**
+	 * 
+	 * DECFSZ 00 1011 dfff ffff
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_decfsz(Integer akt_Befehl, Prozessor cpu) {
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7); //zum speichern
+		
+		Integer result = cpu.getRam().getZelle(f).getValue() -1;
+		
+		//Speicherort abfragen
+				if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1){			
+					try {
+						//in f Register speichern
+						cpu.getRam().getZelle(f).setWert(result);
+						checkZero(cpu,cpu.getRam().getZelle(f));
+					} catch (MemoryOutOfRangeException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					//in w Register speichern
+					cpu.getW().setWert(result);
+					checkZero(cpu,cpu.getW());
+				}
+				
+				if(result >= 1){
+					cpu.incPC();
+				} else if(result == 0) {
+					cpu.incPC();
+					cpu.incPC();
+				}
+	}
+		
+	/**
+	 * 
+	 * INCF
+	 * 00 1010 dfff ffff
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_incf(Integer akt_Befehl, Prozessor cpu) {
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7); 
+	
+		Integer result = cpu.getRam().getZelle(f).getValue() +1;
+		
+		//Speicherort abfragen
+				if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1){			
+					try {
+						//in f Register speichern
+						cpu.getRam().getZelle(f).setWert(result);
+						checkZero(cpu, cpu.getRam().getZelle(f));
+					} catch (MemoryOutOfRangeException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					//in w Register speichern
+					cpu.getW().setWert(result);
+					checkZero(cpu,cpu.getW());
+				}
+				
+			
+				cpu.incPC();
+	}
+	/**
+	 * 
+	 * INCFSZ 00 1011 dfff ffff
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_incfsz(Integer akt_Befehl, Prozessor cpu) {
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7); //zum speichern
+	
+		Integer result = cpu.getRam().getZelle(f).getValue() +1;
+		
+		//Speicherort abfragen
+				if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1){			
+					try {
+						//in f Register speichern
+						cpu.getRam().getZelle(f).setWert(result);
+						checkZero(cpu, cpu.getRam().getZelle(f));
+					} catch (MemoryOutOfRangeException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					//in w Register speichern
+					cpu.getW().setWert(result);
+					checkZero(cpu,cpu.getW());
+				}
+				
+				if(result >= 1){
+					cpu.incPC();
+				} else if(result == 0) {
+					cpu.incPC();
+					cpu.incPC();
+				}
+	}
+	/**
+	 * IORWF 00 0100 dfff ffff
+	 * 
+	 * @param befehl
+	 * @param cpu
+	 */
+	public static void asm_iorwf(Integer befehl, Prozessor cpu) {
+		Integer w = cpu.getW().getWert();
+		Integer f = getOpcodeFromToBit(befehl, 0, 7);
+		Integer erg = w | cpu.getRam().getZelle(f).getValue();
+		
+		if(getOpcodeFromToBit(befehl, 8, 8) == 1){			
+			try {
+				cpu.getRam().getZelle(f).setWert(erg);
+				checkZero(cpu, cpu.getRam().getZelle(f));
+			} catch (MemoryOutOfRangeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {			
+			cpu.getW().setWert(erg);
+			checkZero(cpu,cpu.getW());
+		}
+		cpu.incPC();
+	}
+	/**
+	 * MOVF 00 1000 dfff ffff
+	 * 
+	 * @param befehl
+	 * @param cpu
+	 */
+	public static void asm_movf(Integer befehl, Prozessor cpu) {
+		Integer w = cpu.getW().getWert();
+		Integer f = getOpcodeFromToBit(befehl, 0, 7);
+		
+		if(getOpcodeFromToBit(befehl, 8, 8) == 1){			
+			try {
+				cpu.getRam().getZelle(f).setWert(f);
+				checkZero(cpu, cpu.getRam().getZelle(f));
+			} catch (MemoryOutOfRangeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {			
+			cpu.getW().setWert(f);
+			checkZero(cpu,cpu.getW());
+		}
+		cpu.incPC();
+	}
+	
+
+	
+	/**
+	 * RLF 00 1101 dfff ffff
+	 * 
+	 * @param befehl
+	 * @param cpu
+	 */
+	public static void asm_rlf(Integer befehl, Prozessor cpu) {
+	
+	}
 	/**
 	 * 
 	 * XORLW
