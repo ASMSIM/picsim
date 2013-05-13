@@ -73,7 +73,7 @@ public class PIC_Befehle {
 			cpu.getW().setWert(erg);
 		}
 			
-		
+		cpu.incPC();
 	}
 	
 	/**
@@ -265,8 +265,60 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_addwf(Integer akt_Befehl, Prozessor cpu) {
-	}
 		
+				//Komponenten auslesen
+				Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7);
+				SpecialFunctionRegister w = cpu.getW();
+				Integer result = f + w.getWert();
+				
+				//Speicherort abfragen
+				if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1){			
+					try {
+						//in f Register speichern
+						cpu.getRam().getZelle(f).setWert(result);
+					} catch (MemoryOutOfRangeException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					//in w Register speichern
+					cpu.getW().setWert(result);
+				}
+				
+				// Status setzen DC, Z, C
+				setStatus(w, cpu);
+				
+				//PC ++
+				cpu.incPC();
+	}
+	
+	/**
+	 * 
+	 * COMF 00 1001 dfff ffff
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_comf(Integer akt_Befehl, Prozessor cpu) {
+		
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7);
+		Integer result = 255-f;
+		
+		//Speicherort abfragen
+		if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1){			
+			try {
+				//in f Register speichern
+				cpu.getRam().getZelle(f).setWert(result);
+			} catch (MemoryOutOfRangeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			//in w Register speichern
+			cpu.getW().setWert(result);
+		}
+		cpu.incPC();
+	}
+	
 		
 	/**
 	 * 
