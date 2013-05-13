@@ -84,7 +84,7 @@ public class PIC_Befehle {
 	 */
 	public static void asm_bsf(Integer befehl, Prozessor cpu) {
 		Integer bitNr = getOpcodeFromToBit(befehl, 7, 9);
-		bitNr = bitNr >> 7;
+	
 
 		Integer adresse = getOpcodeFromToBit(befehl, 0, 6);
 
@@ -133,8 +133,9 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_bcf(Integer befehl, Prozessor cpu) {
+		System.out.println("BCF!!!!!!");
 		Integer bitNr = getOpcodeFromToBit(befehl, 7, 9);
-		bitNr = bitNr >> 7;
+//		bitNr = bitNr >> 7;
 
 		Integer adresse = getOpcodeFromToBit(befehl, 0, 6);
 
@@ -223,9 +224,12 @@ public class PIC_Befehle {
 		int k = opcode & 0x3fff;
 		k = opcode & operand;
 
+		k = k >> fromBit;
+
 		PIC_Logger.logger.info("Extrahierter Hexwert: "
 				+ Integer.toHexString(k));
 
+		
 		return k;
 	}
 
@@ -531,6 +535,107 @@ public class PIC_Befehle {
 	public static void asm_clrwdt(Integer akt_Befehl, Prozessor cpu) {
 		//TODO NOT IMPLEMENTED
 		cpu.incPC();
+	}
+
+	/**
+	 * 
+	 * ANDLW
+	 * 
+	 * 11 1001 kkkk kkkk
+	 * 
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_andlw(Integer akt_Befehl, Prozessor cpu) {
+		
+		
+		// Extrahiere K
+		Integer k = getOpcodeFromToBit(akt_Befehl, 0, 7);
+				
+		//Hole W
+		SpecialFunctionRegister w = cpu.getW();
+
+		//AND
+		w.setWert(w.getWert() & k);
+		
+		//Zero ueberpruefen
+		checkZero(cpu);
+		
+		//PC++
+		cpu.incPC();
+	}
+
+	/**
+	 * ADDLW
+	 * 
+	 * 11 111x kkkk kkkk
+	 * 
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_addlw(Integer akt_Befehl, Prozessor cpu) {
+		// Extrahiere K
+		Integer k = getOpcodeFromToBit(akt_Befehl, 0, 7);
+
+		// Get W
+		SpecialFunctionRegister w = cpu.getW();
+
+		// K - W
+		Integer result = k + w.getWert();
+
+		// Ergebnis in W
+		w.setWert(result);
+
+		// Status setzen DC, Z, C
+		setStatus(w, cpu);
+		
+		//PC++
+		cpu.incPC();
+
+	}
+
+	
+	
+	/**
+	 * NOP
+	 * 
+	 * @param akt_Befehl
+	 * @param cpu
+	 */
+	public static void asm_nop(Integer akt_Befehl, Prozessor cpu) {
+		cpu.incPC();	//PC erhoehen
+	}
+	
+	
+	
+	/**
+	 * BTFSS
+	 * 
+	 * 01 11bb bfff ffff
+	 * 
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_btfss(Integer akt_Befehl, Prozessor cpu) {
+		
+		Integer bitNr = getOpcodeFromToBit(akt_Befehl, 7, 9);
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6);
+		
+		Speicherzelle zelle = cpu.getRam().getZelle(f);
+		boolean bitIsSet= zelle.getBit(bitNr);
+		
+		//Bit is set
+		if(bitIsSet){
+			asm_nop(akt_Befehl, cpu);
+		}
+		//Bit not set
+		else{
+			//Nothing
+		}
+		
+		//PC++
+		cpu.incPC();
+		
 	}
 
 }

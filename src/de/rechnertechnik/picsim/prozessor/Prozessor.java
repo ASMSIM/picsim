@@ -183,14 +183,17 @@ public class Prozessor implements Runnable, IProzessor {
 
 			else if(isIntegerCommand(ECommands.BTFSS, akt_Befehl)) {
 				System.out.println("BTFSS");
+				PIC_Befehle.asm_btfss(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.ADDLW, akt_Befehl)) {
 				System.out.println("ADDLW");
+				PIC_Befehle.asm_addlw(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.ANDLW, akt_Befehl)) {
 				System.out.println("ANDLW");
+				PIC_Befehle.asm_andlw(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.CALL, akt_Befehl)) {
