@@ -8,23 +8,23 @@ public class Speicherzelle {
 
 	private Integer speicherzelle;
 
-	public Speicherzelle(Integer value) throws MemoryOutOfRangeException {
-		checkValid(value);
+	public Speicherzelle(Integer value){
+//		checkValid(value);
 		this.speicherzelle = new Integer(value);
 	}
 
-	private void checkValid(Integer value) throws MemoryOutOfRangeException {
-		if(value > 65535 || value < 0) {
-			throw new MemoryOutOfRangeException();
-		}
-	}
+//	private void checkValid(Integer value) throws MemoryOutOfRangeException {
+//		if(value > 65535 || value < 0) {
+//			throw new MemoryOutOfRangeException();
+//		}
+//	}
 
 	public Integer getValue() {
 		return this.speicherzelle;
 	}
 
-	public void setWert(Integer value) throws MemoryOutOfRangeException {
-		checkValid(value);
+	public void setWert(Integer value){
+//		checkValid(value);
 		this.speicherzelle = value;
 	}
 

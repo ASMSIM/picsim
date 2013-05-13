@@ -113,13 +113,7 @@ public class PIC_Befehlstest {
 		
 		//Akkutest
 		Speicherzelle zelle = ram.getZelle(0);
-		try {
 			zelle.setWert(0x1F);
-		}
-		catch(MemoryOutOfRangeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		PIC_Befehle.asm_swapf(0x0600, prozessor);
 		assertEquals(0xF1, (int)prozessor.getW().getWert());
@@ -127,12 +121,7 @@ public class PIC_Befehlstest {
 		
 		//Registertest
 		zelle = ram.getZelle(0);
-		try {
 			zelle.setWert(0x1F);
-		}
-		catch(MemoryOutOfRangeException e) {
-			e.printStackTrace();
-		}
 		
 		PIC_Befehle.asm_swapf(0x0680, prozessor);
 		assertEquals(0xF1, (int)zelle.getValue());

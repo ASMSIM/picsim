@@ -32,14 +32,8 @@ public class Speicher {
 	 */
 	protected void initSpeicher() {
 		for(int i = 0; i < SPEICHERGROESSE; i++) {
-			try {
 				speicherZellen[i] = new Speicherzelle(new Integer(0));
 
-			}
-			catch(MemoryOutOfRangeException e) {
-				System.err.println("That shouldn't happen!");
-				e.printStackTrace();
-			}
 		}
 	}
 
@@ -50,13 +44,7 @@ public class Speicher {
 	 * @param value
 	 */
 	public void setZelle(int zelle, int value) throws MemoryOutOfRangeException {
-		try {
 			speicherZellen[zelle].setWert(value);
-		}
-		catch(MemoryOutOfRangeException e) {
-			System.err.println("Wert liegt nicht zwischen 0 und 65535!");
-			throw new MemoryOutOfRangeException();
-		}
 	}
 
 	/**

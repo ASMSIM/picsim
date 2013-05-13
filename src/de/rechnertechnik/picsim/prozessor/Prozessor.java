@@ -173,6 +173,7 @@ public class Prozessor implements Runnable, IProzessor {
 
 			else if(isIntegerCommand(ECommands.SUBWF, akt_Befehl)) {
 				System.out.println("SUBWF");
+				PIC_Befehle.asm_subwf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.SWAPF, akt_Befehl)) {
@@ -292,13 +293,7 @@ public class Prozessor implements Runnable, IProzessor {
 	}
 
 	public void setStatus(Integer value) {
-		try {
 			this.status.setWert(value);
-		}
-		catch(MemoryOutOfRangeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	
@@ -319,13 +314,7 @@ public class Prozessor implements Runnable, IProzessor {
 	 */
 	private void setPCL(Integer value) {
 
-		try {
 			pc.setWert(value);
-		}
-		catch(MemoryOutOfRangeException e) {
-			System.err.println("Upps Memory Overflow!");
-			e.printStackTrace();
-		}
 	}
 
 	/**

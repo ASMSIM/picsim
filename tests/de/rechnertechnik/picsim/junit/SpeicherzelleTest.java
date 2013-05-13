@@ -48,15 +48,11 @@ public class SpeicherzelleTest {
 
 		for (int x = 0; x < 100; x++) {
 
-			try {
 				zelle = new Speicherzelle(myRandom(-5000, 5000));
 				assertFalse(true);
-			} catch (MemoryOutOfRangeException e) {
-			}
 
 		}
 		
-		throw new MemoryOutOfRangeException();
 
 	}
 }

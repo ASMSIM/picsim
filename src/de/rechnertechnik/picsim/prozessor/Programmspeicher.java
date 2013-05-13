@@ -32,13 +32,7 @@ public class Programmspeicher extends Speicher {
 		
 		
 		for(int i = 0; i < asmProg.size(); i++) {
-			try {
 				speicherZellen[i].setWert(asmProg.get(i));
-			}
-			catch(MemoryOutOfRangeException e) {
-				System.err.println("Programmladefehler!");
-				e.printStackTrace();
-			}
 		}
 
 	}
