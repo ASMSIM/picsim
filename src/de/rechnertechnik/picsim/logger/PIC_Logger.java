@@ -18,7 +18,7 @@ public class PIC_Logger {
 	public static void initLogger(String filename) {
 		
 		logger.setUseParentHandlers(false);
-		logger.setLevel(Level.INFO);
+		logger.setLevel(Level.ALL);
 		
 		Handler fileHandler;
 		MyFormatter formatter = new MyFormatter();
@@ -29,7 +29,7 @@ public class PIC_Logger {
 			fileHandler.setFormatter(formatter);
 			
 			// No XML File for Log
-			fileHandler.setLevel(Level.INFO);
+			fileHandler.setLevel(Level.ALL);
 			logger.addHandler(fileHandler);
 
 
@@ -52,7 +52,7 @@ public class PIC_Logger {
 	 */
 	public static void initLogger() {
 		logger.setUseParentHandlers(false);
-		logger.setLevel(Level.INFO);
+		logger.setLevel(Level.ALL);
 	}
 
 }

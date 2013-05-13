@@ -19,6 +19,7 @@ public class Register {
 		//Ueberlauf
 		//ueberpruefen
 		this.wert = wert;
+		
 	}
 	
 	public boolean getBit(Integer bitNr) {

@@ -28,6 +28,23 @@ public class Speicherzelle {
 		this.speicherzelle = value;
 	}
 
+	
+	public boolean getBit(bits bit) throws BitNotFoundException {
+		switch(bit) {
+			case C:
+				return getBit(0);
+			case DC:
+				return getBit(1);
+			case Z:
+				return getBit(2);
+				
+			default:
+				System.out.println("Check getBit(), Bit Enum, enum not implemented!");
+				break;
+		}
+		throw new BitNotFoundException();
+	}
+	
 	public boolean getBit(Integer bitNr) {
 
 		if((this.getValue() & (1 << bitNr)) != 0) {

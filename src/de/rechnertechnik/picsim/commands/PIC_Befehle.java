@@ -5,6 +5,7 @@ import de.rechnertechnik.picsim.prozessor.MemoryOutOfRangeException;
 import de.rechnertechnik.picsim.prozessor.Prozessor;
 import de.rechnertechnik.picsim.prozessor.Speicherzelle;
 import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
+import de.rechnertechnik.picsim.register.SpecialFunctionRegister;
 import de.rechnertechnik.picsim.stringhex.StringHex;
 
 public class PIC_Befehle {
@@ -65,13 +66,15 @@ public class PIC_Befehle {
 		cpu.getW().setWert(0);
 		Speicherzelle status = cpu.getStatus();
 
-		PIC_Logger.logger.info("Status before: "+Integer.toHexString(cpu.getStatus().getValue()));
-		
+		PIC_Logger.logger.info("Status before: "
+				+ Integer.toHexString(cpu.getStatus().getValue()));
+
 		// Zero Flag
 		// status.setWert(status.getValue() | (int) Math.pow(2, 2));
 		status.setBit(bits.Z);
-		
-		PIC_Logger.logger.info("Status after: "+Integer.toHexString(cpu.getStatus().getValue()));
+
+		PIC_Logger.logger.info("Status after: "
+				+ Integer.toHexString(cpu.getStatus().getValue()));
 
 		cpu.incPC();
 
@@ -216,7 +219,95 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_addwf(Integer akt_Befehl, Prozessor cpu) {
+	}
 
+	/**
+	 * 
+	 * XORLW
+	 * 
+	 * 11 1010 kkkk kkkk
+	 * 
+	 * 
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_xorlw(Integer akt_Befehl, Prozessor cpu) {
+
+		// Extrahiere K
+		Integer k = getOpcodeFromToBit(akt_Befehl, 0, 7);
+		PIC_Logger.logger.info("[XORLW]: k=" + k);
+
+		// Get W
+		SpecialFunctionRegister w = cpu.getW();
+		PIC_Logger.logger.info("[XORLW]: w=" + w.getWert());
+
+		// XOR K ^ W
+		Integer result = k ^ w.getWert();
+		PIC_Logger.logger.info("[XORLW]: result=k^w=" + result);
+
+		// Ergebnis in W
+		w.setWert(result);
+
+		PIC_Logger.logger.info("[XORLW]: w=" + w.getWert());
+
+		// Check Zero Flag, setZero
+		if(w.getWert() == 0) {
+			PIC_Logger.logger.info("[XORLW]: SetZeroflag");
+			cpu.getStatus().setBit(bits.Z);
+		}
+
+		// PC++
+		cpu.incPC();
+	}
+
+	/**
+	 * 
+	 * SUBLW 11 110x kkkk kkkk
+	 * 
+	 * @param akt_Befehl
+	 * @param cpu
+	 */
+	public static void asm_sublw(Integer akt_Befehl, Prozessor cpu) {
+		// Extrahiere K
+		Integer k = getOpcodeFromToBit(akt_Befehl, 0, 7);
+
+		// Get W
+		SpecialFunctionRegister w = cpu.getW();
+
+		// K - W
+		Integer result = k - w.getWert();
+
+		// Ergebnis in W
+		w.setWert(result);
+
+		// Status setzen DC, Z, C
+		setStatus(w, cpu);
+		
+		//PC++
+		cpu.incPC();
+
+	}
+
+	
+	/**
+	 * Setzt anhand des W Registers den aktuellen Status (Ueberlauf, zero...)
+	 * @param w
+	 * @param cpu
+	 */
+	private static void setStatus(SpecialFunctionRegister w, Prozessor cpu) {
+		if(w.getWert() > 255) {
+			// Ueberlauf abfangen
+			w.setWert(w.getWert() - 256);
+			cpu.getStatus().setBit(bits.C);
+		}
+		else if(w.getWert() < 0) {
+			// Ueberlauf abfangen
+			w.setWert(w.getWert() + 256);
+			cpu.getStatus().setBit(bits.DC);
+		}
+		else if(w.getWert() == 0) {
+			cpu.getStatus().setBit(bits.Z);
+		}
 	}
 
 }

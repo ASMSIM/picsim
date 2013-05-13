@@ -2,22 +2,81 @@ package de.rechnertechnik.picsim.junit;
 
 import static org.junit.Assert.*;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.rechnertechnik.picsim.commands.BefehlAdressraumZuordnung;
 import de.rechnertechnik.picsim.commands.PIC_Befehle;
+import de.rechnertechnik.picsim.gui.GUI;
+import de.rechnertechnik.picsim.gui.IProzessor;
+import de.rechnertechnik.picsim.logger.PIC_Logger;
+import de.rechnertechnik.picsim.parser.Parser;
+import de.rechnertechnik.picsim.prozessor.Programmspeicher;
+import de.rechnertechnik.picsim.prozessor.Prozessor;
+import de.rechnertechnik.picsim.prozessor.Speicher;
 
 public class PIC_Befehlstest {
 
-	
+	private static Parser parser;
+	private static Prozessor prozessor;
+	private static BefehlAdressraumZuordnung commandTable;
+	private static Programmspeicher programmSpeicher;
+	private static Speicher ram;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		
+
+		System.out.println("#############################");
+		System.out.println("######## PICSIMULATOR #######");
+		System.out.println("#############################");
+
+		// Init
+		GUI gui = new GUI();
+		PIC_Logger.initLogger();
+		commandTable = new BefehlAdressraumZuordnung();
+		parser = new Parser("res/BA_Test.LST"); // TODO mit GUI öffnen
+												// verknüpfen
+		programmSpeicher = new Programmspeicher(parser); // Legt den
+															// Programmspeicher
+															// an und befüllt
+															// diesen mit dem
+															// Programmcode
+
+		ram = new Speicher();
+		// programmSpeicher.printDump();
+		prozessor = new Prozessor(commandTable, programmSpeicher, ram, gui, parser);
+
+		// GUI öffnen
+		showGUI(gui, prozessor);
+		gui.connectProzessor(prozessor);	//Interfaceverknüpfung
 		
+	}
+	
+	/**
+	 * Init the GUI with Size and Position
+	 */
+	private static void showGUI(GUI gui, IProzessor prozessor) {
+
+		// Zentrierung / Breite & Hoehe des Fensters
+		Dimension main_window_size = new Dimension(1000, 700);
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int top = (screenSize.height - main_window_size.height) / 2;
+		int left = (screenSize.width - main_window_size.width) / 2;
+
+		gui.setSize(main_window_size);
+		gui.setLocation(left, top);
+		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gui.setVisible(true);
 	}
 
 	@AfterClass
@@ -48,10 +107,9 @@ public class PIC_Befehlstest {
 	}
 
 	@Test
-	private void asm_movwf() {
-		
+	public void asm_xorlw() {
+//		PIC_Befehle.asm_xorlw(0x, cpu)
 	}
-	
 	
 
 }

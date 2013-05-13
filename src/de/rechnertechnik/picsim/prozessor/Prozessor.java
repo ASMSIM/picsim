@@ -224,10 +224,12 @@ public class Prozessor implements Runnable, IProzessor {
 
 			else if(isIntegerCommand(ECommands.SUBLW, akt_Befehl)) {
 				System.out.println("SUBLW");
+				PIC_Befehle.asm_sublw(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.XORLW, akt_Befehl)) {
 				System.out.println("XORLW");
+				PIC_Befehle.asm_xorlw(akt_Befehl, this);
 			}
 
 			else {
