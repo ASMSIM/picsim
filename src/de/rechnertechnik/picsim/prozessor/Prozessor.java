@@ -341,17 +341,20 @@ public class Prozessor implements Runnable, IProzessor {
 
 		if((value == 0) && status_effect) {
 			status.setBit(bits.Z);
+			PIC_Logger.logger.info("Flag: Zero");
 		}
 		else if(value > 255) {
 			value -= 256;
 			if(status_effect){
 				status.setBit(bits.C);
+				PIC_Logger.logger.info("Flag: C");
 			}
 		}
 		else if(value < 0) {
 			value += 256;
 			if(status_effect){
 				status.setBit(bits.DC);
+				PIC_Logger.logger.info("Flag: DC");
 			}
 		}
 
