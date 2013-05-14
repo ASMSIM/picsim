@@ -47,6 +47,7 @@ public class GUI extends JFrame implements IGUI{
 	private IProzessor prozessor;
 	
 	private JFileChooser chooser = new JFileChooser();
+	private JLabel FSR_inp;
 	
 	
 //	public static void main(String[] args) {
@@ -576,7 +577,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_lblFsr.gridy = 3;
 		SpzRegPanel.add(lblFsr, gbc_lblFsr);
 		
-		JLabel FSR_inp = new JLabel("00");
+		FSR_inp = new JLabel("00");
 		GridBagConstraints gbc_FSR_inp = new GridBagConstraints();
 		gbc_FSR_inp.anchor = GridBagConstraints.WEST;
 		gbc_FSR_inp.insets = new Insets(0, 0, 5, 0);
@@ -665,6 +666,11 @@ public class GUI extends JFrame implements IGUI{
 		ButtonPanel.setLayout(gbl_ButtonPanel);
 		
 		JButton btnGo = new JButton("Go");
+		btnGo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				prozessor.go();
+			}
+		});
 		btnGo.setToolTipText("");
 		GridBagConstraints gbc_btnGo = new GridBagConstraints();
 		gbc_btnGo.anchor = GridBagConstraints.NORTH;
@@ -796,5 +802,16 @@ public class GUI extends JFrame implements IGUI{
 	@Override
 	public void setFocus(Integer fokus) {
 		Text_inp.setRowSelectionInterval(fokus, fokus);
+	}
+
+	@Override
+	public void show_W_Register(String hexvalue) {
+		FSR_inp.setText(hexvalue);
+	}
+
+	@Override
+	public void show_Register(String adresse, String hexvalue) {
+		// TODO Auto-generated method stub
+		System.out.println("show_Register not implemented!");
 	}
 }

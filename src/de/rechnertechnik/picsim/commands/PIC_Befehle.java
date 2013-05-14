@@ -10,6 +10,10 @@ import de.rechnertechnik.picsim.stringhex.StringHex;
 
 public class PIC_Befehle {
 
+	public enum check {
+		register, w
+	}
+
 	/**
 	 * GOTO Befehl 0010 1KKK KKKK KKKK
 	 */
@@ -24,7 +28,7 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_movlw(Integer befehl, Prozessor cpu) {
-		cpu.getW().setWert(getOpcodeFromToBit(befehl, 0, 7));
+		cpu.setW((getOpcodeFromToBit(befehl, 0, 7)), false);
 		cpu.incPC();
 	}
 
@@ -36,13 +40,9 @@ public class PIC_Befehle {
 	 */
 
 	public static void asm_clrf(Integer befehl, Prozessor cpu) {
-
-		Speicherzelle status = cpu.getStatus();
-
 		Integer f = getOpcodeFromToBit(befehl, 0, 7);
-		cpu.getRam().getZelle(f).setWert(0);
-
-		status.setBit(bits.Z);
+		cpu.setSpeicherzellenWert(f, 0, true);
+		
 		cpu.incPC();
 	}
 
@@ -53,15 +53,15 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_andwf(Integer befehl, Prozessor cpu) {
-		Integer w = cpu.getW().getWert();
+		Integer w = cpu.getW();
 		Integer f = getOpcodeFromToBit(befehl, 0, 7);
-		Integer erg = w & cpu.getRam().getZelle(f).getValue();
+		Integer erg = w & cpu.getSpeicherzellenWert(f);
 
 		if(getOpcodeFromToBit(befehl, 8, 8) == 1) {
-			cpu.getRam().getZelle(f).setWert(erg);
+			cpu.setSpeicherzellenWert(f, erg, true);
 		}
 		else {
-			cpu.getW().setWert(erg);
+			cpu.setW(erg, true);
 		}
 
 		cpu.incPC();
@@ -83,33 +83,20 @@ public class PIC_Befehle {
 		Integer setValue = (int) Math.pow(2, bitNr);
 		PIC_Logger.logger.info("Bitvalue: " + setValue);
 
-		Speicherzelle workingCell = cpu.getRam().getZelle(adresse);
-
+		Integer workingCell = cpu.getSpeicherzellenWert(adresse);
+		
 		PIC_Logger.logger.info("Wert vorher: 0x"
-				+ Integer.toHexString(workingCell.getValue()));
-		workingCell.setWert(workingCell.getValue() | setValue);
+				+ Integer.toHexString(workingCell));
+		cpu.setSpeicherzellenWert(adresse, (workingCell | setValue), false);
 
 		PIC_Logger.logger.info("Wert nacher: 0x"
-				+ Integer.toHexString(workingCell.getValue()));
+				+ Integer.toHexString(workingCell));
 		cpu.incPC();
 	}
 
 	public static void asm_clrw(Integer befehl, Prozessor cpu) {
-		cpu.getW().setWert(0);
-		Speicherzelle status = cpu.getStatus();
-
-		PIC_Logger.logger.info("Status before: "
-				+ Integer.toHexString(cpu.getStatus().getValue()));
-
-		// Zero Flag
-		// status.setWert(status.getValue() | (int) Math.pow(2, 2));
-		status.setBit(bits.Z);
-
-		PIC_Logger.logger.info("Status after: "
-				+ Integer.toHexString(cpu.getStatus().getValue()));
-
+		cpu.setW(0, true);
 		cpu.incPC();
-
 	}
 
 	/**
@@ -120,8 +107,6 @@ public class PIC_Befehle {
 	 */
 	public static void asm_bcf(Integer befehl, Prozessor cpu) {
 		Integer bitNr = getOpcodeFromToBit(befehl, 7, 9);
-		// bitNr = bitNr >> 7; CHECK IF OK DELETE
-
 		Integer adresse = getOpcodeFromToBit(befehl, 0, 6);
 
 		PIC_Logger.logger.info("BitNr: " + bitNr + "\nAdresse: " + adresse);
@@ -132,16 +117,19 @@ public class PIC_Befehle {
 		setValue = setValue - (int) Math.pow(2, bitNr);
 		PIC_Logger.logger.info("Bitvalue: " + setValue);
 
-		Speicherzelle workingCell = cpu.getRam().getZelle(adresse);
 
+		Integer workingCell = cpu.getSpeicherzellenWert(adresse);
+		
 		PIC_Logger.logger.info("Wert vorher: 0x"
-				+ Integer.toHexString(workingCell.getValue()));
+				+ Integer.toHexString(workingCell));
+		
+		
 		// Verunden und dadurch Bit loeschen
-		workingCell.setWert(workingCell.getValue() & setValue);
+		cpu.setSpeicherzellenWert(adresse, (workingCell & setValue), false);
 
+		
 		PIC_Logger.logger.info("Wert nacher: 0x"
-				+ Integer.toHexString(workingCell.getValue()));
-
+				+ Integer.toHexString(workingCell));
 		cpu.incPC();
 	}
 
@@ -155,15 +143,15 @@ public class PIC_Befehle {
 	 */
 	public static void asm_movwf(Integer befehl, Prozessor cpu) {
 		Integer adresse = getOpcodeFromToBit(befehl, 0, 6);
-		Speicherzelle workingCell = cpu.getRam().getZelle(adresse);
-
+		Integer workingCell = cpu.getSpeicherzellenWert(adresse);
+		
+		
 		PIC_Logger.logger.info("Adresse: " + adresse + "\nZelleninhalt: "
-				+ workingCell.getValue());
+				+ workingCell);
 
-		workingCell.setWert(cpu.getW().getWert());
+		cpu.setSpeicherzellenWert(adresse, cpu.getW(), false);
 
-		PIC_Logger.logger.info("W: "
-				+ Integer.toHexString(cpu.getW().getWert()));
+		PIC_Logger.logger.info("W: " + Integer.toHexString(cpu.getW()));
 
 		cpu.incPC();
 	}
@@ -240,8 +228,8 @@ public class PIC_Befehle {
 
 		// Komponenten auslesen
 		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7);
-		SpecialFunctionRegister w = cpu.getW();
-		Integer result = cpu.getRam().getZelle(f).getValue() + w.getWert();
+		Integer w = cpu.getW();
+		Integer result = cpu.getRam().getZelle(f).getValue() + w;
 
 		// Speicherort abfragen
 		if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1) {
@@ -250,16 +238,35 @@ public class PIC_Befehle {
 		}
 		else {
 			// in w Register speichern
-			cpu.getW().setWert(result);
+			cpu.setW(result);
 		}
-
-		// Status setzen DC, Z, C
-		setStatus(w, cpu);
 
 		// PC ++
 		cpu.incPC();
 	}
 
+	
+	private static void check_C_DC_Z(Integer result, Speicherzelle statusregister) {
+		
+	}
+	
+	
+	private static void check_C(Integer result, Speicherzelle statusregister){
+	}
+
+	private static void check_DC(Integer result, Speicherzelle statusregister){
+	}
+
+	
+	
+	private static void check_Z(Integer result, Speicherzelle statusregister){
+		if(result == 0){
+			statusregister.setBit(bits.Z);
+		}
+	}
+
+	
+	
 	/**
 	 * 
 	 * COMF 00 1001 dfff ffff
@@ -280,7 +287,7 @@ public class PIC_Befehle {
 		}
 		else {
 			// in w Register speichern
-			cpu.getW().setWert(result);
+			cpu.setW(result);
 			checkZero(cpu, cpu.getW());
 		}
 
@@ -308,7 +315,7 @@ public class PIC_Befehle {
 		}
 		else {
 			// in w Register speichern
-			cpu.getW().setWert(result);
+			cpu.setW(result);
 			checkZero(cpu, cpu.getW());
 		}
 
@@ -326,11 +333,13 @@ public class PIC_Befehle {
 
 		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7); // zum speichern
 
-		PIC_Logger.logger.info("[DECFSZ]: register= " + cpu.getRam().getZelle(f).getValue());
-		
+		PIC_Logger.logger.info("[DECFSZ]: register= "
+				+ cpu.getRam().getZelle(f).getValue());
+
 		Integer result = cpu.getRam().getZelle(f).getValue() - 1;
-		if(result < 0) result = result + 255;
-		
+		if(result < 0)
+			result = result + 255;
+
 		PIC_Logger.logger.info("[DECFSZ]: result= " + result);
 
 		// Speicherort abfragen
@@ -343,7 +352,7 @@ public class PIC_Befehle {
 		}
 		else {
 			// in w Register speichern
-			cpu.getW().setWert(result);
+			cpu.setW(result);
 			checkZero(cpu, cpu.getW());
 		}
 
@@ -378,7 +387,7 @@ public class PIC_Befehle {
 		}
 		else {
 			// in w Register speichern
-			cpu.getW().setWert(result);
+			cpu.setW(result);
 			checkZero(cpu, cpu.getW());
 		}
 
@@ -407,7 +416,7 @@ public class PIC_Befehle {
 		}
 		else {
 			// in w Register speichern
-			cpu.getW().setWert(result);
+			cpu.setW(result);
 			checkZero(cpu, cpu.getW());
 		}
 
@@ -427,7 +436,7 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_iorwf(Integer befehl, Prozessor cpu) {
-		Integer w = cpu.getW().getWert();
+		Integer w = cpu.getW();
 		Integer f = getOpcodeFromToBit(befehl, 0, 7);
 		Integer erg = w | cpu.getRam().getZelle(f).getValue();
 
@@ -438,7 +447,7 @@ public class PIC_Befehle {
 
 		}
 		else {
-			cpu.getW().setWert(erg);
+			cpu.setW(erg);
 			checkZero(cpu, cpu.getW());
 		}
 		cpu.incPC();
@@ -451,7 +460,7 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_movf(Integer befehl, Prozessor cpu) {
-		Integer w = cpu.getW().getWert();
+		Integer w = cpu.getW();
 		Integer f = getOpcodeFromToBit(befehl, 0, 7);
 
 		if(getOpcodeFromToBit(befehl, 8, 8) == 1) {
@@ -461,7 +470,7 @@ public class PIC_Befehle {
 
 		}
 		else {
-			cpu.getW().setWert(f);
+			cpu.setW(f);
 			checkZero(cpu, cpu.getW());
 		}
 		cpu.incPC();
@@ -544,69 +553,36 @@ public class PIC_Befehle {
 
 	}
 
-	/**
-	 * Setzt anhand des W Registers den aktuellen Status (Ueberlauf, zero...)
-	 * 
-	 * @param w
-	 * @param cpu
-	 */
-	private static void setStatus(SpecialFunctionRegister w, Prozessor cpu) {
-		// Ueberlauf abfangen
-		checkC(w, cpu);
-		checkDC(w, cpu);
-
-		// Zeroflag
-		checkZero(cpu, w);
-	}
-
-	/**
-	 * Check W and set Zero bit
-	 * 
-	 * @param cpu
-	 */
-	private static void checkZero(Prozessor cpu, SpecialFunctionRegister w) {
-		if(cpu.getW().getWert() == 0) {
-			cpu.getStatus().setBit(bits.Z);
-		}
-	}
+//	/**
+//	 * Setzt anhand des W Registers den aktuellen Status (Ueberlauf, zero...)
+//	 * 
+//	 * @param w
+//	 * @param cpu
+//	 */
+//	private static void setStatus(SpecialFunctionRegister w, Prozessor cpu) {
+//		// Ueberlauf abfangen
+//		checkC(w, cpu);
+//		checkDC(w, cpu);
+//
+//		// Zeroflag
+//		checkZero(cpu);
+//	}
 
 	/**
-	 * Check F and set Zero bit
+	 * Check W and set Zero bit if required
 	 * 
 	 * @param cpu
 	 */
-	private static void checkZero(Prozessor cpu, Speicherzelle zelle) {
-		if(zelle.getValue() == 0) {
-			cpu.getStatus().setBit(bits.Z);
-		}
-	}
+//	private static void checkZero(Prozessor cpu) {
+//		if(cpu.getW() == 0) {
+//			cpu.getStatus().setBit(bits.Z);
+//		}
+//	}
 
-	/**
-	 * Check w and set DC bit
-	 * 
-	 * @param w
-	 * @param cpu
-	 */
-	private static void checkDC(SpecialFunctionRegister w, Prozessor cpu) {
-		if(w.getWert() < 0) {
-			// Ueberlauf abfangen
-			w.setWert(w.getWert() + 256);
-			cpu.getStatus().setBit(bits.DC);
-		}
-	}
 
-	/**
-	 * Check W and set C Bit
-	 * 
-	 * @param w
-	 * @param cpu
-	 */
-	private static void checkC(SpecialFunctionRegister w, Prozessor cpu) {
-		if(w.getWert() > 255) {
-			w.setWert(w.getWert() - 256);
-			cpu.getStatus().setBit(bits.C);
-		}
-	}
+
+
+
 
 	/**
 	 * SLEEP

@@ -14,15 +14,20 @@ import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.parser.Parser;
 import de.rechnertechnik.picsim.register.SpecialFunctionRegister;
 import de.rechnertechnik.picsim.register.Statusregister;
+import de.rechnertechnik.picsim.prozessor.EStepmode;
+import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
 
 public class Prozessor implements Runnable, IProzessor {
 
 	private boolean stopProgram = false;
-	private boolean breakpoint = false;
+	// private boolean breakpoint = false;
+	// private boolean oneStep = true;
 	private BefehlAdressraumZuordnung cmdTable;
 	private Programmspeicher programmSpeicher;
 	private Speicher ram;
 	private IGUI gui;
+
+	private EStepmode stepmode;
 
 	/**
 	 * Programmcounter
@@ -32,9 +37,6 @@ public class Prozessor implements Runnable, IProzessor {
 	private SpecialFunctionRegister w = new SpecialFunctionRegister(0);
 	private Parser parser;
 	private Stack<Integer> stack = new Stack<Integer>();
-	
-	
-	
 
 	public Prozessor(BefehlAdressraumZuordnung cmdTable, Programmspeicher programmSpeicher, Speicher ram, IGUI gui, Parser parser) {
 		this.cmdTable = cmdTable;
@@ -42,6 +44,9 @@ public class Prozessor implements Runnable, IProzessor {
 		this.ram = ram;
 		this.gui = gui;
 		this.parser = parser;
+
+		// Hold
+		stepmode = EStepmode.hold;
 
 		status = ram.getStatus(true);
 		pc = ram.getPCL(true);
@@ -62,28 +67,18 @@ public class Prozessor implements Runnable, IProzessor {
 		// INIT
 		while(!stopProgram) {
 
-			while(breakpoint) {
-				try {
-					Thread.sleep(200);
-				}
-				catch(InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-
 			Integer akt_Befehl = nextCommand();
 
 			PIC_Logger.logger.log(Level.INFO, "Next command: 0x"
 					+ Integer.toHexString(akt_Befehl));
 
-			
-			//GOTO
+			// GOTO
 			if(isIntegerCommand(ECommands.GOTO, akt_Befehl)) {
 				System.out.println("GOTO");
 				setPCL(PIC_Befehle.asm_goto(akt_Befehl));
 			}
 
-			//ADDWF
+			// ADDWF
 			else if(isIntegerCommand(ECommands.ADDWF, akt_Befehl)) {
 				System.out.println("ADDWF");
 				PIC_Logger.logger.info("-> ADDWF");
@@ -199,7 +194,7 @@ public class Prozessor implements Runnable, IProzessor {
 			else if(isIntegerCommand(ECommands.BTFSC, akt_Befehl)) {
 				System.out.println("BTFSC");
 				PIC_Befehle.asm_btfsc(akt_Befehl, this);
-				
+
 			}
 
 			else if(isIntegerCommand(ECommands.BTFSS, akt_Befehl)) {
@@ -271,7 +266,28 @@ public class Prozessor implements Runnable, IProzessor {
 				this.stopProgram = true;
 			}
 
-			breakpoint = true;
+			if(stepmode == EStepmode.onestep) {
+				stepmode = EStepmode.hold;
+			}
+			else if(stepmode == EStepmode.go) {
+				try {
+					Thread.sleep(10);
+				}
+				catch(InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			while(stepmode == EStepmode.hold) {
+				try {
+					Thread.sleep(200);
+				}
+				catch(InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+
 		}
 
 	}
@@ -280,12 +296,67 @@ public class Prozessor implements Runnable, IProzessor {
 		setPCL(pc.getValue() + 1);
 	}
 
-	public Speicher getRam() {
+	private Speicher getRam() {
 		return ram;
 	}
+	
+	
+	public Integer getSpeicherzellenWert(Integer adresse){
+		return getRam().getZelle(adresse).getValue();
+	}
+	
+	public void setSpeicherzellenWert(Integer adresse, Integer value, boolean status_effect){
+		if((value == 0) && status_effect) {
+			status.setBit(bits.Z);
+		}
+		else if(value > 255) {
+			value -= 256;
+			if(status_effect){
+				status.setBit(bits.C);
+			}
+		}
+		else if(value < 0) {
+			value += 256;
+			if(status_effect){
+				status.setBit(bits.DC);
+			}
+		}
 
-	public SpecialFunctionRegister getW() {
-		return w;
+		gui.show_Register(Integer.toHexString(adresse), Integer.toHexString(value));
+		getRam().getZelle(adresse).setWert(value);
+	}
+	
+
+	public Integer getW() {
+		return w.getWert();
+	}
+
+	/**
+	 * Setzt einen Wert in W
+	 * 
+	 * @param value zu setzender Wert
+	 * @param status_effect Wenn Status gesetzt werden soll
+	 */
+	public void setW(Integer value, boolean status_effect) {
+
+		if((value == 0) && status_effect) {
+			status.setBit(bits.Z);
+		}
+		else if(value > 255) {
+			value -= 256;
+			if(status_effect){
+				status.setBit(bits.C);
+			}
+		}
+		else if(value < 0) {
+			value += 256;
+			if(status_effect){
+				status.setBit(bits.DC);
+			}
+		}
+
+		gui.show_W_Register(Integer.toHexString(value));
+		this.w.setWert(value);
 	}
 
 	public Speicherzelle getStatus() {
@@ -293,20 +364,17 @@ public class Prozessor implements Runnable, IProzessor {
 	}
 
 	public void setStatus(Integer value) {
-			this.status.setWert(value);
+		this.status.setWert(value);
 	}
 
-	
-	
 	public Stack<Integer> getStack() {
 		return stack;
 	}
-	
-	
+
 	public Speicherzelle getPc() {
 		return pc;
 	}
-	
+
 	/**
 	 * Sets the PCL
 	 * 
@@ -314,7 +382,7 @@ public class Prozessor implements Runnable, IProzessor {
 	 */
 	private void setPCL(Integer value) {
 
-			pc.setWert(value);
+		pc.setWert(value);
 	}
 
 	/**
@@ -335,9 +403,9 @@ public class Prozessor implements Runnable, IProzessor {
 
 	}
 
-
 	/**
 	 * Holt den naechsten Befehl, auf den der PCL zeigt
+	 * 
 	 * @return
 	 */
 	private Integer nextCommand() {
@@ -350,6 +418,16 @@ public class Prozessor implements Runnable, IProzessor {
 
 	@Override
 	public void nextStep() {
-		breakpoint = false;
+		stepmode = EStepmode.onestep;
+	}
+
+	@Override
+	public void go() {
+		if(stepmode == EStepmode.go) {
+			stepmode = EStepmode.hold;
+		}
+		else {
+			stepmode = EStepmode.go;
+		}
 	}
 }
