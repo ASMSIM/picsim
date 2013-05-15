@@ -4,5 +4,6 @@ public interface IProzessor {
 	
 	public void nextStep();
 	public void go();
+	public void reset();
 
 }

@@ -48,6 +48,8 @@ public class GUI extends JFrame implements IGUI{
 	
 	private JFileChooser chooser = new JFileChooser();
 	private JLabel FSR_inp;
+	private JLabel WReg_inp;
+	private JLabel PC_inp;
 	
 	
 //	public static void main(String[] args) {
@@ -64,7 +66,7 @@ public class GUI extends JFrame implements IGUI{
 	}
 	
 	public GUI() {
-		
+		super("PIC-Simulator Team Michael,Julian");
 		
 		
 		//Erstellen einer Menüleiste
@@ -561,7 +563,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_lblWreg.gridy = 2;
 		SpzRegPanel.add(lblWreg, gbc_lblWreg);
 		
-		JLabel WReg_inp = new JLabel("00");
+		WReg_inp = new JLabel("00");
 		GridBagConstraints gbc_WReg_inp = new GridBagConstraints();
 		gbc_WReg_inp.anchor = GridBagConstraints.WEST;
 		gbc_WReg_inp.insets = new Insets(0, 0, 5, 0);
@@ -625,7 +627,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_lblPc.gridy = 6;
 		SpzRegPanel.add(lblPc, gbc_lblPc);
 		
-		JLabel PC_inp = new JLabel("0000");
+		PC_inp = new JLabel("0000");
 		GridBagConstraints gbc_PC_inp = new GridBagConstraints();
 		gbc_PC_inp.anchor = GridBagConstraints.WEST;
 		gbc_PC_inp.insets = new Insets(0, 0, 5, 0);
@@ -687,6 +689,11 @@ public class GUI extends JFrame implements IGUI{
 		ButtonPanel.add(btnStop, gbc_btnStop);
 		
 		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				prozessor.reset();
+			}
+		});
 		GridBagConstraints gbc_btnReset = new GridBagConstraints();
 		gbc_btnReset.insets = new Insets(0, 0, 5, 5);
 		gbc_btnReset.anchor = GridBagConstraints.NORTH;
@@ -802,16 +809,24 @@ public class GUI extends JFrame implements IGUI{
 	@Override
 	public void setFocus(Integer fokus) {
 		Text_inp.setRowSelectionInterval(fokus, fokus);
+		Text_inp.scrollRectToVisible(Text_inp.getCellRect(fokus, fokus, true));
+		
 	}
 
 	@Override
 	public void show_W_Register(String hexvalue) {
-		FSR_inp.setText(hexvalue);
+		WReg_inp.setText("0x"+hexvalue);
 	}
 
 	@Override
 	public void show_Register(String adresse, String hexvalue) {
 		// TODO Auto-generated method stub
 		System.out.println("show_Register not implemented!");
+		System.out.println("setting: addr="+adresse+";hexvalue="+hexvalue);
+	}
+
+	@Override
+	public void show_PC(String value) {
+		PC_inp.setText(value);
 	}
 }

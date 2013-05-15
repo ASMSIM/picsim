@@ -20,8 +20,6 @@ import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
 public class Prozessor implements Runnable, IProzessor {
 
 	private boolean stopProgram = false;
-	// private boolean breakpoint = false;
-	// private boolean oneStep = true;
 	private BefehlAdressraumZuordnung cmdTable;
 	private Programmspeicher programmSpeicher;
 	private Speicher ram;
@@ -50,6 +48,7 @@ public class Prozessor implements Runnable, IProzessor {
 
 		status = ram.getStatus(true);
 		pc = ram.getPCL(true);
+		
 
 		// Init und Fokus auf 1. Zeile
 		gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0));
@@ -63,7 +62,16 @@ public class Prozessor implements Runnable, IProzessor {
 	 */
 	@Override
 	public void run() {
-
+		
+		while(stepmode==EStepmode.hold){
+			try {
+				Thread.sleep(100);
+			}
+			catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		// INIT
 		while(!stopProgram) {
 
@@ -75,7 +83,7 @@ public class Prozessor implements Runnable, IProzessor {
 			// GOTO
 			if(isIntegerCommand(ECommands.GOTO, akt_Befehl)) {
 				System.out.println("GOTO");
-				setPCL(PIC_Befehle.asm_goto(akt_Befehl));
+				PIC_Befehle.asm_goto(akt_Befehl, this);
 			}
 
 			// ADDWF
@@ -266,6 +274,8 @@ public class Prozessor implements Runnable, IProzessor {
 				this.stopProgram = true;
 			}
 
+			gui.setFocus(parser.getCommand_source_line().get(pc.getValue()));
+			
 			if(stepmode == EStepmode.onestep) {
 				stepmode = EStepmode.hold;
 			}
@@ -274,7 +284,6 @@ public class Prozessor implements Runnable, IProzessor {
 					Thread.sleep(10);
 				}
 				catch(InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -294,6 +303,8 @@ public class Prozessor implements Runnable, IProzessor {
 
 	public void incPC() {
 		setPCL(pc.getValue() + 1);
+		String value = Integer.toHexString(pc.getValue());
+		gui.show_PC("0x"+value);
 	}
 
 	private Speicher getRam() {
@@ -383,9 +394,11 @@ public class Prozessor implements Runnable, IProzessor {
 	 * 
 	 * @param value
 	 */
-	private void setPCL(Integer value) {
-
+	public void setPCL(Integer value) {
 		pc.setWert(value);
+		String pcwert = Integer.toHexString(pc.getValue());
+		
+		gui.show_PC("0x"+pcwert);
 	}
 
 	/**
@@ -413,9 +426,6 @@ public class Prozessor implements Runnable, IProzessor {
 	 */
 	private Integer nextCommand() {
 		Integer next = programmSpeicher.getZelle(pc.getValue()).getValue();
-
-		gui.setFocus(parser.getCommand_source_line().get(pc.getValue()));
-
 		return next;
 	}
 
@@ -432,5 +442,14 @@ public class Prozessor implements Runnable, IProzessor {
 		else {
 			stepmode = EStepmode.go;
 		}
+	}
+
+	@Override
+	public void reset() {
+		ram.initSpeicher();
+		setW(0, false);
+		setPCL(0);
+		gui.setFocus(parser.getCommand_source_line().get(0));
+		stepmode = EStepmode.hold;
 	}
 }

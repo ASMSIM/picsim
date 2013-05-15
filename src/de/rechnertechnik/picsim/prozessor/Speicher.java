@@ -30,7 +30,7 @@ public class Speicher {
 	/**
 	 * Init the Memory with 0 in all Cells
 	 */
-	protected void initSpeicher() {
+	public void initSpeicher() {
 		for(int i = 0; i < SPEICHERGROESSE; i++) {
 				speicherZellen[i] = new Speicherzelle(new Integer(0));
 

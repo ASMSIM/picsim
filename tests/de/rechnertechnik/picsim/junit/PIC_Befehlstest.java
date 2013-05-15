@@ -37,29 +37,6 @@ public class PIC_Befehlstest {
 	public static void setUpBeforeClass() throws Exception {
 		
 
-		System.out.println("#############################");
-		System.out.println("######## PICTESTCASE #######");
-		System.out.println("#############################");
-
-		// Init
-		GUI gui = new GUI();
-		PIC_Logger.initLogger("testlog.txt");
-		commandTable = new BefehlAdressraumZuordnung();
-		parser = new Parser("res/BA_Test.LST"); // TODO mit GUI öffnen
-												// verknüpfen
-		programmSpeicher = new Programmspeicher(parser); // Legt den
-															// Programmspeicher
-															// an und befüllt
-															// diesen mit dem
-															// Programmcode
-
-		ram = new Speicher();
-		// programmSpeicher.printDump();
-		prozessor = new Prozessor(commandTable, programmSpeicher, ram, gui, parser);
-
-		// GUI öffnen
-		showGUI(gui, prozessor);
-		gui.connectProzessor(prozessor);	//Interfaceverknüpfung
 		
 	}
 	
@@ -108,20 +85,17 @@ public class PIC_Befehlstest {
 		assertTrue("Befehl 0x3f erwarte k=3f ...true", result==0x3f);
 	}
 
-	@Test
 	public void asm_swapf() {
 		
 		//Akkutest
-		Speicherzelle zelle = ram.getZelle(0);
-			zelle.setWert(0x1F);
+		Speicherzelle zelle = new Speicherzelle(0x1f);
 		
 		PIC_Befehle.asm_swapf(0x0600, prozessor);
-		assertEquals(0xF1, (int)prozessor.getW().getWert());
+		assertEquals(0xF1, (int)prozessor.getW());
 		
 		
 		//Registertest
-		zelle = ram.getZelle(0);
-			zelle.setWert(0x1F);
+		zelle.setWert(0x1F);
 		
 		PIC_Befehle.asm_swapf(0x0680, prozessor);
 		assertEquals(0xF1, (int)zelle.getValue());

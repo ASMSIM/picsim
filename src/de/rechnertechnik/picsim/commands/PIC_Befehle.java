@@ -17,8 +17,8 @@ public class PIC_Befehle {
 	/**
 	 * GOTO Befehl 0010 1KKK KKKK KKKK
 	 */
-	public static Integer asm_goto(Integer next_Befehl) {
-		return getOpcodeFromToBit(next_Befehl, 0, 7);
+	public static void asm_goto(Integer befehl, Prozessor cpu) {
+		cpu.setPCL(getOpcodeFromToBit(befehl, 0, 7));
 	}
 
 	/**
