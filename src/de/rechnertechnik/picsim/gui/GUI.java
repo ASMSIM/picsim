@@ -52,6 +52,48 @@ public class GUI extends JFrame implements IGUI{
 	private JLabel PC_inp;
 	
 	
+	DefaultTableModel ramModel =new DefaultTableModel(
+			new Object[][] {
+				{"00", null, null, null, null, null, null, null, null},
+				{"08", null, null, null, null, null, null, null, null},
+				{"10", null, null, null, null, null, null, null, null},
+				{"18", null, null, null, null, null, null, null, null},
+				{"20", null, null, null, null, null, null, null, null},
+				{"28", null, null, null, null, null, null, null, null},
+				{"30", null, null, null, null, null, null, null, null},
+				{"38", null, null, null, null, null, null, null, null},
+				{"40", null, null, null, null, null, null, null, null},
+				{"48", null, null, null, null, null, null, null, null},
+				{"50", null, null, null, null, null, null, null, null},
+				{"58", null, null, null, null, null, null, null, null},
+				{"60", null, null, null, null, null, null, null, null},
+				{"68", null, null, null, null, null, null, null, null},
+				{"70", null, null, null, null, null, null, null, null},
+				{"78", null, null, null, null, null, null, null, null},
+				{"80", null, null, null, null, null, null, null, null},
+				{"88", null, null, null, null, null, null, null, null},
+				{"90", null, null, null, null, null, null, null, null},
+				{"98", null, null, null, null, null, null, null, null},
+				{"A0", null, null, null, null, null, null, null, null},
+				{"A8", null, null, null, null, null, null, null, null},
+				{"B0", null, null, null, null, null, null, null, null},
+				{"B8", null, null, null, null, null, null, null, null},
+				{"C0", null, null, null, null, null, null, null, null},
+				{"C8", null, null, null, null, null, null, null, null},
+				{"D0", null, null, null, null, null, null, null, null},
+				{"D8", null, null, null, null, null, null, null, null},
+				{"E0", null, null, null, null, null, null, null, null},
+				{"E8", null, null, null, null, null, null, null, null},
+				{"F0", null, null, null, null, null, null, null, null},
+				{"FF", null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"", "00", "01", "02", "03", "04", "05", "06", "07"
+			}
+		);
+	
+	
+	
 //	public static void main(String[] args) {
 //		GUI gui = new GUI();
 //		gui.setBounds(100, 100, 1000,700);
@@ -328,45 +370,7 @@ public class GUI extends JFrame implements IGUI{
 		
 		SpeicherTab = new JTable();
 		SpeicherTab.setEnabled(false);
-		SpeicherTab.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"00", null, null, null, null, null, null, null, null},
-				{"08", null, null, null, null, null, null, null, null},
-				{"10", null, null, null, null, null, null, null, null},
-				{"18", null, null, null, null, null, null, null, null},
-				{"20", null, null, null, null, null, null, null, null},
-				{"28", null, null, null, null, null, null, null, null},
-				{"30", null, null, null, null, null, null, null, null},
-				{"38", null, null, null, null, null, null, null, null},
-				{"40", null, null, null, null, null, null, null, null},
-				{"48", null, null, null, null, null, null, null, null},
-				{"50", null, null, null, null, null, null, null, null},
-				{"58", null, null, null, null, null, null, null, null},
-				{"60", null, null, null, null, null, null, null, null},
-				{"68", null, null, null, null, null, null, null, null},
-				{"70", null, null, null, null, null, null, null, null},
-				{"78", null, null, null, null, null, null, null, null},
-				{"80", null, null, null, null, null, null, null, null},
-				{"88", null, null, null, null, null, null, null, null},
-				{"90", null, null, null, null, null, null, null, null},
-				{"98", null, null, null, null, null, null, null, null},
-				{"A0", null, null, null, null, null, null, null, null},
-				{"A8", null, null, null, null, null, null, null, null},
-				{"B0", null, null, null, null, null, null, null, null},
-				{"B8", null, null, null, null, null, null, null, null},
-				{"C0", null, null, null, null, null, null, null, null},
-				{"C8", null, null, null, null, null, null, null, null},
-				{"D0", null, null, null, null, null, null, null, null},
-				{"D8", null, null, null, null, null, null, null, null},
-				{"E0", null, null, null, null, null, null, null, null},
-				{"E8", null, null, null, null, null, null, null, null},
-				{"F0", null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"", "00", "01", "02", "03", "04", "05", "06", "07"
-			}
-		));
+		SpeicherTab.setModel(ramModel);
 		SpeicherTab.getColumnModel().getColumn(0).setPreferredWidth(30);
 		SpeicherTab.getColumnModel().getColumn(0).setMinWidth(30);
 		SpeicherTab.getColumnModel().getColumn(0).setMaxWidth(30);
@@ -692,6 +696,7 @@ public class GUI extends JFrame implements IGUI{
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				prozessor.reset();
+				initRegisterModel();
 			}
 		});
 		GridBagConstraints gbc_btnReset = new GridBagConstraints();
@@ -757,6 +762,7 @@ public class GUI extends JFrame implements IGUI{
             }
         });
         
+		initRegisterModel();
         /*
         helpMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -767,6 +773,14 @@ public class GUI extends JFrame implements IGUI{
 	}
 
 
+
+	public void initRegisterModel() {
+		for(int x=0; x< 32;x++){
+			for(int y=1; y<9; y++){
+				ramModel.setValueAt("00", x, y);
+			}
+		}
+	}
 
 	@Override
 	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus) {
@@ -801,8 +815,6 @@ public class GUI extends JFrame implements IGUI{
 		RegCTab.getTableHeader().setReorderingAllowed(false);
 		SpeicherTab.getTableHeader().setReorderingAllowed(false);
 		
-	
-		
 	}
 	
 
@@ -821,8 +833,21 @@ public class GUI extends JFrame implements IGUI{
 	@Override
 	public void show_Register(String adresse, String hexvalue) {
 		// TODO Auto-generated method stub
-		System.out.println("show_Register not implemented!");
-		System.out.println("setting: addr="+adresse+";hexvalue="+hexvalue);
+		
+		if(adresse.length()==1) adresse="0"+adresse;
+		if(hexvalue.length()==1) hexvalue="0"+hexvalue;
+		
+//		System.out.println("setting: addr="+adresse+";hexvalue="+hexvalue);
+		
+		Integer row = Integer.parseInt(adresse.substring(0, 1),16);
+		Integer column = Integer.parseInt(adresse.substring(1, 2),16);
+		column++;
+		
+		if(column > 8){
+			column = 18-column;
+			row++;
+		}
+		ramModel.setValueAt(hexvalue, row, column);
 	}
 
 	@Override
