@@ -42,7 +42,7 @@ public class PIC_Befehle {
 	public static void asm_clrf(Integer befehl, Prozessor cpu) {
 		Integer f = getOpcodeFromToBit(befehl, 0, 6);
 		cpu.setSpeicherzellenWert(f, 0, true);
-		
+
 		cpu.incPC();
 	}
 
@@ -84,7 +84,7 @@ public class PIC_Befehle {
 		PIC_Logger.logger.info("Bitvalue: " + setValue);
 
 		Integer workingCell = cpu.getSpeicherzellenWert(adresse);
-		
+
 		PIC_Logger.logger.info("Wert vorher: 0x"
 				+ Integer.toHexString(workingCell));
 		cpu.setSpeicherzellenWert(adresse, (workingCell | setValue), false);
@@ -117,17 +117,14 @@ public class PIC_Befehle {
 		setValue = setValue - (int) Math.pow(2, bitNr);
 		PIC_Logger.logger.info("Bitvalue: " + setValue);
 
-
 		Integer workingCell = cpu.getSpeicherzellenWert(adresse);
-		
+
 		PIC_Logger.logger.info("Wert vorher: 0x"
 				+ Integer.toHexString(workingCell));
-		
-		
+
 		// Verunden und dadurch Bit loeschen
 		cpu.setSpeicherzellenWert(adresse, (workingCell & setValue), false);
 
-		
 		PIC_Logger.logger.info("Wert nacher: 0x"
 				+ Integer.toHexString(workingCell));
 		cpu.incPC();
@@ -144,8 +141,7 @@ public class PIC_Befehle {
 	public static void asm_movwf(Integer befehl, Prozessor cpu) {
 		Integer adresse = getOpcodeFromToBit(befehl, 0, 6);
 		Integer workingCell = cpu.getSpeicherzellenWert(adresse);
-		
-		
+
 		PIC_Logger.logger.info("Adresse: " + adresse + "\nZelleninhalt: "
 				+ workingCell);
 
@@ -245,7 +241,6 @@ public class PIC_Befehle {
 		cpu.incPC();
 	}
 
-	
 	/**
 	 * 
 	 * COMF 00 1001 dfff ffff
@@ -291,7 +286,7 @@ public class PIC_Befehle {
 		}
 		else {
 			// in w Register speichern
-			cpu.setW(result,true);
+			cpu.setW(result, true);
 		}
 
 		cpu.incPC();
@@ -308,7 +303,8 @@ public class PIC_Befehle {
 
 		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6); // zum speichern
 
-		PIC_Logger.logger.info("[DECFSZ]: Speicheradresse="+Integer.toHexString(f));
+		PIC_Logger.logger.info("[DECFSZ]: Speicheradresse="
+				+ Integer.toHexString(f));
 		PIC_Logger.logger.info("[DECFSZ]: Speicherzelleninhalt="
 				+ Integer.toHexString(cpu.getSpeicherzellenWert(f)));
 
@@ -325,12 +321,12 @@ public class PIC_Befehle {
 		}
 		else {
 			// in w Register speichern
-			cpu.setW(result,false);
+			cpu.setW(result, false);
 		}
 
-		//Result neu einlesen (evtl overflow)
+		// Result neu einlesen (evtl overflow)
 		result = cpu.getSpeicherzellenWert(f);
-		
+
 		if(result >= 1) {
 			cpu.incPC();
 		}
@@ -350,7 +346,7 @@ public class PIC_Befehle {
 	public static void asm_incf(Integer akt_Befehl, Prozessor cpu) {
 		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6);
 
-		Integer result = cpu.getSpeicherzellenWert(f)  + 1;
+		Integer result = cpu.getSpeicherzellenWert(f) + 1;
 
 		// Speicherort abfragen
 		if(getOpcodeFromToBit(akt_Befehl, 7, 7) == 1) {
@@ -361,7 +357,7 @@ public class PIC_Befehle {
 		}
 		else {
 			// in w Register speichern
-			cpu.setW(result,true);
+			cpu.setW(result, true);
 		}
 
 		cpu.incPC();
@@ -377,23 +373,23 @@ public class PIC_Befehle {
 	public static void asm_incfsz(Integer akt_Befehl, Prozessor cpu) {
 		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6); // zum speichern
 
-		Integer result = cpu.getSpeicherzellenWert(f)  + 1;
+		Integer result = cpu.getSpeicherzellenWert(f) + 1;
 
 		// Speicherort abfragen
 		if(getOpcodeFromToBit(akt_Befehl, 7, 7) == 1) {
 
 			// in f Register speichern
 			cpu.setSpeicherzellenWert(f, result, false);
-			
+
 		}
 		else {
 			// in w Register speichern
-			cpu.setW(result,false);
+			cpu.setW(result, false);
 		}
-		
-		//Neu einlesen, wegen evtl. Ueberlauf
+
+		// Neu einlesen, wegen evtl. Ueberlauf
 		result = cpu.getSpeicherzellenWert(f);
-		
+
 		if(result >= 1) {
 			cpu.incPC();
 		}
@@ -420,7 +416,7 @@ public class PIC_Befehle {
 
 		}
 		else {
-			cpu.setW(erg,true);
+			cpu.setW(erg, true);
 		}
 		cpu.incPC();
 	}
@@ -435,18 +431,16 @@ public class PIC_Befehle {
 		Integer w = cpu.getW();
 		Integer f = getOpcodeFromToBit(befehl, 0, 6);
 		Integer result = cpu.getSpeicherzellenWert(f);
-		
+
 		if(getOpcodeFromToBit(befehl, 7, 7) == 1) {
 			cpu.setSpeicherzellenWert(f, result, true);
 		}
 		else {
-			cpu.setW(result,true);
+			cpu.setW(result, true);
 		}
 		cpu.incPC();
 	}
 
-	
-	
 	/**
 	 * RLF 00 1101 dfff ffff
 	 * 
@@ -454,7 +448,57 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_rlf(Integer befehl, Prozessor cpu) {
+		// TODO
+		Integer f = getOpcodeFromToBit(befehl, 0, 6);
+		Integer d = getOpcodeFromToBit(befehl, 7, 7);
 
+		Integer result = cpu.getSpeicherzellenWert(f);
+		result = result << 1;
+
+		if(result > 255) {
+			result -= 256;
+			if(cpu.getStatus().getBit(bits.C)) {
+				result++;	///Set Carrybit
+			}
+			cpu.getStatus().setBit(bits.C);
+		}
+
+		if(d == 1) {
+			cpu.setSpeicherzellenWert(f, result, true);
+		}
+		else {
+			cpu.setW(result, true);
+		}
+		cpu.incPC();
+	}
+
+	public static void asm_rrf(Integer befehl, Prozessor cpu) {
+		// TODO
+		Integer f = getOpcodeFromToBit(befehl, 0, 6);
+		Integer d = getOpcodeFromToBit(befehl, 7, 7);
+
+		Integer result = cpu.getSpeicherzellenWert(f);
+		
+		if(cpu.getStatus().getBit(bits.C)){
+			result += 0x100;
+		}
+		
+		if((result & 0x01) == 1){
+			cpu.getStatus().setBit(bits.C);
+		}
+		else{
+			cpu.getStatus().clearBit(bits.C);
+		}
+		
+		result = result >> 1;
+
+		if(d == 1) {
+			cpu.setSpeicherzellenWert(f, result, true);
+		}
+		else {
+			cpu.setW(result, true);
+		}
+		cpu.incPC();
 	}
 
 	/**
@@ -513,7 +557,6 @@ public class PIC_Befehle {
 		// PC++
 		cpu.incPC();
 	}
-
 
 	/**
 	 * SLEEP
@@ -579,7 +622,7 @@ public class PIC_Befehle {
 		Integer w = cpu.getW();
 
 		// OR
-		cpu.setW( (w|k), true);
+		cpu.setW((w | k), true);
 
 		// PC++
 		cpu.incPC();
@@ -615,7 +658,7 @@ public class PIC_Befehle {
 		Integer w = cpu.getW();
 
 		// AND
-		cpu.setW((w&k), true);
+		cpu.setW((w & k), true);
 
 		// PC++
 		cpu.incPC();
@@ -735,11 +778,11 @@ public class PIC_Befehle {
 		Integer w = cpu.getW();
 
 		// EXEC: XOR
-		Integer result = new Integer(w^f);
+		Integer result = new Integer(w ^ f);
 
 		// Store
 		if(d == 0) {
-			cpu.setW(result,true);
+			cpu.setW(result, true);
 		}
 		else {
 			cpu.setSpeicherzellenWert(adresse, result, true);
@@ -784,7 +827,7 @@ public class PIC_Befehle {
 
 		// Store
 		if(W_F_Switch == 0) {
-			cpu.setW(result,false);
+			cpu.setW(result, false);
 		}
 		else if(W_F_Switch == 1) {
 			cpu.setSpeicherzellenWert(adresse, result, false);
@@ -799,8 +842,7 @@ public class PIC_Befehle {
 	}
 
 	/**
-	 * SUBWF
-	 * 00 0010 dfff ffff
+	 * SUBWF 00 0010 dfff ffff
 	 * 
 	 * @param akt_Befehl
 	 * @param prozessor
@@ -825,7 +867,6 @@ public class PIC_Befehle {
 		cpu.incPC();
 	}
 
-	
 	/**
 	 * 
 	 * @param value
@@ -842,5 +883,5 @@ public class PIC_Befehle {
 			return false;
 		}
 	}
-	
+
 }

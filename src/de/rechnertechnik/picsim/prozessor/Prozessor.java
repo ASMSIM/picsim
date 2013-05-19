@@ -172,6 +172,7 @@ public class Prozessor implements Runnable, IProzessor {
 
 			else if(isIntegerCommand(ECommands.RRF, akt_Befehl)) {
 				System.out.println("RRF");
+				PIC_Befehle.asm_rrf(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.SUBWF, akt_Befehl)) {
