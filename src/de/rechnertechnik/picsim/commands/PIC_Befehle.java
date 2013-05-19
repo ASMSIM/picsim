@@ -40,7 +40,7 @@ public class PIC_Befehle {
 	 */
 
 	public static void asm_clrf(Integer befehl, Prozessor cpu) {
-		Integer f = getOpcodeFromToBit(befehl, 0, 7);
+		Integer f = getOpcodeFromToBit(befehl, 0, 6);
 		cpu.setSpeicherzellenWert(f, 0, true);
 		
 		cpu.incPC();
@@ -54,10 +54,10 @@ public class PIC_Befehle {
 	 */
 	public static void asm_andwf(Integer befehl, Prozessor cpu) {
 		Integer w = cpu.getW();
-		Integer f = getOpcodeFromToBit(befehl, 0, 7);
+		Integer f = getOpcodeFromToBit(befehl, 0, 6);
 		Integer erg = w & cpu.getSpeicherzellenWert(f);
 
-		if(getOpcodeFromToBit(befehl, 8, 8) == 1) {
+		if(getOpcodeFromToBit(befehl, 7, 7) == 1) {
 			cpu.setSpeicherzellenWert(f, erg, true);
 		}
 		else {
@@ -227,12 +227,12 @@ public class PIC_Befehle {
 	public static void asm_addwf(Integer akt_Befehl, Prozessor cpu) {
 
 		// Komponenten auslesen
-		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7);
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6);
 		Integer w = cpu.getW();
 		Integer result = cpu.getSpeicherzellenWert(f) + w;
 
 		// Speicherort abfragen
-		if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1) {
+		if(getOpcodeFromToBit(akt_Befehl, 7, 7) == 1) {
 			// in f Register speichern
 			cpu.setSpeicherzellenWert(f, result, true);
 		}
@@ -255,11 +255,11 @@ public class PIC_Befehle {
 	 */
 	public static void asm_comf(Integer akt_Befehl, Prozessor cpu) {
 
-		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7);
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6);
 		Integer result = 255 - cpu.getSpeicherzellenWert(f);
 
 		// Speicherort abfragen
-		if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1) {
+		if(getOpcodeFromToBit(akt_Befehl, 7, 7) == 1) {
 			// in f Register speichern
 			cpu.setSpeicherzellenWert(f, result, true);
 		}
@@ -279,11 +279,11 @@ public class PIC_Befehle {
 	 * @param prozessor
 	 */
 	public static void asm_decf(Integer akt_Befehl, Prozessor cpu) {
-		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7);
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6);
 		Integer result = cpu.getSpeicherzellenWert(f) - 1;
 
 		// Speicherort abfragen
-		if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1) {
+		if(getOpcodeFromToBit(akt_Befehl, 7, 7) == 1) {
 
 			// in f Register speichern
 			cpu.setSpeicherzellenWert(f, result, true);
@@ -306,17 +306,18 @@ public class PIC_Befehle {
 	 */
 	public static void asm_decfsz(Integer akt_Befehl, Prozessor cpu) {
 
-		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7); // zum speichern
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6); // zum speichern
 
-		PIC_Logger.logger.info("[DECFSZ]: register= "
-				+ cpu.getSpeicherzellenWert(f));
+		PIC_Logger.logger.info("[DECFSZ]: Speicheradresse="+Integer.toHexString(f));
+		PIC_Logger.logger.info("[DECFSZ]: Speicherzelleninhalt="
+				+ Integer.toHexString(cpu.getSpeicherzellenWert(f)));
 
 		Integer result = cpu.getSpeicherzellenWert(f) - 1;
 
-		PIC_Logger.logger.info("[DECFSZ]: result= " + result);
+		PIC_Logger.logger.info("[DECFSZ]: Result= " + result);
 
 		// Speicherort abfragen
-		if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1) {
+		if(getOpcodeFromToBit(akt_Befehl, 7, 7) == 1) {
 
 			// in f Register speichern
 			cpu.setSpeicherzellenWert(f, result, false);
@@ -347,12 +348,12 @@ public class PIC_Befehle {
 	 * @param prozessor
 	 */
 	public static void asm_incf(Integer akt_Befehl, Prozessor cpu) {
-		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7);
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6);
 
 		Integer result = cpu.getSpeicherzellenWert(f)  + 1;
 
 		// Speicherort abfragen
-		if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1) {
+		if(getOpcodeFromToBit(akt_Befehl, 7, 7) == 1) {
 
 			// in f Register speichern
 			cpu.setSpeicherzellenWert(f, result, true);
@@ -374,12 +375,12 @@ public class PIC_Befehle {
 	 * @param prozessor
 	 */
 	public static void asm_incfsz(Integer akt_Befehl, Prozessor cpu) {
-		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 7); // zum speichern
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6); // zum speichern
 
 		Integer result = cpu.getSpeicherzellenWert(f)  + 1;
 
 		// Speicherort abfragen
-		if(getOpcodeFromToBit(akt_Befehl, 8, 8) == 1) {
+		if(getOpcodeFromToBit(akt_Befehl, 7, 7) == 1) {
 
 			// in f Register speichern
 			cpu.setSpeicherzellenWert(f, result, false);
@@ -410,10 +411,10 @@ public class PIC_Befehle {
 	 */
 	public static void asm_iorwf(Integer befehl, Prozessor cpu) {
 		Integer w = cpu.getW();
-		Integer f = getOpcodeFromToBit(befehl, 0, 7);
+		Integer f = getOpcodeFromToBit(befehl, 0, 6);
 		Integer erg = w | cpu.getSpeicherzellenWert(f);
 
-		if(getOpcodeFromToBit(befehl, 8, 8) == 1) {
+		if(getOpcodeFromToBit(befehl, 7, 7) == 1) {
 
 			cpu.setSpeicherzellenWert(f, erg, true);
 
@@ -432,10 +433,10 @@ public class PIC_Befehle {
 	 */
 	public static void asm_movf(Integer befehl, Prozessor cpu) {
 		Integer w = cpu.getW();
-		Integer f = getOpcodeFromToBit(befehl, 0, 7);
+		Integer f = getOpcodeFromToBit(befehl, 0, 6);
 		Integer result = cpu.getSpeicherzellenWert(f);
 		
-		if(getOpcodeFromToBit(befehl, 8, 8) == 1) {
+		if(getOpcodeFromToBit(befehl, 7, 7) == 1) {
 			cpu.setSpeicherzellenWert(f, result, true);
 		}
 		else {
@@ -665,8 +666,8 @@ public class PIC_Befehle {
 	 */
 	public static void asm_btfss(Integer akt_Befehl, Prozessor cpu) {
 
-		Integer bitNr = getOpcodeFromToBit(akt_Befehl, 7, 9);
 		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6);
+		Integer bitNr = getOpcodeFromToBit(akt_Befehl, 7, 9);
 
 		Integer k = cpu.getSpeicherzellenWert(f);
 		boolean bitIsSet = getBit(k, bitNr);
@@ -695,8 +696,8 @@ public class PIC_Befehle {
 	 */
 	public static void asm_btfsc(Integer akt_Befehl, Prozessor cpu) {
 
-		Integer bitNr = getOpcodeFromToBit(akt_Befehl, 7, 9);
 		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6);
+		Integer bitNr = getOpcodeFromToBit(akt_Befehl, 7, 9);
 
 		Integer k = cpu.getSpeicherzellenWert(f);
 		boolean bitIsSet = getBit(k, bitNr);
@@ -799,12 +800,29 @@ public class PIC_Befehle {
 
 	/**
 	 * SUBWF
+	 * 00 0010 dfff ffff
 	 * 
 	 * @param akt_Befehl
 	 * @param prozessor
 	 */
-	public static void asm_subwf(Integer akt_Befehl, Prozessor prozessor) {
+	public static void asm_subwf(Integer akt_Befehl, Prozessor cpu) {
+		// Komponenten auslesen
+		Integer f = getOpcodeFromToBit(akt_Befehl, 0, 6);
+		Integer w = cpu.getW();
+		Integer result = cpu.getSpeicherzellenWert(f) - w;
 
+		// Speicherort abfragen
+		if(getOpcodeFromToBit(akt_Befehl, 7, 7) == 1) {
+			// in f Register speichern
+			cpu.setSpeicherzellenWert(f, result, true);
+		}
+		else {
+			// in w Register speichern
+			cpu.setW(result, true);
+		}
+
+		// PC ++
+		cpu.incPC();
 	}
 
 	
