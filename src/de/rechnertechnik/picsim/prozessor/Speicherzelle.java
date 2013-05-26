@@ -3,7 +3,7 @@ package de.rechnertechnik.picsim.prozessor;
 public class Speicherzelle {
 	
 	public enum bits{
-		Z,C,DC
+		Z,C,DC, RP0
 	}
 
 	private Integer speicherzelle;
@@ -37,7 +37,8 @@ public class Speicherzelle {
 				return getBit(1);
 			case Z:
 				return getBit(2);
-				
+			case RP0:
+				return getBit(5);
 			default:
 				System.out.println("Check getBit(), Bit Enum, enum not implemented!");
 				break;
@@ -72,7 +73,9 @@ public class Speicherzelle {
 			case Z:
 				setBit(2);
 				break;
-				
+			case RP0:
+				setBit(5);
+				break;
 			default:
 				System.out.println("Check setBit(), Bit Enum, enum not implemented!");
 				break;
@@ -90,7 +93,9 @@ public class Speicherzelle {
 			case Z:
 				clearBit(2);
 				break;
-				
+			case RP0:
+				clearBit(5);
+				break;
 			default:
 				System.out.println("Check setBit(), Bit Enum, enum not implemented!");
 				break;

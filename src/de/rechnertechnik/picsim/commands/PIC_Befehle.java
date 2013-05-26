@@ -75,13 +75,12 @@ public class PIC_Befehle {
 	 */
 	public static void asm_bsf(Integer befehl, Prozessor cpu) {
 		Integer bitNr = getOpcodeFromToBit(befehl, 7, 9);
-
 		Integer adresse = getOpcodeFromToBit(befehl, 0, 6);
 
 		PIC_Logger.logger.info("BitNr: " + bitNr + "\nAdresse: " + adresse);
 
 		Integer setValue = (int) Math.pow(2, bitNr);
-		PIC_Logger.logger.info("Bitvalue: " + setValue);
+		PIC_Logger.logger.info("Settvalue: " + setValue);
 
 		Integer workingCell = cpu.getSpeicherzellenWert(adresse);
 
@@ -89,8 +88,9 @@ public class PIC_Befehle {
 				+ Integer.toHexString(workingCell));
 		cpu.setSpeicherzellenWert(adresse, (workingCell | setValue), false);
 
+		workingCell = cpu.getSpeicherzellenWert(adresse);
 		PIC_Logger.logger.info("Wert nacher: 0x"
-				+ Integer.toHexString(workingCell));
+				+ Integer.toHexString(workingCell ));
 		cpu.incPC();
 	}
 

@@ -15,6 +15,7 @@ import de.rechnertechnik.picsim.parser.Parser;
 import de.rechnertechnik.picsim.register.SpecialFunctionRegister;
 import de.rechnertechnik.picsim.register.Statusregister;
 import de.rechnertechnik.picsim.prozessor.EStepmode;
+import de.rechnertechnik.picsim.prozessor.Speicher.Bank;
 import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
 
 public class Prozessor implements Runnable, IProzessor {
@@ -314,10 +315,12 @@ public class Prozessor implements Runnable, IProzessor {
 	
 	
 	public Integer getSpeicherzellenWert(Integer adresse){
-		return getRam().getZelle(adresse).getValue();
+		return getRam().getSpeicherzellenWert(adresse);
 	}
 	
 	public void setSpeicherzellenWert(Integer adresse, Integer value, boolean status_effect){
+		
+		//Passive Beeinträchtigung des Statusregister
 		if((value == 0) && status_effect) {
 			status.setBit(bits.Z);
 		}
@@ -334,8 +337,70 @@ public class Prozessor implements Runnable, IProzessor {
 			}
 		}
 
+		
+		
+		//Aktive Beeinträchtigung des  Statusregisters
+		if(adresse == 0x03 || adresse == 0x83){
+			
+			String logstring = "[Aktive Beeinträchtigung des Statusregisters]: ";
+			
+			//CARRY
+			if( (value & 0x01) == 0x01){	//Carrybit manuell gesetzt
+				status.setBit(bits.C);
+				PIC_Logger.logger.info(logstring+"Set C");
+			}
+			else{	//Carrybit gelöscht
+				status.clearBit(bits.C);
+				PIC_Logger.logger.info(logstring+"Clear C");
+			}
+			
+			
+			//DC BIT
+			if( (value & 0x02) == 0x02){	//DC GESETZT
+				status.setBit(bits.DC);
+				PIC_Logger.logger.info(logstring+"Set DC");
+			}	
+			else{						//DC GELÖSCHT
+				status.clearBit(bits.DC);
+				PIC_Logger.logger.info(logstring+"Clear DC");
+			}
+			
+			
+			//Z
+			if( (value & 0x04) == 0x04){	//Z GESETZT
+				status.setBit(bits.Z);
+				PIC_Logger.logger.info(logstring+"Set Z");
+			}	
+			else{						//Z GELÖSCHT
+				status.clearBit(bits.Z);
+				PIC_Logger.logger.info(logstring+"Clear Z");
+			}
+			
+			//RP0
+			if( (value & 0x20) == 0x20){	//RP0 GESETZT
+				status.setBit(bits.RP0);
+				getRam().setBank(Bank.BANK1);
+				PIC_Logger.logger.info(logstring+"Switched to Bank1");
+			}	
+			else{						//RP0 GELÖSCHT
+				status.clearBit(bits.RP0);
+				getRam().setBank(Bank.BANK0);
+				PIC_Logger.logger.info(logstring+"Switched to Bank0");
+			}
+			
+			
+		}
+		
+		if(getRam().getBank() == Bank.BANK1){
+			adresse += 0x80;							//Bank 1 startet bei 0x80h
+			PIC_Logger.logger.info("BANK1: Adresse += 0x80");
+		}
+		
+		getRam().setZelle(adresse, value);
 		gui.show_Register(Integer.toHexString(adresse), Integer.toHexString(value));
-		getRam().getZelle(adresse).setWert(value);
+		
+		getRam().printDump();
+	
 	}
 	
 
@@ -426,7 +491,7 @@ public class Prozessor implements Runnable, IProzessor {
 	 * @return
 	 */
 	private Integer nextCommand() {
-		Integer next = programmSpeicher.getZelle(pc.getValue()).getValue();
+		Integer next = programmSpeicher.getSpeicherzellenWert(pc.getValue());
 		return next;
 	}
 
