@@ -303,21 +303,39 @@ public class Prozessor implements Runnable, IProzessor {
 
 	}
 
+	
+	/**
+	 * Inkrementiere Programmcounter
+	 */
 	public void incPC() {
 		setPCL(pc.getValue() + 1);
 		String value = Integer.toHexString(pc.getValue());
 		gui.show_PC("0x"+value);
+		gui.show_Register("02", value);
+		gui.show_Register("82", value);
 	}
 
-	private Speicher getRam() {
-		return ram;
-	}
 	
-	
+	/**
+	 * Liefert den Wert einer Speicherzelle zurück
+	 * @param adresse
+	 * @return
+	 */
 	public Integer getSpeicherzellenWert(Integer adresse){
-		return getRam().getSpeicherzellenWert(adresse);
+		return ram.getSpeicherzellenWert(adresse);
 	}
 	
+	
+	
+	
+	
+	/**
+	 * Schreibt einen Wert in eine Speicherzelle
+	 * 
+	 * @param adresse
+	 * @param value
+	 * @param status_effect
+	 */
 	public void setSpeicherzellenWert(Integer adresse, Integer value, boolean status_effect){
 		
 		//Passive Beeinträchtigung des Statusregister
@@ -379,35 +397,40 @@ public class Prozessor implements Runnable, IProzessor {
 			//RP0
 			if( (value & 0x20) == 0x20){	//RP0 GESETZT
 				status.setBit(bits.RP0);
-				getRam().setBank(Bank.BANK1);
+				ram.setBank(Bank.BANK1);
 				PIC_Logger.logger.info(logstring+"Switched to Bank1");
 			}	
 			else{						//RP0 GELÖSCHT
 				status.clearBit(bits.RP0);
-				getRam().setBank(Bank.BANK0);
+				ram.setBank(Bank.BANK0);
 				PIC_Logger.logger.info(logstring+"Switched to Bank0");
 			}
 			
-			
 		}
 		
-		if(getRam().getBank() == Bank.BANK1){
+		
+		//Adresse bei Bank 1 erhöhen
+		if(ram.getBank() == Bank.BANK1){
 			adresse += 0x80;							//Bank 1 startet bei 0x80h
 			PIC_Logger.logger.info("BANK1: Adresse += 0x80");
 		}
 		
-		getRam().setZelle(adresse, value);
+		ram.setZelle(adresse, value);
 		gui.show_Register(Integer.toHexString(adresse), Integer.toHexString(value));
 		
-		getRam().printDump();
-	
 	}
 	
 
+	/**
+	 * Liefert den Wert des W Registers zurück
+	 * @return
+	 */
 	public Integer getW() {
 		return w.getWert();
 	}
 
+	
+	
 	/**
 	 * Setzt einen Wert in W
 	 * 
@@ -438,6 +461,7 @@ public class Prozessor implements Runnable, IProzessor {
 		gui.show_W_Register(Integer.toHexString(value));
 		this.w.setWert(value);
 	}
+
 
 	public Speicherzelle getStatus() {
 		return status;
