@@ -18,7 +18,7 @@ import de.rechnertechnik.picsim.prozessor.EStepmode;
 import de.rechnertechnik.picsim.prozessor.Speicher.Bank;
 import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
 
-public class Prozessor implements Runnable, IProzessor {
+public class Prozessor implements Runnable, IProzessor, IPorts {
 
 	private boolean stopProgram = false;
 	private BefehlAdressraumZuordnung cmdTable;
@@ -49,7 +49,8 @@ public class Prozessor implements Runnable, IProzessor {
 
 		status = ram.getStatus(true);
 		pc = ram.getPCL(true);
-		
+
+		gui.show_PortA(0x00);
 
 		// Init und Fokus auf 1. Zeile
 		gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0));
@@ -356,8 +357,45 @@ public class Prozessor implements Runnable, IProzessor {
 		}
 
 		
+		//Adresse bei Bank 1 erhöhen
+		if(ram.getBank() == Bank.BANK1){
+			adresse += 0x80;							//Bank 1 startet bei 0x80h
+			PIC_Logger.logger.info("BANK1: Adresse += 0x80");
+		}
+		
 		
 		//Aktive Beeinträchtigung des  Statusregisters
+		checkStatusActive(adresse, value);
+		
+		
+		
+		//Ports ueberpruefen
+		if(adresse == 0x05){	//Port A
+			//TODO
+		}
+		
+		//Latches ueberpruefen
+		if(adresse == 0x85){	//Tris A
+			//TODO
+		}
+		
+		
+		
+		ram.setZelle(adresse, value);
+		gui.show_Register(Integer.toHexString(adresse), Integer.toHexString(value));
+		
+	}
+
+	
+	/**
+	 * Überprüft beim Setzen eines Wertes, ob es eine direkte Beeinträchtigung des Statusregisters gab
+	 *
+	 * Bsp: bsf status,5
+	 *
+	 * @param adresse
+	 * @param value
+	 */
+	private void checkStatusActive(Integer adresse, Integer value) {
 		if(adresse == 0x03 || adresse == 0x83){
 			
 			String logstring = "[Aktive Beeinträchtigung des Statusregisters]: ";
@@ -407,17 +445,6 @@ public class Prozessor implements Runnable, IProzessor {
 			}
 			
 		}
-		
-		
-		//Adresse bei Bank 1 erhöhen
-		if(ram.getBank() == Bank.BANK1){
-			adresse += 0x80;							//Bank 1 startet bei 0x80h
-			PIC_Logger.logger.info("BANK1: Adresse += 0x80");
-		}
-		
-		ram.setZelle(adresse, value);
-		gui.show_Register(Integer.toHexString(adresse), Integer.toHexString(value));
-		
 	}
 	
 
@@ -543,5 +570,28 @@ public class Prozessor implements Runnable, IProzessor {
 		setPCL(0);
 		gui.setFocus(parser.getCommand_source_line().get(0));
 		stepmode = EStepmode.hold;
+	}
+
+	@Override
+	public void setPortA(Integer value) {
+		//TODO
+	}
+
+	@Override
+	public Integer getPortA() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setTrisA(Integer value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer getTrisA() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

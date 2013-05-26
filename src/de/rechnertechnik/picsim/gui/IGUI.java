@@ -9,5 +9,5 @@ public interface IGUI {
 	public void show_W_Register(String hexvalue);
 	public void show_Register(String adresse, String hexvalue);
 	public void show_PC(String value);
-	
+	public void show_PortA(Integer value);
 }

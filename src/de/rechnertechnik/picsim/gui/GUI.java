@@ -94,6 +94,18 @@ public class GUI extends JFrame implements IGUI{
 	
 	
 	
+	DefaultTableModel regA = new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"RA", "7", "6", "5", "4", "3", "2", "1", "0"
+			}
+		);
+	
+	
+	
+	
 //	public static void main(String[] args) {
 //		GUI gui = new GUI();
 //		gui.setBounds(100, 100, 1000,700);
@@ -210,14 +222,7 @@ public class GUI extends JFrame implements IGUI{
 		
 		RegATab = new JTable();
 		RegATab.setEnabled(false);
-		RegATab.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"RA", "7", "6", "5", "4", "3", "2", "1", "0"
-			}
-		));
+		RegATab.setModel(regA);
 		RegATab.getColumnModel().getColumn(0).setPreferredWidth(20);
 		RegATab.getColumnModel().getColumn(0).setMinWidth(20);
 		RegATab.getColumnModel().getColumn(0).setMaxWidth(20);
@@ -859,5 +864,24 @@ public class GUI extends JFrame implements IGUI{
 	@Override
 	public void show_PC(String value) {
 		PC_inp.setText(value);
+	}
+
+	@Override
+	public void show_PortA(Integer value) {
+		
+		System.out.println("SHOW PORT A");
+		
+		int x=7;
+		for(int i = 0; i < 8; i++){
+			
+			if( (value & (int)Math.pow(2, i)) == (int)Math.pow(2, i)){
+				regA.setValueAt(1, 0, x+1);
+			}
+			else{
+				regA.setValueAt(0, 0, x+1);
+			}
+			x--;
+		}
+		
 	}
 }
