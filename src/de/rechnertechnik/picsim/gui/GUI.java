@@ -837,16 +837,22 @@ public class GUI extends JFrame implements IGUI{
 		if(adresse.length()==1) adresse="0"+adresse;
 		if(hexvalue.length()==1) hexvalue="0"+hexvalue;
 		
-//		System.out.println("setting: addr="+adresse+";hexvalue="+hexvalue);
+		System.out.println("setting: addr="+adresse+";hexvalue="+hexvalue);
 		
 		Integer row = Integer.parseInt(adresse.substring(0, 1),16);
 		Integer column = Integer.parseInt(adresse.substring(1, 2),16);
-		column++;
 		
-		if(column > 8){
-			column = 18-column;
+		
+		row*= 2;
+		
+		if(column >= 8){
+			column-= 8;
 			row++;
 		}
+		
+		column++;
+			
+ 
 		ramModel.setValueAt(hexvalue, row, column);
 	}
 

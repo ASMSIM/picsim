@@ -1,11 +1,8 @@
 package de.rechnertechnik.picsim.prozessor;
 
-import java.util.ArrayList;
-
-import javax.xml.bind.ValidationEvent;
-
 import de.rechnertechnik.picsim.logger.PIC_Logger;
-import de.rechnertechnik.picsim.parser.Parser;
+import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
+
 
 /**
  * Stellt den Programmspeicher des PICs dar
@@ -14,10 +11,18 @@ import de.rechnertechnik.picsim.parser.Parser;
  * 
  */
 public class Speicher {
+	
+	
+	public enum Bank{
+		BANK0, BANK1
+	}
+	
 
 	public static int SPEICHERGROESSE = 300;
-
 	protected Speicherzelle[] speicherZellen = new Speicherzelle[SPEICHERGROESSE];
+	private Bank bank = Bank.BANK0;
+	
+	
 
 	/**
 	 * Creates Memory and init with Zeros
@@ -37,23 +42,59 @@ public class Speicher {
 		}
 	}
 
+	
+	
+	
+	
 	/**
 	 * Wert in Speicherzelle schreiben
 	 * 
-	 * @param zelle
+	 * @param adresse
 	 * @param value
 	 */
-	public void setZelle(int zelle, int value) throws MemoryOutOfRangeException {
-			speicherZellen[zelle].setWert(value);
+	public void setZelle(int adresse, int value) {
+		
+		speicherZellen[adresse].setWert(value);
 	}
 
+	
+	public Bank getBank() {
+		return bank;
+	}
+	
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
+	
+	
 	/**
 	 * Wert aus Speicherzelle lesen
+	 * 
+	 * @param adresse
+	 * @return
+	 */
+	public Integer getSpeicherzellenWert(int adresse) {
+		try {
+			return speicherZellen[adresse].getValue();
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			System.err.println("Speicherbereich nicht vorhanden");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
+	/**
+	 * Wert aus Speicherzelle lesen
+	 * 
+	 * @deprecated
 	 * 
 	 * @param i
 	 * @return
 	 */
-	public Speicherzelle getZelle(int i) {
+	private Speicherzelle getZelle(int i) {
 		try {
 			return speicherZellen[i];
 		}
@@ -100,7 +141,7 @@ public class Speicher {
 		for(int i = 0; i < SPEICHERGROESSE; i++) {
 			System.out.print(Integer.toHexString(speicherZellen[i].getValue()) + "\t");
 			lineCnt++;
-			if(lineCnt % 8 == 0)
+			if(lineCnt % 16 == 0)
 				System.out.println();
 		}
 

@@ -44,30 +44,26 @@ public class Speichertest {
 
 		//Speicher richtig initialisiert?
 		for (int i = 0; i < Speicher.SPEICHERGROESSE; i++) {
-			if (speicher.getZelle(i).getValue() != 0) {
+			if(speicher.getSpeicherzellenWert(i) != 0) {
 				assertFalse(true);
 			}
+			
+			
+			
 		}
 		
 		
-		try {
 			speicher.setZelle(0, 15);
 			speicher.setZelle(1, 40);
 			
-			if(speicher.getZelle(0).getValue() != 15){
+			if(speicher.getSpeicherzellenWert(0) != 15){
 				assertFalse(true);
 			}
-			if(speicher.getZelle(1).getValue() != 40){
+			if(speicher.getSpeicherzellenWert(1) != 40){
 				assertFalse(true);
 			}
 
 
-		} catch (MemoryOutOfRangeException e) {
-			e.printStackTrace();
-			assertFalse(true);			
-		}
-		
-		
 		
 		
 
