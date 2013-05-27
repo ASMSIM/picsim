@@ -870,8 +870,9 @@ public class GUI extends JFrame implements IGUI{
 			@Override
 			public void tableChanged(TableModelEvent arg0) {
 				
+				
 				//Usereingabe
-				if(SpeicherTab.isEditing()){
+				if(SpeicherTab.isEditing() ){
 					
 					Integer column = arg0.getColumn();
 					Integer row = arg0.getLastRow();
@@ -886,14 +887,30 @@ public class GUI extends JFrame implements IGUI{
 					String high = Integer.toHexString(row);
 					String low = Integer.toHexString(column);
 					
-					System.out.println(SpeicherTab.getValueAt(arg0.getLastRow(), arg0.getColumn()));
 					
+					//FEHLEINGABE ERKENNEN
 					String eingabe = SpeicherTab.getValueAt(arg0.getLastRow(), arg0.getColumn()).toString();
 					
-//					if(eingabe.length() != 3){
-//						System.out.println("FEHLER");
-//					}
-//					else if()
+					try{
+						Integer wert = Integer.parseInt(eingabe,16);
+						
+						if(wert < 0 || wert > 255){
+							Integer oldVal =  prozessor.get_RAM_Value(Integer.parseInt(high+""+low,16));
+							show_Register(high+""+low, Integer.toHexString(oldVal));
+						}
+						//WERT AKZEPTIERT !!!
+						else{
+							System.out.println("Registeradresse: "+high+""+low);
+							System.out.println("Wert: "+wert);
+							prozessor.change_RAM_Value(Integer.parseInt(high+""+low,16), wert);
+						}
+					}
+					catch( java.lang.NumberFormatException e){
+						System.out.println("FALSCHEINGABE");
+						Integer oldVal =  prozessor.get_RAM_Value(Integer.parseInt(high+""+low,16));
+						show_Register(high+""+low, Integer.toHexString(oldVal));
+					}
+					
 					
 					
 					PIC_Logger.logger.info("[Usereingabe RAM]: "+high+""+low);
@@ -901,9 +918,6 @@ public class GUI extends JFrame implements IGUI{
 					
 				}
 				
-				
-				
-//				prozessor.change_RAM_Value(adresse, to_Value);
 			}
 		}));
 	}
