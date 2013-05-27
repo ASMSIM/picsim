@@ -279,6 +279,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			}
 
 			gui.setFocus(parser.getCommand_source_line().get(pc.getValue()));
+			gui.show_Register(0x02, pc.getValue());
+			gui.show_Register(0x82, pc.getValue());
 			
 			if(stepmode == EStepmode.onestep) {
 				stepmode = EStepmode.hold;
@@ -343,7 +345,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		//Passive Beeinträchtigung des Statusregister
 		//Überlauf wird abgefangen 
 		if((value == 0) && status_effect) {
-			status.setBit(bits.Z);
+			status.setBit(bits.Z);				//TODO STATUS AUF GUI!???
 		}
 		else if(value > 255) {
 			value -= 256;
@@ -368,6 +370,11 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		
 		//Aktive Beeinträchtigung des  Statusregisters
 		checkStatusActive(adresse, value);
+
+		//GUI AUSGABE
+//		gui.show_Register(0x03, status.getValue());
+//		gui.show_Register(0x83, status.getValue());
+		
 		
 		
 		/**

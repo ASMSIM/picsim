@@ -2,14 +2,10 @@ package de.rechnertechnik.picsim.commands;
 
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.prozessor.Prozessor;
-import de.rechnertechnik.picsim.speicher.Speicherzelle;
 import de.rechnertechnik.picsim.speicher.Speicherzelle.bits;
 
 public class PIC_Befehle {
 
-	public enum check {
-		register, w
-	}
 
 	/**
 	 * GOTO Befehl 0010 1KKK KKKK KKKK
@@ -18,6 +14,7 @@ public class PIC_Befehle {
 		cpu.setPCL(getOpcodeFromToBit(befehl, 0, 7));
 	}
 
+	
 	/**
 	 * MOVLW Befehl 11 00xx kkkk kkkk
 	 * 
@@ -29,20 +26,20 @@ public class PIC_Befehle {
 		cpu.incPC();
 	}
 
+	
 	/**
 	 * CLRF 00 0001 1fff ffff
 	 * 
 	 * @param befehl
 	 * @param cpu
 	 */
-
 	public static void asm_clrf(Integer befehl, Prozessor cpu) {
 		Integer f = getOpcodeFromToBit(befehl, 0, 6);
 		cpu.setSpeicherzellenWert(f, 0, true);
-
 		cpu.incPC();
 	}
 
+	
 	/**
 	 * ANDWF 00 0101 dfff ffff
 	 * 
@@ -64,6 +61,7 @@ public class PIC_Befehle {
 		cpu.incPC();
 	}
 
+	
 	/**
 	 * BSF 01 01bb bfff ffff
 	 * 
@@ -91,11 +89,19 @@ public class PIC_Befehle {
 		cpu.incPC();
 	}
 
+	
+	/**
+	 * CLRW 
+	 * 
+	 * @param befehl
+	 * @param cpu
+	 */
 	public static void asm_clrw(Integer befehl, Prozessor cpu) {
 		cpu.setW(0, true);
 		cpu.incPC();
 	}
 
+	
 	/**
 	 * BCF 01 00bb bfff ffff
 	 * 
@@ -127,6 +133,8 @@ public class PIC_Befehle {
 		cpu.incPC();
 	}
 
+	
+	
 	/**
 	 * MOVWF Wert aus W in F speichern
 	 * 

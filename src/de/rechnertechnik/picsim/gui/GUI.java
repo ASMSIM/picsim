@@ -984,7 +984,7 @@ public class GUI extends JFrame implements IGUI{
 
 	@Override
 	public void show_W_Register(Integer value) {
-		WReg_inp.setText("0x"+String.valueOf(value));
+		WReg_inp.setText("0x"+Integer.toHexString(value));
 	}
 
 	
@@ -1018,7 +1018,7 @@ public class GUI extends JFrame implements IGUI{
 
 	@Override
 	public void show_PC(Integer value) {
-		PC_inp.setText(String.valueOf(value));
+		PC_inp.setText(Integer.toHexString(value));
 	}
 
 	@Override
