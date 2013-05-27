@@ -50,6 +50,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		status = ram.getStatus(true);
 		pc = ram.getPCL(true);
 
+		//Init Port A
 		gui.show_PortA(0x00);
 
 		// Init und Fokus auf 1. Zeile
@@ -340,6 +341,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	public void setSpeicherzellenWert(Integer adresse, Integer value, boolean status_effect){
 		
 		//Passive Beeinträchtigung des Statusregister
+		//Überlauf wird abgefangen 
 		if((value == 0) && status_effect) {
 			status.setBit(bits.Z);
 		}
@@ -360,7 +362,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		//Adresse bei Bank 1 erhöhen
 		if(ram.getBank() == Bank.BANK1){
 			adresse += 0x80;							//Bank 1 startet bei 0x80h
-			PIC_Logger.logger.info("BANK1: Adresse += 0x80");
+			PIC_Logger.logger.info("BANK1: Adresse += 0x80 ==>"+Integer.toHexString(adresse));
 		}
 		
 		
@@ -368,10 +370,15 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		checkStatusActive(adresse, value);
 		
 		
+		/**
+		 * Ab hier wird auf spezielle Funktionsregister SFR überprüft, da die
+		 * Veränderung dieser Register spezielle Funktionen nach sich ziehen
+		 */
 		
 		//Ports ueberpruefen
 		if(adresse == 0x05){	//Port A
 			//TODO
+			gui.show_PortA(value);
 		}
 		
 		//Latches ueberpruefen
@@ -388,7 +395,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 	
 	/**
-	 * Überprüft beim Setzen eines Wertes, ob es eine direkte Beeinträchtigung des Statusregisters gab
+	 * Überprüft beim Setzen eines Wertes, ob das Statusregisters direkt angesprochen und geändert wurde
 	 *
 	 * Bsp: bsf status,5
 	 *
@@ -574,7 +581,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 	@Override
 	public void setPortA(Integer value) {
-		//TODO
+		setSpeicherzellenWert(0x05, value, false);
 	}
 
 	@Override
@@ -593,5 +600,10 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	public Integer getTrisA() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void change_RAM_Value(Integer adresse, Integer to_Value) {
+		setSpeicherzellenWert(adresse, to_Value, false);
 	}
 }
