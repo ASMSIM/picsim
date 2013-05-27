@@ -4,7 +4,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JViewport;
 
 
 import javax.swing.JTable;
@@ -13,27 +12,21 @@ import java.awt.GridBagLayout;
 import javax.swing.JScrollPane;
 import java.awt.GridBagConstraints;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.JPanel;
 import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
-import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
+
+import de.rechnertechnik.picsim.logger.PIC_Logger;
 
 
 
@@ -96,12 +89,13 @@ public class GUI extends JFrame implements IGUI{
 	
 	DefaultTableModel regA = new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"RA", "7", "6", "5", "4", "3", "2", "1", "0"
-			}
-		);
+					{"Tris", null, null, null, null, null, null, null, null},
+					{"Pin", null, null, null, null, null, null, null, null},
+				},
+				new String[] {
+					"RA", "7", "6", "5", "4", "3", "2", "1", "0"
+				}
+			);
 	
 	
 	
@@ -220,15 +214,7 @@ public class GUI extends JFrame implements IGUI{
 		
 		RegATab = new JTable();
 		RegATab.setEnabled(false);
-		RegATab.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Tris", null, null, null, null, null, null, null, null},
-				{"Pin", null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"RA", "7", "6", "5", "4", "3", "2", "1", "0"
-			}
-		));
+		RegATab.setModel(regA);
 		RegATab.getColumnModel().getColumn(0).setPreferredWidth(30);
 		RegATab.getColumnModel().getColumn(0).setMinWidth(30);
 		RegATab.getColumnModel().getColumn(0).setMaxWidth(30);
@@ -390,7 +376,6 @@ public class GUI extends JFrame implements IGUI{
 		gbc_lblSpeicher.gridx = 0;
 		gbc_lblSpeicher.gridy = 0;
 		SpeicherPanel.add(lblSpeicher, gbc_lblSpeicher);
-		
 		JScrollPane SpeicherScrPanel = new JScrollPane();
 		GridBagConstraints gbc_SpeicherScrPanel = new GridBagConstraints();
 		gbc_SpeicherScrPanel.fill = GridBagConstraints.BOTH;
@@ -399,8 +384,8 @@ public class GUI extends JFrame implements IGUI{
 		SpeicherPanel.add(SpeicherScrPanel, gbc_SpeicherScrPanel);
 		
 		SpeicherTab = new JTable();
-		SpeicherTab.setEnabled(false);
 		SpeicherTab.setModel(ramModel);
+		
 		SpeicherTab.getColumnModel().getColumn(0).setPreferredWidth(30);
 		SpeicherTab.getColumnModel().getColumn(0).setMinWidth(30);
 		SpeicherTab.getColumnModel().getColumn(0).setMaxWidth(30);
@@ -882,6 +867,21 @@ public class GUI extends JFrame implements IGUI{
             }
         });
         */
+		
+		
+		SpeicherTab.getModel().addTableModelListener((new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent arg0) {
+				System.out.println("MODEL CHANGE");
+				
+				System.out.println(arg0.getColumn());
+				System.out.println(arg0.getLastRow());
+				
+				
+//				prozessor.change_RAM_Value(adresse, to_Value);
+			}
+		}));
 	}
 
 
@@ -976,16 +976,35 @@ public class GUI extends JFrame implements IGUI{
 	@Override
 	public void show_PortA(Integer value) {
 		
-		System.out.println("SHOW PORT A");
+		PIC_Logger.logger.info("Showing Port A");
 		
 		int x=7;
 		for(int i = 0; i < 8; i++){
 			
 			if( (value & (int)Math.pow(2, i)) == (int)Math.pow(2, i)){
-				regA.setValueAt(1, 0, x+1);
+				regA.setValueAt(1, 1, x+1);
 			}
 			else{
-				regA.setValueAt(0, 0, x+1);
+				regA.setValueAt(0, 1, x+1);
+			}
+			x--;
+		}
+		
+	}
+
+	@Override
+	public void show_TrisA(Integer value) {
+
+		PIC_Logger.logger.info("Showing Tris A");
+		
+		int x=7;
+		for(int i = 0; i < 8; i++){
+			
+			if( (value & (int)Math.pow(2, i)) == (int)Math.pow(2, i)){
+				regA.setValueAt("i", 0, x+1);
+			}
+			else{
+				regA.setValueAt("o", 0, x+1);
 			}
 			x--;
 		}

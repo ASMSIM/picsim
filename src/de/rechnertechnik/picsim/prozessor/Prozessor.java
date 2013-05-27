@@ -52,6 +52,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 		//Init Port A
 		gui.show_PortA(0x00);
+		gui.show_TrisA(0x00);
 
 		// Init und Fokus auf 1. Zeile
 		gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0));
