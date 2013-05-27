@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.rechnertechnik.picsim.prozessor.MemoryOutOfRangeException;
 import de.rechnertechnik.picsim.prozessor.Speicher;
 import de.rechnertechnik.picsim.prozessor.Speicherzelle;
 import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
@@ -44,7 +43,7 @@ public class Speichertest {
 
 		//Speicher richtig initialisiert?
 		for (int i = 0; i < Speicher.SPEICHERGROESSE; i++) {
-			if(speicher.getSpeicherzellenWert(i) != 0) {
+			if(speicher.getValueFromCell(i) != 0) {
 				assertFalse(true);
 			}
 			
@@ -53,13 +52,13 @@ public class Speichertest {
 		}
 		
 		
-			speicher.setZelle(0, 15);
-			speicher.setZelle(1, 40);
+			speicher.writeValueToCell(0, 15);
+			speicher.writeValueToCell(1, 40);
 			
-			if(speicher.getSpeicherzellenWert(0) != 15){
+			if(speicher.getValueFromCell(0) != 15){
 				assertFalse(true);
 			}
-			if(speicher.getSpeicherzellenWert(1) != 40){
+			if(speicher.getValueFromCell(1) != 40){
 				assertFalse(true);
 			}
 
@@ -70,7 +69,7 @@ public class Speichertest {
 	}
 	
 	@Test
-	public void testSetBit() throws MemoryOutOfRangeException{
+	public void testSetBit() {
 		Speicherzelle zelle = new Speicherzelle(0xFF);
 		zelle.clearBit(0);
 		assertEquals((int)0xFE, (int)zelle.getValue());

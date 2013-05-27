@@ -1,9 +1,7 @@
 package de.rechnertechnik.picsim.prozessor;
 
-import java.io.IOException;
 import java.util.Stack;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import de.rechnertechnik.picsim.commands.PIC_Befehle;
 import de.rechnertechnik.picsim.commands.BefehlAdressraumZuordnung;
@@ -13,7 +11,6 @@ import de.rechnertechnik.picsim.gui.IProzessor;
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.parser.Parser;
 import de.rechnertechnik.picsim.register.SpecialFunctionRegister;
-import de.rechnertechnik.picsim.register.Statusregister;
 import de.rechnertechnik.picsim.prozessor.EStepmode;
 import de.rechnertechnik.picsim.prozessor.Speicher.Bank;
 import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
@@ -325,7 +322,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	 * @return
 	 */
 	public Integer getSpeicherzellenWert(Integer adresse){
-		return ram.getSpeicherzellenWert(adresse);
+		return ram.getValueFromCell(adresse);
 	}
 	
 	
@@ -392,7 +389,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			setPCL(value);
 		}
 		
-		ram.setZelle(adresse, value);
+		ram.writeValueToCell(adresse, value);
 		gui.show_Register(Integer.toHexString(adresse), Integer.toHexString(value));
 	}
 	
@@ -569,7 +566,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	 * @return
 	 */
 	private Integer nextCommand() {
-		Integer next = programmSpeicher.getSpeicherzellenWert(pc.getValue());
+		Integer next = programmSpeicher.getValueFromCell(pc.getValue());
 		return next;
 	}
 

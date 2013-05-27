@@ -1,16 +1,12 @@
 package de.rechnertechnik.picsim.junit;
 
 
-import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
-import de.rechnertechnik.picsim.prozessor.MemoryOutOfRangeException;
-import de.rechnertechnik.picsim.prozessor.Speicherzelle;
 
 public class SpeicherzelleTest {
 
@@ -40,19 +36,4 @@ public class SpeicherzelleTest {
 
 	}
 
-	@Test(expected = MemoryOutOfRangeException.class)
-	public void testMemoryOutofRangeException()
-			throws MemoryOutOfRangeException {
-
-		Speicherzelle zelle;
-
-		for (int x = 0; x < 100; x++) {
-
-				zelle = new Speicherzelle(myRandom(-5000, 5000));
-				assertFalse(true);
-
-		}
-		
-
-	}
 }

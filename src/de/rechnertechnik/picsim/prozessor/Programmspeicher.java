@@ -5,41 +5,39 @@ import java.util.ArrayList;
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.parser.Parser;
 
+
+/**
+ * Stellt den geflashten Programmspeicher des Simulators dar
+ * @author michael
+ *
+ */
 public class Programmspeicher extends Speicher {
-	
-	
+
 	private Parser parser;
-	
+
 	public Programmspeicher(Parser parser) {
-		super();				//Init mit 0
+		super(); // Init mit 0
 		this.parser = parser;
 
 		loadProgramm();
 		PIC_Logger.logger.info("Program loaded successfully!");
 	}
-	
-	
+
 	/**
 	 * Load Program file from Parser into Memory
 	 */
 	private void loadProgramm() {
 		ArrayList<Integer> asmProg = parser.getAsmProg();
-		
-		if(asmProg.size() >= SPEICHERGROESSE){
+
+		if(asmProg.size() >= SPEICHERGROESSE) {
 			PIC_Logger.logger.fine("Speicher zu klein!!");
 			System.exit(-1);
 		}
-		
-		
+
 		for(int i = 0; i < asmProg.size(); i++) {
-				speicherZellen[i].setWert(asmProg.get(i));
+			speicherZellen[i].setWert(asmProg.get(i));
 		}
 
 	}
-	
-
-
-	
-	
 
 }

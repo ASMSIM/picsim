@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public class BefehlAdressraumZuordnung {
 
-	//Enthält die Zuordnung: Befehl -> Adressraum
+	// Enthält die Zuordnung: Befehl -> Adressraum
 	private HashMap<ECommands, Adressraum> assemblerCommand = new HashMap<ECommands, Adressraum>();
 
 	public BefehlAdressraumZuordnung() {

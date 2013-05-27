@@ -1,16 +1,20 @@
 package de.rechnertechnik.picsim.logger;
 
-import java.util.Locale;
 import java.util.Date;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
-import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+
+/**
+ * Eigenes Logdateiformat
+ * @author michael
+ *
+ */
 public class LogCustomFormatter {
     public static void main(String[] args) {
         Logger logger = Logger.getLogger(LogCustomFormatter.class.getName());

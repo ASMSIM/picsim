@@ -11,6 +11,8 @@ import java.util.HashMap;
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 
 /**
+ * Liest die LST Datei aus und befüllt Arraylisten mit dem Sourcecode und dem
+ * eigentlichen Assemblercode
  * 
  * @author Michael
  * 
@@ -51,15 +53,14 @@ public class Parser {
 		for(int i = 0; i < sourceLine.size(); i++) {
 
 			if(!(sourceLine.get(i).charAt(0) == ' ')) {
-				
-				
+
 				String dst = sourceLine.get(i).substring(5, 9);
 				// System.out.println(dst);
 				Integer befehl = (int) Integer.parseInt(dst, 16);
 				// System.out.println(befehl);
 				asmProg.add(befehl);
-				
-				command_source_line.put(asmProg.size()-1, i);
+
+				command_source_line.put(asmProg.size() - 1, i);
 			}
 
 		}
@@ -97,11 +98,6 @@ public class Parser {
 		}
 
 	}
-	
-	
-	
-	
-	
 
 	public HashMap<Integer, Integer> getCommand_source_line() {
 		return command_source_line;
