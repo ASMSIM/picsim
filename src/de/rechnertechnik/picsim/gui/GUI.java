@@ -4,6 +4,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButton;
 
 
 import javax.swing.JTable;
@@ -938,25 +939,26 @@ public class GUI extends JFrame implements IGUI{
 	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus) {
 
 			DefaultTableModel model = new DefaultTableModel();
-			Object[][] zeilen = new Object[sourceLine.size()][sourceLine.size()];
+			Object[][] zeilen = new Object[sourceLine.size()][sourceLine.size()+1];
 			
 		for(int i=0; i<sourceLine.size(); i++){
 			zeilen[i][0] = i+1;
-			zeilen[i][1] = sourceLine.get(i); 
+			zeilen[i][1] = sourceLine.get(i);
+			zeilen[i][2] = "BP";
 		}
 		
 		
 		Text_inp.setModel(new DefaultTableModel(
 				zeilen,
 				new String[] {
-					"NR", ""
+					"NR", "", "BP"
 				}
 			));
 		
 		Text_inp.getColumnModel().getColumn(0).setMaxWidth(25);
 		Text_inp.getColumnModel().getColumn(0).setPreferredWidth(25);
 		Text_inp.getColumnModel().getColumn(1).setPreferredWidth(521);
-	
+		Text_inp.getColumnModel().getColumn(2).setPreferredWidth(10);
 
 		
 		Text_inp.setRowSelectionInterval(fokus, fokus);
