@@ -1,4 +1,5 @@
-package de.rechnertechnik.picsim.prozessor;
+package de.rechnertechnik.picsim.speicher;
+
 
 /**
  * Stellt den Programmspeicher(RAM) des PICs dar

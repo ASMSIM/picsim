@@ -11,9 +11,11 @@ import de.rechnertechnik.picsim.gui.IProzessor;
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.parser.Parser;
 import de.rechnertechnik.picsim.register.SpecialFunctionRegister;
+import de.rechnertechnik.picsim.speicher.Speicher;
+import de.rechnertechnik.picsim.speicher.Speicherzelle;
+import de.rechnertechnik.picsim.speicher.Speicher.Bank;
+import de.rechnertechnik.picsim.speicher.Speicherzelle.bits;
 import de.rechnertechnik.picsim.prozessor.EStepmode;
-import de.rechnertechnik.picsim.prozessor.Speicher.Bank;
-import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
 
 public class Prozessor implements Runnable, IProzessor, IPorts {
 

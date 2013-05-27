@@ -9,9 +9,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.rechnertechnik.picsim.prozessor.Speicher;
-import de.rechnertechnik.picsim.prozessor.Speicherzelle;
-import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
+import de.rechnertechnik.picsim.speicher.Speicher;
+import de.rechnertechnik.picsim.speicher.Speicherzelle;
+import de.rechnertechnik.picsim.speicher.Speicherzelle.bits;
 
 public class Speichertest {
 

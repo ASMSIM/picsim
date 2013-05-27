@@ -1,4 +1,4 @@
-package de.rechnertechnik.picsim.prozessor;
+package de.rechnertechnik.picsim.speicher;
 
 public class Speicherzelle {
 	

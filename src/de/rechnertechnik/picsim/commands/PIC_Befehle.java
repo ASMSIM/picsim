@@ -2,8 +2,8 @@ package de.rechnertechnik.picsim.commands;
 
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.prozessor.Prozessor;
-import de.rechnertechnik.picsim.prozessor.Speicherzelle;
-import de.rechnertechnik.picsim.prozessor.Speicherzelle.bits;
+import de.rechnertechnik.picsim.speicher.Speicherzelle;
+import de.rechnertechnik.picsim.speicher.Speicherzelle.bits;
 
 public class PIC_Befehle {
 

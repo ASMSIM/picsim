@@ -12,7 +12,7 @@ import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.parser.Parser;
 import de.rechnertechnik.picsim.prozessor.Programmspeicher;
 import de.rechnertechnik.picsim.prozessor.Prozessor;
-import de.rechnertechnik.picsim.prozessor.Speicher;
+import de.rechnertechnik.picsim.speicher.Speicher;
 
 public class Main {
 
