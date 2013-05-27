@@ -389,27 +389,27 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		
 		//Programmcounter
 		if(adresse == 0x02 || adresse == 0x82){
-			//TODO BUGGY
-			pc.setWert(value);
+			setPCL(value);
 		}
 		
 		ram.setZelle(adresse, value);
-	}
-	
-	
-	
-	
-	/**
-	 * Schreibt einen Wert in eine Speicherzelle und gibt diesen auf der GUI aus
-	 * 
-	 * @param adresse
-	 * @param value
-	 * @param status_effect
-	 */
-	public void setSpeicherzellenWertAndShow(Integer adresse, Integer value, boolean status_effect){
-		setSpeicherzellenWert(adresse, value, status_effect);
 		gui.show_Register(Integer.toHexString(adresse), Integer.toHexString(value));
 	}
+	
+	
+	
+	
+//	/**
+//	 * Schreibt einen Wert in eine Speicherzelle und gibt diesen auf der GUI aus
+//	 * 
+//	 * @param adresse
+//	 * @param value
+//	 * @param status_effect
+//	 */
+//	public void setSpeicherzellenWertAndShow(Integer adresse, Integer value, boolean status_effect){
+//		setSpeicherzellenWert(adresse, value, status_effect);
+//		gui.show_Register(Integer.toHexString(adresse), Integer.toHexString(value));
+//	}
 
 	
 	/**
@@ -599,7 +599,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 	@Override
 	public void setPortA(Integer value) {
-		setSpeicherzellenWertAndShow(0x05, value, false);
+		setSpeicherzellenWert(0x05, value, false);
 	}
 
 	@Override

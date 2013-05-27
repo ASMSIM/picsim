@@ -44,6 +44,7 @@ public class GUI extends JFrame implements IGUI{
 	private JLabel FSR_inp;
 	private JLabel WReg_inp;
 	private JLabel PC_inp;
+	private boolean userCanEditRAM = true;
 	
 	
 	DefaultTableModel ramModel =new DefaultTableModel(
@@ -872,7 +873,8 @@ public class GUI extends JFrame implements IGUI{
 				
 				
 				//Usereingabe
-				if(SpeicherTab.isEditing() ){
+				if(SpeicherTab.isEditing() && userCanEditRAM ){
+					userCanEditRAM = false;
 					
 					Integer column = arg0.getColumn();
 					Integer row = arg0.getLastRow();
@@ -914,7 +916,7 @@ public class GUI extends JFrame implements IGUI{
 					
 					
 					PIC_Logger.logger.info("[Usereingabe RAM]: "+high+""+low);
-					
+					userCanEditRAM = true;
 					
 				}
 				
@@ -982,12 +984,9 @@ public class GUI extends JFrame implements IGUI{
 
 	@Override
 	public void show_Register(String adresse, String hexvalue) {
-		// TODO Auto-generated method stub
 		
 		if(adresse.length()==1) adresse="0"+adresse;
 		if(hexvalue.length()==1) hexvalue="0"+hexvalue;
-		
-		System.out.println("setting: addr="+adresse+";hexvalue="+hexvalue);
 		
 		Integer row = Integer.parseInt(adresse.substring(0, 1),16);
 		Integer column = Integer.parseInt(adresse.substring(1, 2),16);
