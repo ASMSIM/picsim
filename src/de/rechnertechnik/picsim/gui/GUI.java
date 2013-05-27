@@ -156,7 +156,7 @@ public class GUI extends JFrame implements IGUI{
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 191, 0, 0, -55, 0, 0, 0, 0, 49, 23, 20, 142, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 98, 64, 0, 15, 131, 43, 42, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 98, 64, 28, 15, 131, 43, 42, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
@@ -182,17 +182,17 @@ public class GUI extends JFrame implements IGUI{
 		JPanel RegisterPanel = new JPanel();
 		RegisterPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagConstraints gbc_RegisterPanel = new GridBagConstraints();
-		gbc_RegisterPanel.fill = GridBagConstraints.VERTICAL;
-		gbc_RegisterPanel.gridheight = 4;
+		gbc_RegisterPanel.fill = GridBagConstraints.BOTH;
+		gbc_RegisterPanel.gridheight = 3;
 		gbc_RegisterPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_RegisterPanel.gridx = 2;
 		gbc_RegisterPanel.gridy = 1;
 		getContentPane().add(RegisterPanel, gbc_RegisterPanel);
 		GridBagLayout gbl_RegisterPanel = new GridBagLayout();
-		gbl_RegisterPanel.columnWidths = new int[]{189, 0};
-		gbl_RegisterPanel.rowHeights = new int[]{0, 43, 15, 0, 0, 0, 0, 38, 0};
+		gbl_RegisterPanel.columnWidths = new int[]{193, 0};
+		gbl_RegisterPanel.rowHeights = new int[]{0, 59, 59, 54, 0};
 		gbl_RegisterPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_RegisterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_RegisterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		RegisterPanel.setLayout(gbl_RegisterPanel);
 		
 		JLabel RegVarLabel = new JLabel("Register");
@@ -205,7 +205,6 @@ public class GUI extends JFrame implements IGUI{
 		
 		JScrollPane RegAPanel = new JScrollPane();
 		GridBagConstraints gbc_RegAPanel = new GridBagConstraints();
-		gbc_RegAPanel.gridheight = 2;
 		gbc_RegAPanel.fill = GridBagConstraints.BOTH;
 		gbc_RegAPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_RegAPanel.gridx = 0;
@@ -247,11 +246,10 @@ public class GUI extends JFrame implements IGUI{
 		JScrollPane RegBPanel = new JScrollPane();
 		RegBPanel.setToolTipText("");
 		GridBagConstraints gbc_RegBPanel = new GridBagConstraints();
-		gbc_RegBPanel.gridheight = 3;
 		gbc_RegBPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_RegBPanel.fill = GridBagConstraints.BOTH;
 		gbc_RegBPanel.gridx = 0;
-		gbc_RegBPanel.gridy = 3;
+		gbc_RegBPanel.gridy = 2;
 		RegisterPanel.add(RegBPanel, gbc_RegBPanel);
 		
 		RegBTab = new JTable();
@@ -296,11 +294,9 @@ public class GUI extends JFrame implements IGUI{
 		
 		JScrollPane RegCPanel = new JScrollPane();
 		GridBagConstraints gbc_RegCPanel = new GridBagConstraints();
-		gbc_RegCPanel.gridheight = 2;
-		gbc_RegCPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_RegCPanel.fill = GridBagConstraints.BOTH;
 		gbc_RegCPanel.gridx = 0;
-		gbc_RegCPanel.gridy = 6;
+		gbc_RegCPanel.gridy = 3;
 		RegisterPanel.add(RegCPanel, gbc_RegCPanel);
 		
 		RegCTab = new JTable();
@@ -354,7 +350,7 @@ public class GUI extends JFrame implements IGUI{
 		JPanel SpeicherPanel = new JPanel();
 		SpeicherPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagConstraints gbc_SpeicherPanel = new GridBagConstraints();
-		gbc_SpeicherPanel.gridheight = 2;
+		gbc_SpeicherPanel.gridheight = 3;
 		gbc_SpeicherPanel.gridwidth = 7;
 		gbc_SpeicherPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_SpeicherPanel.fill = GridBagConstraints.BOTH;
@@ -362,8 +358,8 @@ public class GUI extends JFrame implements IGUI{
 		gbc_SpeicherPanel.gridy = 1;
 		getContentPane().add(SpeicherPanel, gbc_SpeicherPanel);
 		GridBagLayout gbl_SpeicherPanel = new GridBagLayout();
-		gbl_SpeicherPanel.columnWidths = new int[]{288, 0};
-		gbl_SpeicherPanel.rowHeights = new int[]{15, 138, 0};
+		gbl_SpeicherPanel.columnWidths = new int[]{287, 0};
+		gbl_SpeicherPanel.rowHeights = new int[]{15, 173, 0};
 		gbl_SpeicherPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_SpeicherPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		SpeicherPanel.setLayout(gbl_SpeicherPanel);
