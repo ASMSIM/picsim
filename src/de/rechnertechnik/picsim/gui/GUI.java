@@ -899,8 +899,10 @@ public class GUI extends JFrame implements IGUI{
 						
 						if(wert < 0 || wert > 255){
 							Integer oldVal =  prozessor.get_RAM_Value(Integer.parseInt(high+""+low,16));
-							show_Register(high+""+low, Integer.toHexString(oldVal));
+							Integer adr = Integer.parseInt(high+""+low);		//TODO CHECK IF OK?
+							show_Register(adr, oldVal);
 						}
+						
 						//WERT AKZEPTIERT !!!
 						else{
 							System.out.println("Registeradresse: "+high+""+low);
@@ -911,7 +913,8 @@ public class GUI extends JFrame implements IGUI{
 					catch( java.lang.NumberFormatException e){
 						System.out.println("FALSCHEINGABE");
 						Integer oldVal =  prozessor.get_RAM_Value(Integer.parseInt(high+""+low,16));
-						show_Register(high+""+low, Integer.toHexString(oldVal));
+						Integer adr = Integer.parseInt(high+""+low);		//TODO CHECK IF OK?
+						show_Register(adr, oldVal);
 					}
 					
 					
@@ -980,18 +983,24 @@ public class GUI extends JFrame implements IGUI{
 	}
 
 	@Override
-	public void show_W_Register(String hexvalue) {
-		WReg_inp.setText("0x"+hexvalue);
+	public void show_W_Register(Integer value) {
+		WReg_inp.setText("0x"+String.valueOf(value));
 	}
 
+	
+	//TODO IN INT
 	@Override
-	public void show_Register(String adresse, String hexvalue) {
+	public void show_Register(Integer adresse, Integer value) {
 		
-		if(adresse.length()==1) adresse="0"+adresse;
-		if(hexvalue.length()==1) hexvalue="0"+hexvalue;
+		String hex_adr = Integer.toHexString(adresse);
+		String hex_value = Integer.toHexString(value);
 		
-		Integer row = Integer.parseInt(adresse.substring(0, 1),16);
-		Integer column = Integer.parseInt(adresse.substring(1, 2),16);
+		if(hex_adr.length()==1) hex_adr="0"+hex_adr;
+		if(hex_value.length()==1) hex_value="0"+hex_value;
+		
+		
+		Integer row = Integer.parseInt(hex_adr.substring(0, 1),16);
+		Integer column = Integer.parseInt(hex_adr.substring(1, 2),16);
 		
 		
 		row*= 2;
@@ -1004,12 +1013,12 @@ public class GUI extends JFrame implements IGUI{
 		column++;
 			
  
-		ramModel.setValueAt(hexvalue, row, column);
+		ramModel.setValueAt(hex_value, row, column);
 	}
 
 	@Override
-	public void show_PC(String value) {
-		PC_inp.setText(value);
+	public void show_PC(Integer value) {
+		PC_inp.setText(String.valueOf(value));
 	}
 
 	@Override

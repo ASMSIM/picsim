@@ -310,11 +310,11 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	 * Inkrementiere Programmcounter
 	 */
 	public void incPC() {
-		setPCL(pc.getValue() + 1);
-		String value = Integer.toHexString(pc.getValue());
-		gui.show_PC("0x"+value);
-		gui.show_Register("02", value);
-		gui.show_Register("82", value);
+		Integer value =pc.getValue();
+		setPCL(value + 1);
+		gui.show_PC(value);			//TODO CHECK?
+		gui.show_Register(0x02, value);
+		gui.show_Register(0x82, value);
 	}
 
 	
@@ -392,7 +392,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		}
 		
 		ram.writeValueToCell(adresse, value);
-		gui.show_Register(Integer.toHexString(adresse), Integer.toHexString(value));
+		gui.show_Register(adresse, value);		//TODO CHECK?
 	}
 	
 	
@@ -483,7 +483,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	
 	
 	/**
-	 * Setzt einen Wert in W
+	 * Setzt einen Wert in W und gibt diesen auf der GUI aus
 	 * 
 	 * @param value zu setzender Wert
 	 * @param status_effect Wenn Status gesetzt werden soll
@@ -509,44 +509,79 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			}
 		}
 
-		gui.show_W_Register(Integer.toHexString(value));
 		this.w.setWert(value);
+		gui.show_W_Register(value);	//Ausgabe auf GUI		TODO CHECK
 	}
 
 
-	public Speicherzelle getStatus() {
-		return status;
+	
+	/**
+	 * Liefert true, wenn das gewünschte Bit gesetzt ist
+	 * sonst false
+	 * 
+	 * @param bit
+	 * @return
+	 */
+	public boolean getStatus(bits bit){
+		if(status.getBit(bit)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	
+	//TODO STATUSREGISTER AUF GUI ausgeben
+	public void setStatus(bits bit) {
+		status.setBit(bit);
+		//AUSGABE GUI TODO
 	}
 
-	public void setStatus(Integer value) {
-		this.status.setWert(value);
+	//TODO STATUSREGISTER AUF GUI ausgeben
+	public void clearStatus(bits bit){
+		status.clearBit(bit);
+		//TODO ausgabe GUI
 	}
-
+	
+	
+	/**
+	 * Liefert den Stack zurück
+	 * @return
+	 */
 	public Stack<Integer> getStack() {
 		return stack;
 	}
-
-	public Speicherzelle getPc() {
-		return pc;
+	
+	
+	/**
+	 * Liefert den Wert des Programmcounters zurück
+	 * @return
+	 */
+	public Integer getPCValue() {
+		return pc.getValue();
 	}
 
+	
 	/**
-	 * Sets the PCL
+	 * Übernimmt den value wert für den Programmcounter
 	 * 
-	 * @param value
+	 * @param value Neuer Programmcounterwert
 	 */
 	public void setPCL(Integer value) {
 		pc.setWert(value);
-		String pcwert = Integer.toHexString(pc.getValue());
 		
-		gui.show_PC("0x"+pcwert);
-		gui.show_Register("02", pcwert);
-		gui.show_Register("82", pcwert);
+		//Ausgabe auf GUI
+		gui.show_PC(value);			//Extralabel
+		gui.show_Register(0x02, value);	//Speicher Bank0
+		gui.show_Register(0x82, value);	//Speicher Bank1
+		
 	}
 
+	
 	/**
 	 * Testet, ob einen Integerwert auf einen bestimmten Befehl. Liefert true,
-	 * wenn der Wert im Befehl liegt
+	 * wenn der Wert im Befehl liegt, sonst false
 	 * 
 	 * @param testing_command
 	 * @param intCommand

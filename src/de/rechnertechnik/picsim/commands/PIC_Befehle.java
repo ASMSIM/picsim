@@ -198,11 +198,11 @@ public class PIC_Befehle {
 		Integer k = getOpcodeFromToBit(akt_Befehl, 0, 10);
 
 		// Push PC + 1 auf Stack
-		Integer pc_inc = cpu.getPc().getValue() + 1;
+		Integer pc_inc = cpu.getPCValue() + 1;
 		cpu.getStack().push(pc_inc);
 
 		// PC auf K Wert setzen
-		cpu.getPc().setWert(k);
+		cpu.setPCL(k);
 
 	}
 
@@ -454,10 +454,11 @@ public class PIC_Befehle {
 
 		if(result > 255) {
 			result -= 256;
-			if(cpu.getStatus().getBit(bits.C)) {
+			if(cpu.getStatus(bits.C)) {
 				result++;	///Set Carrybit
 			}
-			cpu.getStatus().setBit(bits.C);
+			cpu.setStatus(bits.C);
+			
 		}
 
 		if(d == 1) {
@@ -476,15 +477,15 @@ public class PIC_Befehle {
 
 		Integer result = cpu.getSpeicherzellenWert(f);
 		
-		if(cpu.getStatus().getBit(bits.C)){
+		if(cpu.getStatus(bits.C)){
 			result += 0x100;
 		}
 		
 		if((result & 0x01) == 1){
-			cpu.getStatus().setBit(bits.C);
+			cpu.setStatus(bits.C);
 		}
 		else{
-			cpu.getStatus().clearBit(bits.C);
+			cpu.clearStatus(bits.C);
 		}
 		
 		result = result >> 1;
@@ -574,9 +575,7 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_return(Integer akt_Befehl, Prozessor cpu) {
-		// Hole PC
-		Speicherzelle pc = cpu.getPc();
-		pc.setWert(cpu.getStack().pop());
+		cpu.setPCL(cpu.getStack().pop());
 	}
 
 	/**

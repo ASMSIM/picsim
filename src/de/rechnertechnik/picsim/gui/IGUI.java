@@ -12,9 +12,9 @@ public interface IGUI {
 
 	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus);
 	public void setFocus(Integer fokus);
-	public void show_W_Register(String hexvalue);
-	public void show_Register(String adresse, String hexvalue);
-	public void show_PC(String value);
+	public void show_W_Register(Integer value);			//HEX?
+	public void show_Register(Integer adresse, Integer value);
+	public void show_PC(Integer value);
 	public void show_PortA(Integer value);
 	public void show_TrisA(Integer value);
 }
