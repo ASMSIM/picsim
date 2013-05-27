@@ -44,6 +44,7 @@ public class GUI extends JFrame implements IGUI{
 	private JLabel FSR_inp;
 	private JLabel WReg_inp;
 	private JLabel PC_inp;
+	private boolean userCanEditRAM = true;
 	
 	
 	DefaultTableModel ramModel =new DefaultTableModel(
@@ -872,7 +873,8 @@ public class GUI extends JFrame implements IGUI{
 				
 				
 				//Usereingabe
-				if(SpeicherTab.isEditing() ){
+				if(SpeicherTab.isEditing() && userCanEditRAM ){
+					userCanEditRAM = false;
 					
 					Integer column = arg0.getColumn();
 					Integer row = arg0.getLastRow();
@@ -914,7 +916,7 @@ public class GUI extends JFrame implements IGUI{
 					
 					
 					PIC_Logger.logger.info("[Usereingabe RAM]: "+high+""+low);
-					
+					userCanEditRAM = true;
 					
 				}
 				
