@@ -579,17 +579,18 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	}
 
 	
+	
 	/**
-	 * Testet, ob einen Integerwert auf einen bestimmten Befehl. Liefert true,
-	 * wenn der Wert im Befehl liegt, sonst false
+	 * Testet, ob einen Integerwert auf einen bestimmten Befehl.
+	 * Liefert true, wenn der Wert im Befehlsadressraum liegt, sonst false
 	 * 
-	 * @param testing_command
-	 * @param intCommand
+	 * @param command_enum
+	 * @param actual_cmd
 	 * @return
 	 */
-	private boolean isIntegerCommand(ECommands testing_command, Integer intCommand) {
-		if(intCommand >= cmdTable.getAssemblerCommand().get(testing_command).getFrom()) {
-			if(intCommand <= cmdTable.getAssemblerCommand().get(testing_command).getTo()) {
+	private boolean isIntegerCommand(ECommands command_enum, Integer actual_cmd) {
+		if(actual_cmd >= cmdTable.getAssemblerCommand().get(command_enum).getFrom()) {
+			if(actual_cmd <= cmdTable.getAssemblerCommand().get(command_enum).getTo()) {
 				return true;
 			}
 		}
@@ -597,21 +598,28 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 	}
 
+	
 	/**
-	 * Holt den naechsten Befehl, auf den der PCL zeigt
+	 * Holt den naechsten Befehl, auf den der Programmcounter zeigt
 	 * 
 	 * @return
 	 */
 	private Integer nextCommand() {
-		Integer next = programmSpeicher.getValueFromCell(pc.getValue());
-		return next;
+		return programmSpeicher.getValueFromCell(pc.getValue());
 	}
 
+	/**
+	 * Ein Programmschritt	TODO LAUFZEITZAEHLER ERHOEHEN
+	 */
 	@Override
 	public void nextStep() {
 		stepmode = EStepmode.onestep;
 	}
+	
 
+	/**
+	 * Programm läuft automatisch weiter
+	 */
 	@Override
 	public void go() {
 		if(stepmode == EStepmode.go) {
@@ -622,43 +630,65 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		}
 	}
 
+	/**
+	 * Simulator wird zurückgesetzt TODO Initialwerte
+	 */
 	@Override
 	public void reset() {
 		ram.initSpeicher();
 		setW(0, false);
 		setPCL(0);
+		setPortA(0);
 		gui.setFocus(parser.getCommand_source_line().get(0));
 		stepmode = EStepmode.hold;
 	}
 
+	/**
+	 * Port A mit Wert belegen
+	 */
 	@Override
 	public void setPortA(Integer value) {
+		//TODO TRIS ABFRAGE I/0
 		setSpeicherzellenWert(0x05, value, false);
 	}
 
+	/**
+	 * Liefert Wert von Port A zurück
+	 */
 	@Override
 	public Integer getPortA() {
-		// TODO Auto-generated method stub
-		return null;
+		return get_RAM_Value(0x05);
 	}
 
+	/**
+	 * Tris A mit Wert belegen
+	 */
 	@Override
 	public void setTrisA(Integer value) {
-		// TODO Auto-generated method stub
-		
+		setSpeicherzellenWert(0x85, value, false);
 	}
 
+	/**
+	 * Gibt Wert von Tris A zurück
+	 */
 	@Override
 	public Integer getTrisA() {
-		// TODO Auto-generated method stub
-		return null;
+		return get_RAM_Value(0x85);
 	}
 
+	
+	/**
+	 * Speicherzelle wird direkt von der GUI verändert
+	 */
 	@Override
 	public void change_RAM_Value(Integer adresse, Integer to_Value) {
 		setSpeicherzellenWert(adresse, to_Value, false);
 	}
 
+	/**
+	 * Wird von der GUI benötigt, um bei Falscheingabe den alten
+	 * Wert zu erhalten
+	 */
 	@Override
 	public Integer get_RAM_Value(Integer adresse) {
 		return getSpeicherzellenWert(adresse);
