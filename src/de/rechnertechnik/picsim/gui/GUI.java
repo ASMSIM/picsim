@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
 import javax.swing.border.EtchedBorder;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 
@@ -868,15 +869,42 @@ public class GUI extends JFrame implements IGUI{
         });
         */
 		
-		
 		SpeicherTab.getModel().addTableModelListener((new TableModelListener() {
 			
 			@Override
 			public void tableChanged(TableModelEvent arg0) {
-				System.out.println("MODEL CHANGE");
 				
-				System.out.println(arg0.getColumn());
-				System.out.println(arg0.getLastRow());
+				//Usereingabe
+				if(SpeicherTab.isEditing()){
+					
+					Integer column = arg0.getColumn();
+					Integer row = arg0.getLastRow();
+					
+					column--;
+
+					if( ((row + 1) % 2) == 0 ){	//Ungerade
+						column+=8;
+					}
+					row/=2;
+					
+					String high = Integer.toHexString(row);
+					String low = Integer.toHexString(column);
+					
+					System.out.println(SpeicherTab.getValueAt(arg0.getLastRow(), arg0.getColumn()));
+					
+					String eingabe = SpeicherTab.getValueAt(arg0.getLastRow(), arg0.getColumn()).toString();
+					
+//					if(eingabe.length() != 3){
+//						System.out.println("FEHLER");
+//					}
+//					else if()
+					
+					
+					PIC_Logger.logger.info("[Usereingabe RAM]: "+high+""+low);
+					
+					
+				}
+				
 				
 				
 //				prozessor.change_RAM_Value(adresse, to_Value);
