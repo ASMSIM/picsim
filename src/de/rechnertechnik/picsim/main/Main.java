@@ -35,7 +35,7 @@ public class Main {
 		GUI gui = new GUI();
 		PIC_Logger.initLogger("logfile.txt");
 		commandTable = new BefehlAdressraumZuordnung();
-		parser = new Parser("res/BA_Test.LST"); // TODO mit GUI öffnen
+		parser = new Parser("res/BA_Test2.LST"); // TODO mit GUI öffnen
 												// verknüpfen
 		programmSpeicher = new Programmspeicher(parser); // Legt den
 															// Programmspeicher

@@ -30,7 +30,7 @@ public class BefehlAdressraumZuordnung {
 		assemblerCommand.put(ECommands.IORWF, new Adressraum(0x0400, 0x04FF));
 		assemblerCommand.put(ECommands.MOVF, new Adressraum(0x0800, 0x08FF));
 		assemblerCommand.put(ECommands.MOVWF, new Adressraum(0x0080, 0x00FF));
-		assemblerCommand.put(ECommands.NOP, new Adressraum(0x0000, 0x0060)); // !!!!!
+		assemblerCommand.put(ECommands.NOP, new Adressraum(0x0000, 0x0000)); // !!!!!
 		assemblerCommand.put(ECommands.RLF, new Adressraum(0x0D00, 0x0DFF));
 		assemblerCommand.put(ECommands.RRF, new Adressraum(0x0C00, 0x0CFF));
 		assemblerCommand.put(ECommands.SUBWF, new Adressraum(0x0200, 0x02FF));

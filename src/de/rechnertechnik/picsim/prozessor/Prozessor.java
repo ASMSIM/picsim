@@ -26,6 +26,9 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	private IGUI gui;
 
 	private EStepmode stepmode;
+	
+	private Interrupt interruptHandler = new Interrupt();
+	
 
 	/**
 	 * Programmcounter
@@ -252,7 +255,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			}
 
 			else if(isIntegerCommand(ECommands.RETFIE, akt_Befehl)) {
-				System.out.println("RETFIE: TODO");
+				System.out.println("RETFIE");
+				PIC_Befehle.asm_retfie(akt_Befehl, this);
 			}
 
 			else if(isIntegerCommand(ECommands.RETLW, akt_Befehl)) {
@@ -288,6 +292,12 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			gui.setFocus(parser.getCommand_source_line().get(pc.getValue()));
 			gui.show_Register(0x02, pc.getValue());
 			gui.show_Register(0x82, pc.getValue());
+			
+			
+			//Check Interrupt
+			interruptHandler.checkInterrupt(this);
+			
+			
 			
 			if(stepmode == EStepmode.onestep) {
 				stepmode = EStepmode.hold;
@@ -479,7 +489,11 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		
 		//INTCON
 		else if( adresse == 0x0B || adresse == 0x8B ){
-			//TODO
+			ram.writeValueToCell(0x0B, value);		//In beide Bänke schreiben
+			ram.writeValueToCell(0x8B, value);	
+			gui.show_Register(0x0B, value);		
+			gui.show_Register(0x8B, value);	
+			return;	//TODO CHECK IF OK=
 		}
 		
 		

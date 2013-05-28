@@ -888,4 +888,19 @@ public class PIC_Befehle {
 		}
 	}
 
+
+	/**
+	 * Wird nach ISR aufgerufen
+	 * 
+	 * @param akt_Befehl
+	 * @param prozessor
+	 */
+	public static void asm_retfie(Integer akt_Befehl, Prozessor cpu) {
+		Integer pc = cpu.getStack().pop();
+		Integer INTCON = cpu.get_RAM_Value(0x0b);
+		cpu.setSpeicherzellenWert(0x0b, (INTCON | 0x80 ), false);	//Enable GIE
+		
+		cpu.setPCL(pc);
+	}
+
 }
