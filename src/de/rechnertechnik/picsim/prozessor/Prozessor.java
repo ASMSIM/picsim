@@ -461,9 +461,10 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			gui.show_PortA(value);
 		}
 		
-		//Tris A ueberpruefen
+		//Tris A
 		else if(adresse == 0x85){	
 			//TODO
+			gui.show_TrisA(value);
 		}
 		
 		//Port B
