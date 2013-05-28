@@ -790,8 +790,8 @@ public class GUI extends JFrame implements IGUI{
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				prozessor.reset();
 				initRegisterModel();
+				prozessor.reset();
 			}
 		});
 		GridBagConstraints gbc_btnReset = new GridBagConstraints();
@@ -995,6 +995,7 @@ public class GUI extends JFrame implements IGUI{
 		String hex_adr = Integer.toHexString(adresse);
 		String hex_value = Integer.toHexString(value);
 		
+		
 		if(hex_adr.length()==1) hex_adr="0"+hex_adr;
 		if(hex_value.length()==1) hex_value="0"+hex_value;
 		
@@ -1012,7 +1013,6 @@ public class GUI extends JFrame implements IGUI{
 		
 		column++;
 			
- 
 		ramModel.setValueAt(hex_value, row, column);
 	}
 

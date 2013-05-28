@@ -49,6 +49,13 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		status = ram.getStatus(true);
 		pc = ram.getPCL(true);
 
+		//Option
+		setSpeicherzellenWert(0x03, 0x18, false);
+		setSpeicherzellenWert(0x83, 0x18, false);
+		
+		//Status
+		setSpeicherzellenWert(0x81, 0xff, false);
+		
 		//Init Port A
 		gui.show_PortA(0x00);
 		gui.show_TrisA(0x00);
@@ -382,8 +389,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		}
 		
 		
-		//Aktive Beeinträchtigung des  Statusregisters
-		checkStatusActive(adresse, value);
+	
 
 		//GUI AUSGABE
 //		gui.show_Register(0x03, status.getValue());
@@ -406,11 +412,10 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		 * 
 		 */
 		
-		
-		if(adresse == 0x00){		//Indirecte Adressierung
+		//Indirect. Adress
+		if(adresse == 0x00 || adresse == 0x80){		//Indirekte Adressierung
 			String logprefix = "[SPECIALFUNCTIONREGISTER]: ";
 			
-			PIC_Logger.logger.info(logprefix+"0x00= Indirekte Adressierung");
 			Integer indirect_address = get_RAM_Value(0x04);		//FSR
 			
 			PIC_Logger.logger.info(logprefix+"Ind. Adresse= "+indirect_address);
@@ -421,29 +426,61 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			return;		//TODO CHECK?
 		}
 		
+		// TMR0
+		else if( adresse == 0x01){
+			//TODO
+		}
+		
+		//Option_REG
+		else if ( adresse == 0x81){
+			//TODO
+		}
+		
 		//Programmcounter
-		if(adresse == 0x02 || adresse == 0x82){
+		else if(adresse == 0x02 || adresse == 0x82){
 			setPCL(value);
 		}
 		
-		if( adresse == 0x04 || adresse == 0x84){	//FSR
-			ram.writeValueToCell(0x04, value);	
+		//Status
+		else if(adresse == 0x03 || adresse == 0x83){
+			checkStatusActive(adresse, value);
+		}
+		
+		//FSR
+		else if( adresse == 0x04 || adresse == 0x84){	
+			ram.writeValueToCell(0x04, value);		//In beide Bänke schreiben
 			ram.writeValueToCell(0x84, value);	
 			gui.show_Register(0x04, value);		
 			gui.show_Register(0x84, value);	
 			return;	//TODO CHECK IF OK=
 		}
 		
-		//Ports ueberpruefen
-		if(adresse == 0x05){	//Port A
+		//Port A
+		else if(adresse == 0x05){	
 			//TODO
 			gui.show_PortA(value);
 		}
 		
-		//Latches ueberpruefen
-		if(adresse == 0x85){	//Tris A
+		//Tris A ueberpruefen
+		else if(adresse == 0x85){	
 			//TODO
 		}
+		
+		//Port B
+		else if (adresse == 0x06){
+			//TODO
+		}
+		
+		//Tris B ueberpruefen
+		else if(adresse == 0x86){	
+			//TODO
+		}
+		
+		//INTCON
+		else if( adresse == 0x0B || adresse == 0x8B ){
+			//TODO
+		}
+		
 		
 		
 		ram.writeValueToCell(adresse, value);	
@@ -475,7 +512,6 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	 * @param value
 	 */
 	private void checkStatusActive(Integer adresse, Integer value) {
-		if(adresse == 0x03 || adresse == 0x83){
 			
 			String logstring = "[Aktive Beeinträchtigung des Statusregisters]: ";
 			
@@ -523,7 +559,6 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 				PIC_Logger.logger.info(logstring+"Switched to Bank0");
 			}
 			
-		}
 	}
 	
 
@@ -630,7 +665,6 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		gui.show_PC(value);			//Extralabel
 		gui.show_Register(0x02, value);	//Speicher Bank0
 		gui.show_Register(0x82, value);	//Speicher Bank1
-		
 	}
 
 	
@@ -694,7 +728,28 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		setW(0, false);
 		setPCL(0);
 		setPortA(0);
+		
+		//Status
+		setSpeicherzellenWert(0x03, 0x18, false);	
+		gui.show_Register(0x03, 0x18);
+		
+		setSpeicherzellenWert(0x83, 0x18, false);	
+		gui.show_Register(0x83, 0x18);
+		
+		//Option
+		setSpeicherzellenWert(0x81, 0xff, false);	
+		gui.show_Register(0x81, 0xff);
+		
+		//Tris A
+		setSpeicherzellenWert(0x85, 0x1F, false);
+		gui.show_Register(0x85, 0x1F);
+		
+		//Tris B
+		setSpeicherzellenWert(0x86, 0xFF, false);	
+		gui.show_Register(0x86, 0xFF);
+		
 		gui.setFocus(parser.getCommand_source_line().get(0));
+		
 		stepmode = EStepmode.hold;
 	}
 
