@@ -326,7 +326,21 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	 * @return
 	 */
 	public Integer getSpeicherzellenWert(Integer adresse){
-		return ram.getValueFromCell(adresse);
+		
+		if(adresse == 0x00){
+				String logprefix = "[INDIREKTE ADRESSIERUNG]: ";
+				
+				Integer indirect_address = get_RAM_Value(0x04);		//FSR
+				Integer indirect_value = get_RAM_Value(indirect_address);
+				
+				PIC_Logger.logger.info(logprefix+"Ind. Adresse= "+indirect_address);
+				PIC_Logger.logger.info(logprefix+"Ind. Wert= "+indirect_value);
+				
+				return indirect_value;					//TODO CHECK
+		}
+		else{
+			return ram.getValueFromCell(adresse);
+		}
 	}
 	
 	
@@ -378,9 +392,47 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		
 		
 		/**
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
 		 * Ab hier wird auf spezielle Funktionsregister SFR überprüft, da die
 		 * Veränderung dieser Register spezielle Funktionen nach sich ziehen
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
 		 */
+		
+		
+		if(adresse == 0x00){		//Indirecte Adressierung
+			String logprefix = "[SPECIALFUNCTIONREGISTER]: ";
+			
+			PIC_Logger.logger.info(logprefix+"0x00= Indirekte Adressierung");
+			Integer indirect_address = get_RAM_Value(0x04);		//FSR
+			
+			PIC_Logger.logger.info(logprefix+"Ind. Adresse= "+indirect_address);
+			PIC_Logger.logger.info(logprefix+"Setze Wert= "+value);
+			
+			ram.writeValueToCell(indirect_address, value);
+			gui.show_Register(indirect_address, value);			
+			return;		//TODO CHECK?
+		}
+		
+		//Programmcounter
+		if(adresse == 0x02 || adresse == 0x82){
+			setPCL(value);
+		}
+		
+		if( adresse == 0x04 || adresse == 0x84){	//FSR
+			ram.writeValueToCell(0x04, value);	
+			ram.writeValueToCell(0x84, value);	
+			gui.show_Register(0x04, value);		
+			gui.show_Register(0x84, value);	
+			return;	//TODO CHECK IF OK=
+		}
 		
 		//Ports ueberpruefen
 		if(adresse == 0x05){	//Port A
@@ -393,12 +445,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			//TODO
 		}
 		
-		//Programmcounter
-		if(adresse == 0x02 || adresse == 0x82){
-			setPCL(value);
-		}
 		
-		ram.writeValueToCell(adresse, value);
+		ram.writeValueToCell(adresse, value);	
 		gui.show_Register(adresse, value);		//TODO CHECK?
 	}
 	
