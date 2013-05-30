@@ -104,6 +104,7 @@ public class GUI extends JFrame implements IGUI{
 				}
 			);
 	private JLabel labelLaufzeitValue;
+	private JLabel lblQuartz;
 	
 	
 	
@@ -800,7 +801,7 @@ public class GUI extends JFrame implements IGUI{
 		getContentPane().add(LaufzeitPanel, gbc_LaufzeitPanel);
 		LaufzeitPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel lblQuartz = new JLabel("4 MHz");
+		lblQuartz = new JLabel("4 MHz");
 		LaufzeitPanel.add(lblQuartz);
 		
 		JLabel lblNewLabel = new JLabel("");
@@ -970,7 +971,13 @@ public class GUI extends JFrame implements IGUI{
 	    Rectangle rect = table.getCellRect(rowIndex, vColIndex, true);
 	    Point pt = viewport.getViewPosition();
 	    rect.setLocation(rect.x-pt.x, rect.y-pt.y);
-	    viewport.scrollRectToVisible(rect);
+	    try{
+	    	viewport.scrollRectToVisible(rect);
+	    }
+	    catch(java.lang.NullPointerException e)
+	    {
+	    	e.printStackTrace();
+	    }
 	}
 	
 	

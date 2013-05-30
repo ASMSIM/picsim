@@ -29,6 +29,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	private EStepmode stepmode;
 	
 	private Interrupt interruptHandler = new Interrupt();
+	private Integer megaHertz = 4;
+	
 	
 
 	/**
@@ -327,6 +329,13 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 	}
 
+	
+	
+	public Integer getMegaHertz() {
+		return megaHertz;
+	}
+	
+	
 	
 	/**
 	 * Inkrementiere Programmcounter
@@ -830,5 +839,10 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	@Override
 	public Integer get_RAM_Value(Integer adresse) {
 		return getSpeicherzellenWert(adresse);
+	}
+
+	@Override
+	public Integer getQuartzTakt() {
+		return megaHertz;
 	}
 }

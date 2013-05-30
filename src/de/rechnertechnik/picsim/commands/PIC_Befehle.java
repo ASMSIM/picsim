@@ -23,7 +23,8 @@ public class PIC_Befehle {
 	 * @param cycles
 	 */
 	private static void erhoeheLaufzeit(Prozessor cpu, Integer cycles) {
-		cpu.setLaufzeit(cpu.getLaufzeit() + cycles);
+		Integer factor = 4 / cpu.getMegaHertz();
+		cpu.setLaufzeit( cpu.getLaufzeit() + cycles*factor );
 	}
 
 	
