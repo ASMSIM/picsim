@@ -49,7 +49,7 @@ public class Main {
 
 		// GUI öffnen
 		showGUI(gui, prozessor);
-		gui.connectProzessor(prozessor);	//Interfaceverknüpfung
+		gui.connectProzessor(prozessor,prozessor);	//Interfaceverknüpfung
 
 	}
 

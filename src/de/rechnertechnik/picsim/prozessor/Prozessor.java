@@ -845,4 +845,45 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	public Integer getQuartzTakt() {
 		return megaHertz;
 	}
+
+	
+	@Override
+	public void setBitPortA(Integer bitNr) {
+		setBitPort(bitNr, 0x05);
+	}
+	
+	public void setBitPort(Integer bitNr, Integer adresse){
+		Integer tris = get_RAM_Value(adresse+0x80);
+		Integer port = get_RAM_Value(adresse);
+		
+		boolean trisBit =  PIC_Befehle.getBit(tris, bitNr);
+		Integer setValue = port | (int)Math.pow(2, bitNr);
+		
+		//Nur verändern wenn Tris richtig gesetzt ist
+		if(trisBit){
+			setSpeicherzellenWert(adresse, setValue , false);
+		}
+	}
+	
+
+	@Override
+	public void clearBitPortA(Integer bitNr) {
+		clearBitPort(bitNr, 0x05);
+	}
+	
+
+	private void clearBitPort(Integer bitNr, Integer adresse) {
+		Integer tris = get_RAM_Value(adresse+0x80);
+		Integer port = get_RAM_Value(adresse);
+		
+		boolean trisBit =  PIC_Befehle.getBit(tris, bitNr);
+		Integer setValue = (int)Math.pow(2, bitNr);
+		setValue = 255 - setValue;
+		setValue = port & setValue;
+		
+		//Tris als input gesetzt
+		if(trisBit){
+			setSpeicherzellenWert(adresse, setValue , false);
+		}
+	}
 }

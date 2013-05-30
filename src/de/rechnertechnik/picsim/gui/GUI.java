@@ -33,6 +33,8 @@ import javax.swing.border.EtchedBorder;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 
 import de.rechnertechnik.picsim.logger.PIC_Logger;
+import de.rechnertechnik.picsim.prozessor.IPorts;
+
 import java.awt.GridLayout;
 
 
@@ -105,6 +107,7 @@ public class GUI extends JFrame implements IGUI{
 			);
 	private JLabel labelLaufzeitValue;
 	private JLabel lblQuartz;
+	private IPorts ports;
 	
 	
 	
@@ -118,8 +121,9 @@ public class GUI extends JFrame implements IGUI{
 	
 	
 	
-	public void connectProzessor(IProzessor prozessor){
+	public void connectProzessor(IProzessor prozessor, IPorts ports){
 		this.prozessor = prozessor;
+		this.ports = ports;
 	}
 	
 	public GUI() {
@@ -416,7 +420,17 @@ public class GUI extends JFrame implements IGUI{
 		JCheckBox chckbxSA1 = new JCheckBox("A1");
 		SchalterPanel.add(chckbxSA1);
 		
-		JCheckBox chckbxA0 = new JCheckBox("A0");
+		final JCheckBox chckbxA0 = new JCheckBox("A0");
+		chckbxA0.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxA0.isSelected()){
+					ports.setBitPortA(0);
+				}
+				else{
+					ports.clearBitPortA(0);
+				}
+			}
+		});
 		SchalterPanel.add(chckbxA0);
 		
 		JCheckBox chckbxB = new JCheckBox("B7");
