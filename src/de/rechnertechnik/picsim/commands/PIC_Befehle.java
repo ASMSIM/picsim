@@ -12,6 +12,18 @@ public class PIC_Befehle {
 	 */
 	public static void asm_goto(Integer befehl, Prozessor cpu) {
 		cpu.setPCL(getOpcodeFromToBit(befehl, 0, 7));
+		erhoeheLaufzeit(cpu,2);
+	}
+
+
+	
+	/**
+	 * Erhoeht die Laufzeit des CPU-Laufzeit-Zaehlers
+	 * @param cpu
+	 * @param cycles
+	 */
+	private static void erhoeheLaufzeit(Prozessor cpu, Integer cycles) {
+		cpu.setLaufzeit(cpu.getLaufzeit() + cycles);
 	}
 
 	
@@ -24,6 +36,7 @@ public class PIC_Befehle {
 	public static void asm_movlw(Integer befehl, Prozessor cpu) {
 		cpu.setW((getOpcodeFromToBit(befehl, 0, 7)), false);
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	
@@ -37,6 +50,7 @@ public class PIC_Befehle {
 		Integer f = getOpcodeFromToBit(befehl, 0, 6);
 		cpu.setSpeicherzellenWert(f, 0, true);
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	
@@ -59,6 +73,7 @@ public class PIC_Befehle {
 		}
 
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	
@@ -87,6 +102,7 @@ public class PIC_Befehle {
 		PIC_Logger.logger.info("Wert nacher: 0x"
 				+ Integer.toHexString(workingCell ));
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	
@@ -99,6 +115,7 @@ public class PIC_Befehle {
 	public static void asm_clrw(Integer befehl, Prozessor cpu) {
 		cpu.setW(0, true);
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	
@@ -131,6 +148,7 @@ public class PIC_Befehle {
 		PIC_Logger.logger.info("Wert nacher: 0x"
 				+ Integer.toHexString(workingCell));
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	
@@ -155,6 +173,7 @@ public class PIC_Befehle {
 		PIC_Logger.logger.info("W: " + Integer.toHexString(cpu.getW()));
 
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -211,6 +230,7 @@ public class PIC_Befehle {
 
 		// PC auf K Wert setzen
 		cpu.setPCL(k);
+		erhoeheLaufzeit(cpu,2);
 
 	}
 
@@ -244,6 +264,7 @@ public class PIC_Befehle {
 
 		// PC ++
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -269,6 +290,7 @@ public class PIC_Befehle {
 		}
 
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -295,6 +317,7 @@ public class PIC_Befehle {
 		}
 
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -334,10 +357,12 @@ public class PIC_Befehle {
 
 		if(result >= 1) {
 			cpu.incPC();
+			erhoeheLaufzeit(cpu,1);
 		}
 		else if(result == 0) {
 			cpu.incPC();
 			cpu.incPC();
+			erhoeheLaufzeit(cpu,2);
 		}
 	}
 
@@ -366,6 +391,7 @@ public class PIC_Befehle {
 		}
 
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -397,10 +423,12 @@ public class PIC_Befehle {
 
 		if(result >= 1) {
 			cpu.incPC();
+			erhoeheLaufzeit(cpu,1);
 		}
 		else if(result == 0) {
 			cpu.incPC();
 			cpu.incPC();
+			erhoeheLaufzeit(cpu,2);
 		}
 	}
 
@@ -424,6 +452,7 @@ public class PIC_Befehle {
 			cpu.setW(erg, true);
 		}
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -444,6 +473,7 @@ public class PIC_Befehle {
 			cpu.setW(result, true);
 		}
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -476,6 +506,7 @@ public class PIC_Befehle {
 			cpu.setW(result, true);
 		}
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	public static void asm_rrf(Integer befehl, Prozessor cpu) {
@@ -505,6 +536,7 @@ public class PIC_Befehle {
 			cpu.setW(result, true);
 		}
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -538,6 +570,7 @@ public class PIC_Befehle {
 
 		// PC++
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -562,6 +595,7 @@ public class PIC_Befehle {
 
 		// PC++
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -574,6 +608,7 @@ public class PIC_Befehle {
 		// TODO implement
 		PIC_Logger.logger.warning("SLEEP not implemented!");
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -584,6 +619,7 @@ public class PIC_Befehle {
 	 */
 	public static void asm_return(Integer akt_Befehl, Prozessor cpu) {
 		cpu.setPCL(cpu.getStack().pop());
+		erhoeheLaufzeit(cpu,2);
 	}
 
 	/**
@@ -607,6 +643,7 @@ public class PIC_Befehle {
 
 		// Normaler Return
 		asm_return(akt_Befehl, cpu);
+		erhoeheLaufzeit(cpu,2);
 	}
 
 	/**
@@ -630,6 +667,7 @@ public class PIC_Befehle {
 
 		// PC++
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 
 	}
 
@@ -642,6 +680,7 @@ public class PIC_Befehle {
 	public static void asm_clrwdt(Integer akt_Befehl, Prozessor cpu) {
 		// TODO NOT IMPLEMENTED
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -666,6 +705,7 @@ public class PIC_Befehle {
 
 		// PC++
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -691,6 +731,7 @@ public class PIC_Befehle {
 
 		// PC++
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -701,6 +742,7 @@ public class PIC_Befehle {
 	 */
 	public static void asm_nop(Integer akt_Befehl, Prozessor cpu) {
 		cpu.incPC(); // PC erhoehen
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -730,6 +772,7 @@ public class PIC_Befehle {
 
 		// PC++
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 
 	}
 
@@ -760,6 +803,7 @@ public class PIC_Befehle {
 
 		// PC++
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 
 	}
 
@@ -794,6 +838,7 @@ public class PIC_Befehle {
 
 		// PC++
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 
 	}
 
@@ -842,7 +887,7 @@ public class PIC_Befehle {
 
 		// PC++
 		cpu.incPC();
-
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
@@ -869,9 +914,11 @@ public class PIC_Befehle {
 
 		// PC ++
 		cpu.incPC();
+		erhoeheLaufzeit(cpu,1);
 	}
 
 	/**
+	 * Liefert war, wen das Bit mit der Nr bitNr in value gesetzt ist
 	 * 
 	 * @param value
 	 * @param bitNr
@@ -901,6 +948,7 @@ public class PIC_Befehle {
 		cpu.setSpeicherzellenWert(0x0b, (INTCON | 0x80 ), false);	//Enable GIE
 		
 		cpu.setPCL(pc);
+		erhoeheLaufzeit(cpu,2);
 	}
 
 }

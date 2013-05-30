@@ -24,7 +24,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	private Programmspeicher programmSpeicher;
 	private Speicher ram;
 	private IGUI gui;
-
+	private Integer laufzeit = 0;
+	
 	private EStepmode stepmode;
 	
 	private Interrupt interruptHandler = new Interrupt();
@@ -52,6 +53,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		status = ram.getStatus(true);
 		pc = ram.getPCL(true);
 
+		gui.setLaufzeitCounter(laufzeit);
+		
 		//Option
 		setSpeicherzellenWert(0x03, 0x18, false);
 		setSpeicherzellenWert(0x83, 0x18, false);
@@ -292,7 +295,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			gui.setFocus(parser.getCommand_source_line().get(pc.getValue()));
 			gui.show_Register(0x02, pc.getValue());
 			gui.show_Register(0x82, pc.getValue());
-			
+			gui.setLaufzeitCounter(laufzeit);		//Laufzeit aktualisieren
 			
 			//Check Interrupt
 			interruptHandler.checkInterrupt(this);
@@ -585,6 +588,16 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		return w.getWert();
 	}
 
+	
+	
+	public Integer getLaufzeit() {
+		return laufzeit;
+	}
+	
+	public void setLaufzeit(Integer laufzeit) {
+		this.laufzeit = laufzeit;
+	}
+	
 	
 	
 	/**

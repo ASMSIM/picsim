@@ -17,4 +17,5 @@ public interface IGUI {
 	public void show_PC(Integer value);
 	public void show_PortA(Integer value);
 	public void show_TrisA(Integer value);
+	public void setLaufzeitCounter(Integer microSec);
 }

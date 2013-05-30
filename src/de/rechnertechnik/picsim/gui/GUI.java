@@ -33,6 +33,7 @@ import javax.swing.border.EtchedBorder;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 
 import de.rechnertechnik.picsim.logger.PIC_Logger;
+import java.awt.GridLayout;
 
 
 
@@ -40,7 +41,6 @@ public class GUI extends JFrame implements IGUI{
 	
 	private JTable Text_inp;
 	private JTable RegATab;
-	private JTable RegCTab;
 	private JTable RegBTab;
 	private JTable SpeicherTab;
 	private IProzessor prozessor;
@@ -103,6 +103,7 @@ public class GUI extends JFrame implements IGUI{
 					"RA", "7", "6", "5", "4", "3", "2", "1", "0"
 				}
 			);
+	private JLabel labelLaufzeitValue;
 	
 	
 	
@@ -298,53 +299,6 @@ public class GUI extends JFrame implements IGUI{
 		RegBTab.getColumnModel().getColumn(8).setMinWidth(20);
 		RegBTab.getColumnModel().getColumn(8).setMaxWidth(20);
 		RegBPanel.setViewportView(RegBTab);
-		
-		JScrollPane RegCPanel = new JScrollPane();
-		GridBagConstraints gbc_RegCPanel = new GridBagConstraints();
-		gbc_RegCPanel.fill = GridBagConstraints.BOTH;
-		gbc_RegCPanel.gridx = 0;
-		gbc_RegCPanel.gridy = 3;
-		RegisterPanel.add(RegCPanel, gbc_RegCPanel);
-		
-		RegCTab = new JTable();
-		RegCTab.setEnabled(false);
-		RegCTab.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Tris", null, null, null, null, null, null, null, null},
-				{"Pin", null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"RC", "7", "6", "5", "4", "3", "2", "1", "0"
-			}
-		));
-		RegCTab.getColumnModel().getColumn(0).setPreferredWidth(30);
-		RegCTab.getColumnModel().getColumn(0).setMinWidth(30);
-		RegCTab.getColumnModel().getColumn(0).setMaxWidth(30);
-		RegCTab.getColumnModel().getColumn(1).setPreferredWidth(20);
-		RegCTab.getColumnModel().getColumn(1).setMinWidth(20);
-		RegCTab.getColumnModel().getColumn(1).setMaxWidth(20);
-		RegCTab.getColumnModel().getColumn(2).setPreferredWidth(20);
-		RegCTab.getColumnModel().getColumn(2).setMinWidth(20);
-		RegCTab.getColumnModel().getColumn(2).setMaxWidth(20);
-		RegCTab.getColumnModel().getColumn(3).setPreferredWidth(20);
-		RegCTab.getColumnModel().getColumn(3).setMinWidth(20);
-		RegCTab.getColumnModel().getColumn(3).setMaxWidth(20);
-		RegCTab.getColumnModel().getColumn(4).setPreferredWidth(20);
-		RegCTab.getColumnModel().getColumn(4).setMinWidth(20);
-		RegCTab.getColumnModel().getColumn(4).setMaxWidth(20);
-		RegCTab.getColumnModel().getColumn(5).setPreferredWidth(20);
-		RegCTab.getColumnModel().getColumn(5).setMinWidth(20);
-		RegCTab.getColumnModel().getColumn(5).setMaxWidth(20);
-		RegCTab.getColumnModel().getColumn(6).setPreferredWidth(20);
-		RegCTab.getColumnModel().getColumn(6).setMinWidth(20);
-		RegCTab.getColumnModel().getColumn(6).setMaxWidth(20);
-		RegCTab.getColumnModel().getColumn(7).setPreferredWidth(20);
-		RegCTab.getColumnModel().getColumn(7).setMinWidth(20);
-		RegCTab.getColumnModel().getColumn(7).setMaxWidth(20);
-		RegCTab.getColumnModel().getColumn(8).setPreferredWidth(20);
-		RegCTab.getColumnModel().getColumn(8).setMinWidth(20);
-		RegCTab.getColumnModel().getColumn(8).setMaxWidth(20);
-		RegCPanel.setViewportView(RegCTab);
 		
 		JPanel PlatzhalterRegSp = new JPanel();
 		GridBagConstraints gbc_PlatzhalterRegSp = new GridBagConstraints();
@@ -758,16 +712,15 @@ public class GUI extends JFrame implements IGUI{
 		GridBagConstraints gbc_ButtonPanel = new GridBagConstraints();
 		gbc_ButtonPanel.fill = GridBagConstraints.BOTH;
 		gbc_ButtonPanel.gridwidth = 3;
-		gbc_ButtonPanel.gridheight = 3;
 		gbc_ButtonPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_ButtonPanel.gridx = 3;
 		gbc_ButtonPanel.gridy = 5;
 		getContentPane().add(ButtonPanel, gbc_ButtonPanel);
 		GridBagLayout gbl_ButtonPanel = new GridBagLayout();
 		gbl_ButtonPanel.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_ButtonPanel.rowHeights = new int[]{25, 0, 0, 0, 30, 0, 0, 0, 0, 0};
-		gbl_ButtonPanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_ButtonPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_ButtonPanel.rowHeights = new int[]{25, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0};
+		gbl_ButtonPanel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_ButtonPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		ButtonPanel.setLayout(gbl_ButtonPanel);
 		
 		JButton btnGo = new JButton("Go");
@@ -837,6 +790,27 @@ public class GUI extends JFrame implements IGUI{
 		Text_inp = new JTable();
 		
 		TextPanel.setViewportView(Text_inp);
+		
+		JPanel LaufzeitPanel = new JPanel();
+		GridBagConstraints gbc_LaufzeitPanel = new GridBagConstraints();
+		gbc_LaufzeitPanel.gridwidth = 3;
+		gbc_LaufzeitPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_LaufzeitPanel.gridx = 3;
+		gbc_LaufzeitPanel.gridy = 6;
+		getContentPane().add(LaufzeitPanel, gbc_LaufzeitPanel);
+		LaufzeitPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JLabel lblQuartz = new JLabel("4 MHz");
+		LaufzeitPanel.add(lblQuartz);
+		
+		JLabel lblNewLabel = new JLabel("");
+		LaufzeitPanel.add(lblNewLabel);
+		
+		JLabel lblLaufzeitzähler = new JLabel("Laufzeit:");
+		LaufzeitPanel.add(lblLaufzeitzähler);
+		
+		labelLaufzeitValue = new JLabel("0 µs");
+		LaufzeitPanel.add(labelLaufzeitValue);
 	
 	    
 		menuItemFileOpen.addActionListener(new ActionListener() {
@@ -973,7 +947,6 @@ public class GUI extends JFrame implements IGUI{
 		Text_inp.getTableHeader().setReorderingAllowed(false);
 		RegATab.getTableHeader().setReorderingAllowed(false);
 		RegBTab.getTableHeader().setReorderingAllowed(false);
-		RegCTab.getTableHeader().setReorderingAllowed(false);
 		SpeicherTab.getTableHeader().setReorderingAllowed(false);
 		
 	}
@@ -1080,5 +1053,13 @@ public class GUI extends JFrame implements IGUI{
 			x--;
 		}
 		
+	}
+
+	@Override
+	public void setLaufzeitCounter(Integer microSec) {
+		String suffix = " µs";
+		String value = String.valueOf(microSec);
+		
+		this.labelLaufzeitValue.setText(value+suffix);
 	}
 }
