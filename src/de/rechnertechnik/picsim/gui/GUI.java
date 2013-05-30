@@ -5,11 +5,15 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButton;
+import javax.swing.JViewport;
 
 
 import javax.swing.JTable;
 import javax.swing.JMenuBar;
 import java.awt.GridBagLayout;
+import java.awt.Point;
+import java.awt.Rectangle;
+
 import javax.swing.JScrollPane;
 import java.awt.GridBagConstraints;
 import javax.swing.table.DefaultTableModel;
@@ -978,9 +982,28 @@ public class GUI extends JFrame implements IGUI{
 	@Override
 	public void setFocus(Integer fokus) {
 		Text_inp.setRowSelectionInterval(fokus, fokus);
-		Text_inp.scrollRectToVisible(Text_inp.getCellRect(fokus, fokus, true));
-		
+//		Text_inp.scrollRectToVisible(Text_inp.getCellRect(fokus, fokus, true));
+		scrollToVisible(Text_inp, fokus, 0);
+		Text_inp.repaint();
 	}
+	
+	
+	
+	
+	public static void scrollToVisible(JTable table, int rowIndex, int vColIndex)
+	{
+	    if (!(table.getParent() instanceof JViewport)) return;
+	    JViewport viewport = (JViewport)table.getParent();
+	    Rectangle rect = table.getCellRect(rowIndex, vColIndex, true);
+	    Point pt = viewport.getViewPosition();
+	    rect.setLocation(rect.x-pt.x, rect.y-pt.y);
+	    viewport.scrollRectToVisible(rect);
+	}
+	
+	
+	
+	
+	
 
 	@Override
 	public void show_W_Register(Integer value) {
