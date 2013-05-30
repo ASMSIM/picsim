@@ -393,98 +393,55 @@ public class GUI extends JFrame implements IGUI{
 		gbc_SchalterPanel.gridx = 13;
 		gbc_SchalterPanel.gridy = 1;
 		getContentPane().add(SchalterPanel, gbc_SchalterPanel);
-		GridBagLayout gbl_SchalterPanel = new GridBagLayout();
-		gbl_SchalterPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_SchalterPanel.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_SchalterPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_SchalterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		SchalterPanel.setLayout(gbl_SchalterPanel);
+		SchalterPanel.setLayout(new GridLayout(0, 8, 0, 0));
 		
-		JLabel lblSchalter = new JLabel("Schalter");
-		GridBagConstraints gbc_lblSchalter = new GridBagConstraints();
-		gbc_lblSchalter.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSchalter.gridx = 0;
-		gbc_lblSchalter.gridy = 0;
-		SchalterPanel.add(lblSchalter, gbc_lblSchalter);
+		JCheckBox chckbxA7 = new JCheckBox("A7");
+		SchalterPanel.add(chckbxA7);
 		
-		JCheckBox chckbxS = new JCheckBox("S5");
-		GridBagConstraints gbc_chckbxS = new GridBagConstraints();
-		gbc_chckbxS.anchor = GridBagConstraints.WEST;
-		gbc_chckbxS.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxS.gridx = 0;
-		gbc_chckbxS.gridy = 1;
-		SchalterPanel.add(chckbxS, gbc_chckbxS);
+		JCheckBox chckbxA6 = new JCheckBox("A6");
+		SchalterPanel.add(chckbxA6);
 		
-		JCheckBox chckbxS_3 = new JCheckBox("S4");
-		GridBagConstraints gbc_chckbxS_3 = new GridBagConstraints();
-		gbc_chckbxS_3.anchor = GridBagConstraints.WEST;
-		gbc_chckbxS_3.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxS_3.gridx = 1;
-		gbc_chckbxS_3.gridy = 1;
-		SchalterPanel.add(chckbxS_3, gbc_chckbxS_3);
+		JCheckBox chckbxA5 = new JCheckBox("A5");
+		SchalterPanel.add(chckbxA5);
 		
-		JCheckBox chckbxS_2 = new JCheckBox("S3");
-		GridBagConstraints gbc_chckbxS_2 = new GridBagConstraints();
-		gbc_chckbxS_2.anchor = GridBagConstraints.WEST;
-		gbc_chckbxS_2.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxS_2.gridx = 2;
-		gbc_chckbxS_2.gridy = 1;
-		SchalterPanel.add(chckbxS_2, gbc_chckbxS_2);
+		JCheckBox chckbxA4 = new JCheckBox("A4");
+		SchalterPanel.add(chckbxA4);
 		
-		JCheckBox chckbxS_1 = new JCheckBox("S2");
-		GridBagConstraints gbc_chckbxS_1 = new GridBagConstraints();
-		gbc_chckbxS_1.anchor = GridBagConstraints.WEST;
-		gbc_chckbxS_1.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxS_1.gridx = 3;
-		gbc_chckbxS_1.gridy = 1;
-		SchalterPanel.add(chckbxS_1, gbc_chckbxS_1);
+		JCheckBox checkBoxA3 = new JCheckBox("A3");
+		SchalterPanel.add(checkBoxA3);
 		
-		JCheckBox checkBox_7 = new JCheckBox("S1");
-		GridBagConstraints gbc_checkBox_7 = new GridBagConstraints();
-		gbc_checkBox_7.anchor = GridBagConstraints.WEST;
-		gbc_checkBox_7.insets = new Insets(0, 0, 5, 0);
-		gbc_checkBox_7.gridx = 4;
-		gbc_checkBox_7.gridy = 1;
-		SchalterPanel.add(checkBox_7, gbc_checkBox_7);
+		JCheckBox chckbxA2 = new JCheckBox("A2");
+		SchalterPanel.add(chckbxA2);
 		
-		JCheckBox chckbxS_8 = new JCheckBox("S10");
-		GridBagConstraints gbc_chckbxS_8 = new GridBagConstraints();
-		gbc_chckbxS_8.anchor = GridBagConstraints.WEST;
-		gbc_chckbxS_8.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxS_8.gridx = 0;
-		gbc_chckbxS_8.gridy = 2;
-		SchalterPanel.add(chckbxS_8, gbc_chckbxS_8);
+		JCheckBox chckbxSA1 = new JCheckBox("A1");
+		SchalterPanel.add(chckbxSA1);
 		
-		JCheckBox chckbxS_7 = new JCheckBox("S9");
-		GridBagConstraints gbc_chckbxS_7 = new GridBagConstraints();
-		gbc_chckbxS_7.anchor = GridBagConstraints.WEST;
-		gbc_chckbxS_7.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxS_7.gridx = 1;
-		gbc_chckbxS_7.gridy = 2;
-		SchalterPanel.add(chckbxS_7, gbc_chckbxS_7);
+		JCheckBox chckbxA0 = new JCheckBox("A0");
+		SchalterPanel.add(chckbxA0);
 		
-		JCheckBox chckbxS_6 = new JCheckBox("S8");
-		GridBagConstraints gbc_chckbxS_6 = new GridBagConstraints();
-		gbc_chckbxS_6.anchor = GridBagConstraints.WEST;
-		gbc_chckbxS_6.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxS_6.gridx = 2;
-		gbc_chckbxS_6.gridy = 2;
-		SchalterPanel.add(chckbxS_6, gbc_chckbxS_6);
+		JCheckBox chckbxB = new JCheckBox("B7");
+		SchalterPanel.add(chckbxB);
 		
-		JCheckBox chckbxS_5 = new JCheckBox("S7");
-		GridBagConstraints gbc_chckbxS_5 = new GridBagConstraints();
-		gbc_chckbxS_5.anchor = GridBagConstraints.WEST;
-		gbc_chckbxS_5.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxS_5.gridx = 3;
-		gbc_chckbxS_5.gridy = 2;
-		SchalterPanel.add(chckbxS_5, gbc_chckbxS_5);
+		JCheckBox chckbxB_1 = new JCheckBox("B6");
+		SchalterPanel.add(chckbxB_1);
 		
-		JCheckBox chckbxS_4 = new JCheckBox("S6");
-		GridBagConstraints gbc_chckbxS_4 = new GridBagConstraints();
-		gbc_chckbxS_4.anchor = GridBagConstraints.WEST;
-		gbc_chckbxS_4.gridx = 4;
-		gbc_chckbxS_4.gridy = 2;
-		SchalterPanel.add(chckbxS_4, gbc_chckbxS_4);
+		JCheckBox chckbxB_2 = new JCheckBox("B5");
+		SchalterPanel.add(chckbxB_2);
+		
+		JCheckBox chckbxB_3 = new JCheckBox("B4");
+		SchalterPanel.add(chckbxB_3);
+		
+		JCheckBox chckbxB_4 = new JCheckBox("B3");
+		SchalterPanel.add(chckbxB_4);
+		
+		JCheckBox chckbxB_5 = new JCheckBox("B2");
+		SchalterPanel.add(chckbxB_5);
+		
+		JCheckBox chckbxB_6 = new JCheckBox("B1");
+		SchalterPanel.add(chckbxB_6);
+		
+		JCheckBox chckbxB_7 = new JCheckBox("B0");
+		SchalterPanel.add(chckbxB_7);
 		
 		
 		
