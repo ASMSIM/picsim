@@ -1,5 +1,7 @@
 package de.rechnertechnik.picsim.prozessor;
 
+import de.rechnertechnik.picsim.logger.PIC_Logger;
+
 
 public class Interrupt {
 
@@ -15,11 +17,13 @@ public class Interrupt {
 		
 		//Global Interrupt enabled
 		if(GIE){
-			System.out.println("Interrupt Global aktiv");
-			System.out.println(Integer.toHexString(INTCON));
+			
+			
+			PIC_Logger.logger.info("Interrupt Global aktiv");
+			PIC_Logger.logger.info(Integer.toHexString(INTCON));
 			//RB0 Interrupt enabled
 			if(INTE){
-				System.out.println("RB0 Interrupt check...");
+				PIC_Logger.logger.info("RB0 Interrupt check...");
 				
 				Integer PortB = cpu.get_RAM_Value(0x06);
 				boolean RB0 = ( ( PortB & 0x01) == 0x01 )?true:false;
@@ -31,13 +35,13 @@ public class Interrupt {
 					
 					//Found rising edge
 					if(oldValue == false && RB0 == true && INTEDG){
-						System.out.println("Interrupt Rising");
+						PIC_Logger.logger.info("Interrupt Rising");
 						externerInterruptRB0(cpu, INTCON, RB0);
 					}
 					
 					//Found falling edge
 					else if(oldValue == true && RB0 == false && !INTEDG){
-						System.out.println("Interrupt Falling");
+						PIC_Logger.logger.info("Interrupt Falling");
 						externerInterruptRB0(cpu, INTCON, RB0);
 					}
 					
@@ -66,7 +70,7 @@ public class Interrupt {
 	 */
 	private void externerInterruptRB0(Prozessor cpu, Integer INTCON, boolean RB0) {
 			//Interrupt hat stattgefunden
-			System.out.println("RB0 Interrupt hat stattgefunden");
+			PIC_Logger.logger.info("RB0 Interrupt hat stattgefunden");
 			cpu.setSpeicherzellenWert(0x0b, (INTCON & 0x7F ), false);	//Disable GIE
 			cpu.setSpeicherzellenWert(0x0b, (INTCON | 0x02 ), false);	//Interrupt Flag setzen
 			

@@ -67,6 +67,11 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		//Init Port A
 		gui.show_PortA(0x00);
 		gui.show_TrisA(0x00);
+		
+		//Init Port B
+		gui.show_PortB(0x00);
+		gui.show_TrisB(0x00);
+		
 
 		// Init und Fokus auf 1. Zeile
 		gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0));
@@ -488,24 +493,22 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		
 		//Port A
 		else if(adresse == 0x05){	
-			//TODO
 			gui.show_PortA(value);
 		}
 		
 		//Tris A
 		else if(adresse == 0x85){	
-			//TODO
 			gui.show_TrisA(value);
 		}
 		
 		//Port B
 		else if (adresse == 0x06){
-			//TODO
+			gui.show_PortB(value);
 		}
 		
 		//Tris B ueberpruefen
 		else if(adresse == 0x86){	
-			//TODO
+			gui.show_TrisB(value);
 		}
 		
 		//INTCON
@@ -896,5 +899,17 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		if(trisBit){
 			setSpeicherzellenWert(adresse, setValue , false);
 		}
+	}
+
+
+
+	@Override
+	public void clearBitPortB(Integer bitNr) {
+		clearBitPort(bitNr, 0x06);		
+	}
+
+	@Override
+	public void setBitPortB(Integer bitNr) {
+		setBitPort(bitNr, 0x06);		
 	}
 }

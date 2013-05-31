@@ -108,6 +108,21 @@ public class GUI extends JFrame implements IGUI{
 					"RA", "7", "6", "5", "4", "3", "2", "1", "0"
 				}
 			);
+	
+	
+	DefaultTableModel regB = new DefaultTableModel(
+			new Object[][] {
+					{"Tris", null, null, null, null, null, null, null, null},
+					{"Pin", null, null, null, null, null, null, null, null},
+				},
+				new String[] {
+					"RB", "7", "6", "5", "4", "3", "2", "1", "0"
+				}
+			);
+	
+	
+	
+	
 	private JLabel labelLaufzeitValue;
 	private JLabel lblQuartz;
 	private IPorts ports;
@@ -128,6 +143,14 @@ public class GUI extends JFrame implements IGUI{
 	private JLabel lblZval;
 	private JLabel lblDC_Val;
 	private JLabel lblC_VAL;
+	private JCheckBox chckbxB7;
+	private JCheckBox chckbxB5;
+	private JCheckBox chckbxB4;
+	private JCheckBox chckbxB3;
+	private JCheckBox chckbxB2;
+	private JCheckBox chckbxB1;
+	private JCheckBox chckbxB0;
+	private JCheckBox chckbxB6;
 	
 	
 	
@@ -288,15 +311,7 @@ public class GUI extends JFrame implements IGUI{
 		
 		RegBTab = new JTable();
 		RegBTab.setEnabled(false);
-		RegBTab.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Tris", null, null, null, null, null, null, null, null},
-				{"Pin", null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"RB", "7", "6", "5", "4", "3", "2", "1", "0"
-			}
-		));
+		RegBTab.setModel(regB);
 		RegBTab.getColumnModel().getColumn(0).setPreferredWidth(30);
 		RegBTab.getColumnModel().getColumn(0).setMinWidth(30);
 		RegBTab.getColumnModel().getColumn(0).setMaxWidth(30);
@@ -432,51 +447,231 @@ public class GUI extends JFrame implements IGUI{
 		
 		chckbxA7 = new JCheckBox("A7");
 		panel_ports.add(chckbxA7);
+		chckbxA7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxA7.isSelected()){
+					ports.setBitPortA(7);
+				}
+				else{
+					ports.clearBitPortA(7);
+				}
+				
+			}
+		});
 		
 		chckbxA6 = new JCheckBox("A6");
 		panel_ports.add(chckbxA6);
+		chckbxA6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxA6.isSelected()){
+					ports.setBitPortA(6);
+				}
+				else{
+					ports.clearBitPortA(6);
+				}
+				
+			}
+		});
 		
 		chckbxA5 = new JCheckBox("A5");
 		panel_ports.add(chckbxA5);
+		chckbxA5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxA5.isSelected()){
+					ports.setBitPortA(5);
+				}
+				else{
+					ports.clearBitPortA(5);
+				}
+				
+			}
+		});
 		
 		chckbxA4 = new JCheckBox("A4");
 		panel_ports.add(chckbxA4);
+		chckbxA4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxA4.isSelected()){
+					ports.setBitPortA(4);
+				}
+				else{
+					ports.clearBitPortA(4);
+				}
+				
+			}
+		});
+		
+		
+		
 		
 		checkBoxA3 = new JCheckBox("A3");
 		panel_ports.add(checkBoxA3);
+		checkBoxA3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(checkBoxA3.isSelected()){
+					ports.setBitPortA(3);
+				}
+				else{
+					ports.clearBitPortA(3);
+				}
+				
+			}
+		});
+		
+		
 		
 		chckbxA2 = new JCheckBox("A2");
 		panel_ports.add(chckbxA2);
+		chckbxA2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxA2.isSelected()){
+					ports.setBitPortA(2);
+				}
+				else{
+					ports.clearBitPortA(2);
+				}
+				
+			}
+		});
+		
 		
 		chckbxSA1 = new JCheckBox("A1");
+		chckbxSA1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxSA1.isSelected()){
+					ports.setBitPortA(1);
+				}
+				else{
+					ports.clearBitPortA(1);
+				}
+				
+			}
+		});
 		panel_ports.add(chckbxSA1);
 		
 		chckbxA0 = new JCheckBox("A0");
 		panel_ports.add(chckbxA0);
+				
 		
-		JCheckBox chckbxB = new JCheckBox("B7");
-		panel_ports.add(chckbxB);
+		chckbxB7 = new JCheckBox("B7");
+		panel_ports.add(chckbxB7);
+		chckbxB7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxB7.isSelected()){
+					ports.setBitPortB(7);
+				}
+				else{
+					ports.clearBitPortB(7);
+				}
+				
+			}
+		});
 		
-		JCheckBox chckbxB_2 = new JCheckBox("B5");
-		panel_ports.add(chckbxB_2);
 		
-		JCheckBox chckbxB_3 = new JCheckBox("B4");
-		panel_ports.add(chckbxB_3);
 		
-		JCheckBox chckbxB_4 = new JCheckBox("B3");
-		panel_ports.add(chckbxB_4);
+		chckbxB6 = new JCheckBox("B6");
+		panel_ports.add(chckbxB6);
+		chckbxB6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxB6.isSelected()){
+					ports.setBitPortB(6);
+				}
+				else{
+					ports.clearBitPortB(6);
+				}
+				
+			}
+		});
 		
-		JCheckBox chckbxB_5 = new JCheckBox("B2");
-		panel_ports.add(chckbxB_5);
+		chckbxB5 = new JCheckBox("B5");
+		panel_ports.add(chckbxB5);
+		chckbxB5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxB5.isSelected()){
+					ports.setBitPortB(5);
+				}
+				else{
+					ports.clearBitPortB(5);
+				}
+				
+			}
+		});
 		
-		JCheckBox chckbxB_6 = new JCheckBox("B1");
-		panel_ports.add(chckbxB_6);
+		chckbxB4 = new JCheckBox("B4");
+		panel_ports.add(chckbxB4);
+		chckbxB4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxB4.isSelected()){
+					ports.setBitPortB(4);
+				}
+				else{
+					ports.clearBitPortB(4);
+				}
+				
+			}
+		});
 		
-		JCheckBox chckbxB_7 = new JCheckBox("B0");
-		panel_ports.add(chckbxB_7);
 		
-		JCheckBox chckbxB_1 = new JCheckBox("B6");
-		panel_ports.add(chckbxB_1);
+		
+		chckbxB3 = new JCheckBox("B3");
+		panel_ports.add(chckbxB3);
+		chckbxB3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxB3.isSelected()){
+					ports.setBitPortB(3);
+				}
+				else{
+					ports.clearBitPortB(3);
+				}
+				
+			}
+		});
+		
+		
+		
+		chckbxB2 = new JCheckBox("B2");
+		panel_ports.add(chckbxB2);
+		chckbxB2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxB2.isSelected()){
+					ports.setBitPortB(2);
+				}
+				else{
+					ports.clearBitPortB(2);
+				}
+				
+			}
+		});
+		
+		
+		chckbxB1 = new JCheckBox("B1");
+		panel_ports.add(chckbxB1);
+		chckbxB1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxB1.isSelected()){
+					ports.setBitPortB(1);
+				}
+				else{
+					ports.clearBitPortB(1);
+				}
+				
+			}
+		});
+		
+		chckbxB0 = new JCheckBox("B0");
+		panel_ports.add(chckbxB0);
+		chckbxB0.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxB0.isSelected()){
+					ports.setBitPortB(0);
+				}
+				else{
+					ports.clearBitPortB(0);
+				}
+				
+			}
+		});
+		
 		
 		JLabel label_1 = new JLabel("");
 		SchalterPanel.add(label_1);
@@ -490,7 +685,6 @@ public class GUI extends JFrame implements IGUI{
 				}
 			}
 		});
-		
 		
 		
 		
@@ -1088,16 +1282,53 @@ public class GUI extends JFrame implements IGUI{
 			}
 			x--;
 		}
-		
-		
-		
-		
-		
-		
 	}
 
 	@Override
 	public void showFSR(Integer value) {
 		FSR_inp.setText(Integer.toHexString(value));
+	}
+
+	@Override
+	public void show_PortB(Integer value) {
+
+		PIC_Logger.logger.info("Showing Port B");
+		JCheckBox portB[] = { chckbxB0, chckbxB1, chckbxB2, chckbxB3, chckbxB4, chckbxB5, chckbxB6, chckbxB7 } ;
+		
+		int x=7;
+		for(int i = 0; i < 8; i++){
+			
+			if( (value & (int)Math.pow(2, i)) == (int)Math.pow(2, i)){
+				regB.setValueAt(1, 1, x+1);
+				portB[i].setSelected(true);
+			}
+			else{
+				regB.setValueAt(0, 1, x+1);
+				portB[i].setSelected(false);
+			}
+			x--;
+		}
+	}
+
+	@Override
+	public void show_TrisB(Integer value) {
+		PIC_Logger.logger.info("Showing Tris B");
+		JCheckBox portB[] = { chckbxB0, chckbxB1, chckbxB2, chckbxB3, chckbxB4, chckbxB5, chckbxB6, chckbxB7 } ;
+		
+		//Tris anzeige
+		int x=7;
+		for(int i = 0; i < 8; i++){
+			
+			if( (value & (int)Math.pow(2, i)) == (int)Math.pow(2, i)){
+				regB.setValueAt("i", 0, x+1);
+				portB[i].setEnabled(true);
+			}
+			else{
+				regB.setValueAt("o", 0, x+1);
+				portB[i].setEnabled(false);
+			}
+			x--;
+		}
+		
 	}
 }

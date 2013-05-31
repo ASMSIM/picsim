@@ -21,4 +21,7 @@ public interface IGUI {
 	public void showStatus(Integer value);
 	public void showFSR(Integer value);
 	
+	public void show_PortB(Integer value);
+	public void show_TrisB(Integer value);
+	
 }
