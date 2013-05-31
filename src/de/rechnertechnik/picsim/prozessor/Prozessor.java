@@ -482,7 +482,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			ram.writeValueToCell(0x84, value);	
 			gui.show_Register(0x04, value);		
 			gui.show_Register(0x84, value);	
-			return;	//TODO CHECK IF OK=
+			gui.showFSR(value);
+			return;	
 		}
 		
 		//Port A

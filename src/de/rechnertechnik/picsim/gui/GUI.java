@@ -1095,4 +1095,9 @@ public class GUI extends JFrame implements IGUI{
 		
 		
 	}
+
+	@Override
+	public void showFSR(Integer value) {
+		FSR_inp.setText(Integer.toHexString(value));
+	}
 }
