@@ -466,6 +466,14 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		//Status
 		else if(adresse == 0x03 || adresse == 0x83){
 			checkStatusActive(adresse, value);
+			
+			ram.writeValueToCell(0x03, value);	
+			gui.show_Register(0x03, value);		
+			ram.writeValueToCell(0x83, value);	
+			gui.show_Register(0x83, value);		
+			
+			return;
+			
 		}
 		
 		//FSR
@@ -585,6 +593,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 				ram.setBank(Bank.BANK0);
 				PIC_Logger.logger.info(logstring+"Switched to Bank0");
 			}
+			
+			gui.showStatus(status.getValue());
 			
 	}
 	

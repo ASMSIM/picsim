@@ -36,6 +36,9 @@ import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.prozessor.IPorts;
 
 import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 
@@ -116,6 +119,15 @@ public class GUI extends JFrame implements IGUI{
 	private JCheckBox chckbxA5;
 	private JCheckBox chckbxA6;
 	private JCheckBox chckbxA7;
+	private JLabel Status_inp;
+	private JLabel lblIRPVal;
+	private JLabel lblRp1val;
+	private JLabel lblRp0val;
+	private JLabel lblT0val;
+	private JLabel lblpdval;
+	private JLabel lblZval;
+	private JLabel lblDC_Val;
+	private JLabel lblC_VAL;
 	
 	
 	
@@ -177,14 +189,14 @@ public class GUI extends JFrame implements IGUI{
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 191, 0, 0, -55, 0, 0, 0, 0, 49, 23, 20, 142, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 98, 64, 28, 15, 131, 43, 42, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 98, 0, 64, 28, 15, 131, 43, 42, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JPanel PlatzhalterSenk = new JPanel();
 		GridBagConstraints gbc_PlatzhalterSenk = new GridBagConstraints();
-		gbc_PlatzhalterSenk.gridheight = 10;
+		gbc_PlatzhalterSenk.gridheight = 11;
 		gbc_PlatzhalterSenk.insets = new Insets(0, 0, 0, 5);
 		gbc_PlatzhalterSenk.fill = GridBagConstraints.BOTH;
 		gbc_PlatzhalterSenk.gridx = 1;
@@ -204,7 +216,7 @@ public class GUI extends JFrame implements IGUI{
 		RegisterPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagConstraints gbc_RegisterPanel = new GridBagConstraints();
 		gbc_RegisterPanel.fill = GridBagConstraints.BOTH;
-		gbc_RegisterPanel.gridheight = 3;
+		gbc_RegisterPanel.gridheight = 4;
 		gbc_RegisterPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_RegisterPanel.gridx = 2;
 		gbc_RegisterPanel.gridy = 1;
@@ -234,6 +246,7 @@ public class GUI extends JFrame implements IGUI{
 		
 		RegATab = new JTable();
 		RegATab.setEnabled(false);
+		
 		RegATab.setModel(regA);
 		RegATab.getColumnModel().getColumn(0).setPreferredWidth(30);
 		RegATab.getColumnModel().getColumn(0).setMinWidth(30);
@@ -324,7 +337,7 @@ public class GUI extends JFrame implements IGUI{
 		JPanel SpeicherPanel = new JPanel();
 		SpeicherPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagConstraints gbc_SpeicherPanel = new GridBagConstraints();
-		gbc_SpeicherPanel.gridheight = 3;
+		gbc_SpeicherPanel.gridheight = 4;
 		gbc_SpeicherPanel.gridwidth = 7;
 		gbc_SpeicherPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_SpeicherPanel.fill = GridBagConstraints.BOTH;
@@ -388,7 +401,7 @@ public class GUI extends JFrame implements IGUI{
 		JPanel PlatzhalterSpSch = new JPanel();
 		GridBagConstraints gbc_PlatzhalterSpSch = new GridBagConstraints();
 		gbc_PlatzhalterSpSch.anchor = GridBagConstraints.EAST;
-		gbc_PlatzhalterSpSch.gridheight = 2;
+		gbc_PlatzhalterSpSch.gridheight = 3;
 		gbc_PlatzhalterSpSch.insets = new Insets(0, 0, 5, 5);
 		gbc_PlatzhalterSpSch.fill = GridBagConstraints.VERTICAL;
 		gbc_PlatzhalterSpSch.gridx = 12;
@@ -405,30 +418,68 @@ public class GUI extends JFrame implements IGUI{
 		gbc_SchalterPanel.gridx = 13;
 		gbc_SchalterPanel.gridy = 1;
 		getContentPane().add(SchalterPanel, gbc_SchalterPanel);
-		SchalterPanel.setLayout(new GridLayout(0, 8, 0, 0));
+		SchalterPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel lblPortInputs = new JLabel("Ports");
+		SchalterPanel.add(lblPortInputs);
+		
+		JLabel label = new JLabel("");
+		SchalterPanel.add(label);
+		
+		JPanel panel_ports = new JPanel();
+		SchalterPanel.add(panel_ports);
+		panel_ports.setLayout(new GridLayout(2, 0, 0, 0));
 		
 		chckbxA7 = new JCheckBox("A7");
-		SchalterPanel.add(chckbxA7);
+		panel_ports.add(chckbxA7);
 		
 		chckbxA6 = new JCheckBox("A6");
-		SchalterPanel.add(chckbxA6);
+		panel_ports.add(chckbxA6);
 		
 		chckbxA5 = new JCheckBox("A5");
-		SchalterPanel.add(chckbxA5);
+		panel_ports.add(chckbxA5);
 		
 		chckbxA4 = new JCheckBox("A4");
-		SchalterPanel.add(chckbxA4);
+		panel_ports.add(chckbxA4);
 		
 		checkBoxA3 = new JCheckBox("A3");
-		SchalterPanel.add(checkBoxA3);
+		panel_ports.add(checkBoxA3);
 		
 		chckbxA2 = new JCheckBox("A2");
-		SchalterPanel.add(chckbxA2);
+		panel_ports.add(chckbxA2);
 		
 		chckbxSA1 = new JCheckBox("A1");
-		SchalterPanel.add(chckbxSA1);
+		panel_ports.add(chckbxSA1);
 		
 		chckbxA0 = new JCheckBox("A0");
+		panel_ports.add(chckbxA0);
+		
+		JCheckBox chckbxB = new JCheckBox("B7");
+		panel_ports.add(chckbxB);
+		
+		JCheckBox chckbxB_2 = new JCheckBox("B5");
+		panel_ports.add(chckbxB_2);
+		
+		JCheckBox chckbxB_3 = new JCheckBox("B4");
+		panel_ports.add(chckbxB_3);
+		
+		JCheckBox chckbxB_4 = new JCheckBox("B3");
+		panel_ports.add(chckbxB_4);
+		
+		JCheckBox chckbxB_5 = new JCheckBox("B2");
+		panel_ports.add(chckbxB_5);
+		
+		JCheckBox chckbxB_6 = new JCheckBox("B1");
+		panel_ports.add(chckbxB_6);
+		
+		JCheckBox chckbxB_7 = new JCheckBox("B0");
+		panel_ports.add(chckbxB_7);
+		
+		JCheckBox chckbxB_1 = new JCheckBox("B6");
+		panel_ports.add(chckbxB_1);
+		
+		JLabel label_1 = new JLabel("");
+		SchalterPanel.add(label_1);
 		chckbxA0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chckbxA0.isSelected()){
@@ -439,31 +490,6 @@ public class GUI extends JFrame implements IGUI{
 				}
 			}
 		});
-		SchalterPanel.add(chckbxA0);
-		
-		JCheckBox chckbxB = new JCheckBox("B7");
-		SchalterPanel.add(chckbxB);
-		
-		JCheckBox chckbxB_1 = new JCheckBox("B6");
-		SchalterPanel.add(chckbxB_1);
-		
-		JCheckBox chckbxB_2 = new JCheckBox("B5");
-		SchalterPanel.add(chckbxB_2);
-		
-		JCheckBox chckbxB_3 = new JCheckBox("B4");
-		SchalterPanel.add(chckbxB_3);
-		
-		JCheckBox chckbxB_4 = new JCheckBox("B3");
-		SchalterPanel.add(chckbxB_4);
-		
-		JCheckBox chckbxB_5 = new JCheckBox("B2");
-		SchalterPanel.add(chckbxB_5);
-		
-		JCheckBox chckbxB_6 = new JCheckBox("B1");
-		SchalterPanel.add(chckbxB_6);
-		
-		JCheckBox chckbxB_7 = new JCheckBox("B0");
-		SchalterPanel.add(chckbxB_7);
 		
 		
 		
@@ -475,7 +501,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_PlatzhalterMitte.insets = new Insets(0, 0, 5, 5);
 		gbc_PlatzhalterMitte.fill = GridBagConstraints.HORIZONTAL;
 		gbc_PlatzhalterMitte.gridx = 3;
-		gbc_PlatzhalterMitte.gridy = 4;
+		gbc_PlatzhalterMitte.gridy = 5;
 		getContentPane().add(PlatzhalterMitte, gbc_PlatzhalterMitte);
 		
 		JPanel SpzRegPanel = new JPanel();
@@ -485,7 +511,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_SpzRegPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_SpzRegPanel.fill = GridBagConstraints.BOTH;
 		gbc_SpzRegPanel.gridx = 2;
-		gbc_SpzRegPanel.gridy = 5;
+		gbc_SpzRegPanel.gridy = 6;
 		getContentPane().add(SpzRegPanel, gbc_SpzRegPanel);
 		GridBagLayout gbl_SpzRegPanel = new GridBagLayout();
 		gbl_SpzRegPanel.columnWidths = new int[]{86, 0, 0, 0, 0};
@@ -599,7 +625,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_lblStatus.gridy = 7;
 		SpzRegPanel.add(lblStatus, gbc_lblStatus);
 		
-		JLabel Status_inp = new JLabel("00");
+		Status_inp = new JLabel("00");
 		GridBagConstraints gbc_Status_inp = new GridBagConstraints();
 		gbc_Status_inp.insets = new Insets(0, 0, 5, 5);
 		gbc_Status_inp.anchor = GridBagConstraints.WEST;
@@ -618,74 +644,61 @@ public class GUI extends JFrame implements IGUI{
 		
 		JPanel StatusPanel = new JPanel();
 		GridBagConstraints gbc_StatusPanel = new GridBagConstraints();
-		gbc_StatusPanel.gridheight = 2;
 		gbc_StatusPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_StatusPanel.gridwidth = 3;
 		gbc_StatusPanel.fill = GridBagConstraints.BOTH;
 		gbc_StatusPanel.gridx = 0;
 		gbc_StatusPanel.gridy = 9;
 		SpzRegPanel.add(StatusPanel, gbc_StatusPanel);
-		GridBagLayout gbl_StatusPanel = new GridBagLayout();
-		gbl_StatusPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_StatusPanel.rowHeights = new int[]{0, 0};
-		gbl_StatusPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_StatusPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-		StatusPanel.setLayout(gbl_StatusPanel);
+		StatusPanel.setLayout(new GridLayout(2, 8, 5, 0));
 		
 		JLabel lblIrp = new JLabel("IRP");
-		GridBagConstraints gbc_lblIrp = new GridBagConstraints();
-		gbc_lblIrp.insets = new Insets(0, 0, 0, 5);
-		gbc_lblIrp.gridx = 0;
-		gbc_lblIrp.gridy = 0;
-		StatusPanel.add(lblIrp, gbc_lblIrp);
+		StatusPanel.add(lblIrp);
 		
 		JLabel lblRp = new JLabel("RP1");
-		GridBagConstraints gbc_lblRp = new GridBagConstraints();
-		gbc_lblRp.insets = new Insets(0, 0, 0, 5);
-		gbc_lblRp.gridx = 1;
-		gbc_lblRp.gridy = 0;
-		StatusPanel.add(lblRp, gbc_lblRp);
+		StatusPanel.add(lblRp);
 		
 		JLabel lblRp_1 = new JLabel("RP0");
-		GridBagConstraints gbc_lblRp_1 = new GridBagConstraints();
-		gbc_lblRp_1.insets = new Insets(0, 0, 0, 5);
-		gbc_lblRp_1.gridx = 2;
-		gbc_lblRp_1.gridy = 0;
-		StatusPanel.add(lblRp_1, gbc_lblRp_1);
+		StatusPanel.add(lblRp_1);
 		
 		JLabel lblT = new JLabel("T0");
-		GridBagConstraints gbc_lblT = new GridBagConstraints();
-		gbc_lblT.insets = new Insets(0, 0, 0, 5);
-		gbc_lblT.gridx = 3;
-		gbc_lblT.gridy = 0;
-		StatusPanel.add(lblT, gbc_lblT);
+		StatusPanel.add(lblT);
 		
 		JLabel lblPd = new JLabel("PD");
-		GridBagConstraints gbc_lblPd = new GridBagConstraints();
-		gbc_lblPd.insets = new Insets(0, 0, 0, 5);
-		gbc_lblPd.gridx = 4;
-		gbc_lblPd.gridy = 0;
-		StatusPanel.add(lblPd, gbc_lblPd);
+		StatusPanel.add(lblPd);
 		
 		JLabel lblZ = new JLabel("Z");
-		GridBagConstraints gbc_lblZ = new GridBagConstraints();
-		gbc_lblZ.insets = new Insets(0, 0, 0, 5);
-		gbc_lblZ.gridx = 5;
-		gbc_lblZ.gridy = 0;
-		StatusPanel.add(lblZ, gbc_lblZ);
+		StatusPanel.add(lblZ);
 		
 		JLabel lblDc = new JLabel("DC");
-		GridBagConstraints gbc_lblDc = new GridBagConstraints();
-		gbc_lblDc.insets = new Insets(0, 0, 0, 5);
-		gbc_lblDc.gridx = 6;
-		gbc_lblDc.gridy = 0;
-		StatusPanel.add(lblDc, gbc_lblDc);
+		StatusPanel.add(lblDc);
 		
 		JLabel lblC = new JLabel("C");
-		GridBagConstraints gbc_lblC = new GridBagConstraints();
-		gbc_lblC.gridx = 7;
-		gbc_lblC.gridy = 0;
-		StatusPanel.add(lblC, gbc_lblC);
+		StatusPanel.add(lblC);
+		
+		lblIRPVal = new JLabel("x");
+		StatusPanel.add(lblIRPVal);
+		
+		lblRp1val = new JLabel("x");
+		StatusPanel.add(lblRp1val);
+		
+		lblRp0val = new JLabel("x");
+		StatusPanel.add(lblRp0val);
+		
+		lblT0val = new JLabel("x");
+		StatusPanel.add(lblT0val);
+		
+		lblpdval = new JLabel("x");
+		StatusPanel.add(lblpdval);
+		
+		lblZval = new JLabel("x");
+		StatusPanel.add(lblZval);
+		
+		lblDC_Val = new JLabel("x");
+		StatusPanel.add(lblDC_Val);
+		
+		lblC_VAL = new JLabel("x");
+		StatusPanel.add(lblC_VAL);
 		
 		JPanel ButtonPanel = new JPanel();
 		ButtonPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -694,7 +707,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_ButtonPanel.gridwidth = 3;
 		gbc_ButtonPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_ButtonPanel.gridx = 3;
-		gbc_ButtonPanel.gridy = 5;
+		gbc_ButtonPanel.gridy = 6;
 		getContentPane().add(ButtonPanel, gbc_ButtonPanel);
 		GridBagLayout gbl_ButtonPanel = new GridBagLayout();
 		gbl_ButtonPanel.columnWidths = new int[]{0, 0, 0, 0};
@@ -764,7 +777,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_TextPanel.gridwidth = 8;
 		gbc_TextPanel.fill = GridBagConstraints.BOTH;
 		gbc_TextPanel.gridx = 7;
-		gbc_TextPanel.gridy = 5;
+		gbc_TextPanel.gridy = 6;
 		getContentPane().add(TextPanel, gbc_TextPanel);
 		
 		Text_inp = new JTable();
@@ -776,7 +789,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_LaufzeitPanel.gridwidth = 3;
 		gbc_LaufzeitPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_LaufzeitPanel.gridx = 3;
-		gbc_LaufzeitPanel.gridy = 6;
+		gbc_LaufzeitPanel.gridy = 7;
 		getContentPane().add(LaufzeitPanel, gbc_LaufzeitPanel);
 		LaufzeitPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -1055,5 +1068,31 @@ public class GUI extends JFrame implements IGUI{
 		String value = String.valueOf(microSec);
 		
 		this.labelLaufzeitValue.setText(value+suffix);
+	}
+
+	@Override
+	public void showStatus(Integer value) {
+		Status_inp.setText(Integer.toHexString(value));
+		
+		JLabel statuslabels[] = {  lblIRPVal, lblRp1val, lblRp0val, lblT0val, lblpdval, lblZval, lblDC_Val, lblC_VAL};
+		
+		//Status anzeigen
+		int x=7;
+		for(int i = 0; i < 8; i++){
+			
+			if( (value & (int)Math.pow(2, i)) == (int)Math.pow(2, i)){
+				statuslabels[x].setText("1");
+			}
+			else{
+				statuslabels[x].setText("0");
+			}
+			x--;
+		}
+		
+		
+		
+		
+		
+		
 	}
 }
