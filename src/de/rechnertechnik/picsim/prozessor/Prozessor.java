@@ -912,4 +912,24 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	public void setBitPortB(Integer bitNr) {
 		setBitPort(bitNr, 0x06);		
 	}
+
+	@Override
+	public void setPortB(Integer value) {
+		setSpeicherzellenWert(0x06, value, false);
+	}
+
+	@Override
+	public Integer getPortB() {
+		return getSpeicherzellenWert(0x06);
+	}
+
+	@Override
+	public void setTrisB(Integer value) {
+		setSpeicherzellenWert(0x86, value, false);
+	}
+
+	@Override
+	public Integer getTrisB() {
+		return getSpeicherzellenWert(0x86);
+	}
 }
