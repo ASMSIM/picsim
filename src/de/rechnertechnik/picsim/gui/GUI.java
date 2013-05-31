@@ -57,6 +57,15 @@ public class GUI extends JFrame implements IGUI{
 	private boolean userCanEditRAM = true;
 	
 	
+	DefaultTableModel stackmodel = new DefaultTableModel(
+			new Object[][] {
+				{null},
+			},
+			new String[] {
+				"Stack"
+			}
+		);
+	
 	DefaultTableModel ramModel =new DefaultTableModel(
 			new Object[][] {
 				{"00", null, null, null, null, null, null, null, null},
@@ -151,6 +160,7 @@ public class GUI extends JFrame implements IGUI{
 	private JCheckBox chckbxB1;
 	private JCheckBox chckbxB0;
 	private JCheckBox chckbxB6;
+	private JTable table_stack;
 	
 	
 	
@@ -213,8 +223,8 @@ public class GUI extends JFrame implements IGUI{
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 191, 0, 0, -55, 0, 0, 0, 0, 49, 23, 20, 142, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 98, 0, 64, 28, 15, 131, 43, 42, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JPanel PlatzhalterSenk = new JPanel();
@@ -239,22 +249,22 @@ public class GUI extends JFrame implements IGUI{
 		RegisterPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagConstraints gbc_RegisterPanel = new GridBagConstraints();
 		gbc_RegisterPanel.fill = GridBagConstraints.BOTH;
-		gbc_RegisterPanel.gridheight = 4;
+		gbc_RegisterPanel.gridheight = 3;
 		gbc_RegisterPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_RegisterPanel.gridx = 2;
 		gbc_RegisterPanel.gridy = 1;
 		getContentPane().add(RegisterPanel, gbc_RegisterPanel);
 		GridBagLayout gbl_RegisterPanel = new GridBagLayout();
-		gbl_RegisterPanel.columnWidths = new int[]{193, 0};
+		gbl_RegisterPanel.columnWidths = new int[]{193, 0, 0, 0};
 		gbl_RegisterPanel.rowHeights = new int[]{0, 59, 59, 54, 0};
-		gbl_RegisterPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_RegisterPanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_RegisterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		RegisterPanel.setLayout(gbl_RegisterPanel);
 		
 		JLabel RegVarLabel = new JLabel("Register");
 		GridBagConstraints gbc_RegVarLabel = new GridBagConstraints();
 		gbc_RegVarLabel.anchor = GridBagConstraints.WEST;
-		gbc_RegVarLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_RegVarLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_RegVarLabel.gridx = 0;
 		gbc_RegVarLabel.gridy = 0;
 		RegisterPanel.add(RegVarLabel, gbc_RegVarLabel);
@@ -262,7 +272,7 @@ public class GUI extends JFrame implements IGUI{
 		JScrollPane RegAPanel = new JScrollPane();
 		GridBagConstraints gbc_RegAPanel = new GridBagConstraints();
 		gbc_RegAPanel.fill = GridBagConstraints.BOTH;
-		gbc_RegAPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_RegAPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_RegAPanel.gridx = 0;
 		gbc_RegAPanel.gridy = 1;
 		RegisterPanel.add(RegAPanel, gbc_RegAPanel);
@@ -303,7 +313,7 @@ public class GUI extends JFrame implements IGUI{
 		JScrollPane RegBPanel = new JScrollPane();
 		RegBPanel.setToolTipText("");
 		GridBagConstraints gbc_RegBPanel = new GridBagConstraints();
-		gbc_RegBPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_RegBPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_RegBPanel.fill = GridBagConstraints.BOTH;
 		gbc_RegBPanel.gridx = 0;
 		gbc_RegBPanel.gridy = 2;
@@ -361,7 +371,7 @@ public class GUI extends JFrame implements IGUI{
 		getContentPane().add(SpeicherPanel, gbc_SpeicherPanel);
 		GridBagLayout gbl_SpeicherPanel = new GridBagLayout();
 		gbl_SpeicherPanel.columnWidths = new int[]{287, 0};
-		gbl_SpeicherPanel.rowHeights = new int[]{15, 173, 0};
+		gbl_SpeicherPanel.rowHeights = new int[] {15, 200, 0};
 		gbl_SpeicherPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_SpeicherPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		SpeicherPanel.setLayout(gbl_SpeicherPanel);
@@ -710,8 +720,8 @@ public class GUI extends JFrame implements IGUI{
 		GridBagLayout gbl_SpzRegPanel = new GridBagLayout();
 		gbl_SpzRegPanel.columnWidths = new int[]{86, 0, 0, 0, 0};
 		gbl_SpzRegPanel.rowHeights = new int[]{15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_SpzRegPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_SpzRegPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_SpzRegPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_SpzRegPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		SpzRegPanel.setLayout(gbl_SpzRegPanel);
 		
 		JLabel lblSpezialfunktionsregister = new JLabel("Spezialfunktionsregister");
@@ -893,6 +903,22 @@ public class GUI extends JFrame implements IGUI{
 		
 		lblC_VAL = new JLabel("x");
 		StatusPanel.add(lblC_VAL);
+		
+		JPanel panel_stack = new JPanel();
+		GridBagConstraints gbc_panel_stack = new GridBagConstraints();
+		gbc_panel_stack.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_stack.fill = GridBagConstraints.BOTH;
+		gbc_panel_stack.gridx = 1;
+		gbc_panel_stack.gridy = 10;
+		SpzRegPanel.add(panel_stack, gbc_panel_stack);
+		
+		table_stack = new JTable();
+		panel_stack.add(table_stack);
+		table_stack.setEnabled(false);
+		table_stack.setModel(stackmodel);
+		
+		JLabel lblStack = new JLabel("Stack  ");
+		panel_stack.add(lblStack);
 		
 		JPanel ButtonPanel = new JPanel();
 		ButtonPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1328,6 +1354,25 @@ public class GUI extends JFrame implements IGUI{
 				portB[i].setEnabled(false);
 			}
 			x--;
+		}
+		
+	}
+
+	@Override
+	public void showStack(ArrayList<Integer> stack) {
+		for(Integer integer : stack) {
+			System.out.println(integer);
+		}
+		
+		//Alte Reihen entfernen
+		while (stackmodel.getRowCount()>0){
+			stackmodel.removeRow(0);
+		}
+
+		
+		for(int i=0; i<stack.size();i++){
+			Object insert[] = { stack.get(i) };
+			stackmodel.addRow( insert);
 		}
 		
 	}

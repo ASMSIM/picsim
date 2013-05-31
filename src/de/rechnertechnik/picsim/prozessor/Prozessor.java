@@ -1,5 +1,6 @@
 package de.rechnertechnik.picsim.prozessor;
 
+import java.util.ArrayList;
 import java.util.Stack;
 import java.util.logging.Level;
 
@@ -810,7 +811,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	@Override
 	public void setPortA(Integer value) {
 		//TODO TRIS ABFRAGE I/0
-		setSpeicherzellenWert(0x05, value, false);
+//		setSpeicherzellenWert(0x05, value, false);
+		System.out.println("NOT IMPLEMENTED");
 	}
 
 	/**
@@ -915,7 +917,9 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 	@Override
 	public void setPortB(Integer value) {
-		setSpeicherzellenWert(0x06, value, false);
+		//TODO TRIS ABFRAGE I/0
+//		setSpeicherzellenWert(0x06, value, false);
+		System.out.println("NOT IMPLEMENTED");
 	}
 
 	@Override
@@ -932,4 +936,15 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	public Integer getTrisB() {
 		return getSpeicherzellenWert(0x86);
 	}
+	
+	public void showStackOnGUI() {
+		ArrayList<Integer> stack = new ArrayList<Integer>();
+		
+		for(int i=0; i<this.stack.size(); i++){
+			stack.add(this.stack.get(i));
+		}
+		
+		gui.showStack(stack);
+	}
+	
 }

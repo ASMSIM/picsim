@@ -232,6 +232,7 @@ public class PIC_Befehle {
 		// PC auf K Wert setzen
 		cpu.setPCL(k);
 		erhoeheLaufzeit(cpu,2);
+		cpu.showStackOnGUI();
 
 	}
 
@@ -621,6 +622,7 @@ public class PIC_Befehle {
 	public static void asm_return(Integer akt_Befehl, Prozessor cpu) {
 		cpu.setPCL(cpu.getStack().pop());
 		erhoeheLaufzeit(cpu,2);
+		cpu.showStackOnGUI();
 	}
 
 	/**
@@ -950,6 +952,7 @@ public class PIC_Befehle {
 		
 		cpu.setPCL(pc);
 		erhoeheLaufzeit(cpu,2);
+		cpu.showStackOnGUI();
 	}
 
 }
