@@ -1,2 +1,10 @@
 \newpage
 \section{Interrupt}
+
+Bei einem Interrupt verlässt der PIC16F seine normale Routine und springt in eine Interruptroutine, die er abarbeitet um dann wieder an die Stelle des normalen Ablaufs zurückzukehren.
+\\
+\noindent Im Simulator wird zwischen jedem Funktionsaufruf der einen Befehl beschreibt überprüft ob ein Interrupt stattfindet.
+
+\lstinputlisting[language=java]{Listings/Interrupt.java}
+
+\noindent Bevor der Interrupt ausgeführt wird muss zuerst geprüft werden ob das GIE (Global Interrupt enable) und das INTCON Bit gesetzt worden ist. 

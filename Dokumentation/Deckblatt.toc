@@ -10,14 +10,16 @@
 \contentsline {section}{\numberline {3.1}Benutzeroberfläche}{9}
 \contentsline {section}{\numberline {3.2}Programmablauf}{11}
 \contentsline {section}{\numberline {3.3}Beschreibung einiger Befehle}{12}
-\contentsline {subsection}{\numberline {3.3.1}DECF}{12}
-\contentsline {subsection}{\numberline {3.3.2}ANDLW}{13}
+\contentsline {subsection}{\numberline {3.3.1}DECFSZ}{12}
+\contentsline {subsection}{\numberline {3.3.2}MOVF}{13}
 \contentsline {subsection}{\numberline {3.3.3}BTFSS}{14}
-\contentsline {subsection}{\numberline {3.3.4}ADDWF}{15}
+\contentsline {subsection}{\numberline {3.3.4}SUBLW}{15}
 \contentsline {subsection}{\numberline {3.3.5}CALL}{16}
-\contentsline {section}{\numberline {3.4}Interrupt}{17}
-\contentsline {section}{\numberline {3.5}TRIS-Register}{17}
-\contentsline {section}{\numberline {3.6}Klassendiagramm}{17}
-\contentsline {chapter}{\numberline {4}Zusammenfassung}{18}
-\contentsline {section}{\numberline {4.1}Umsetzung}{18}
-\contentsline {section}{\numberline {4.2}Fazit}{18}
+\contentsline {subsection}{\numberline {3.3.6}RRF}{17}
+\contentsline {subsection}{\numberline {3.3.7}XORLW}{18}
+\contentsline {section}{\numberline {3.4}Interrupt}{19}
+\contentsline {section}{\numberline {3.5}TRIS-Register}{20}
+\contentsline {section}{\numberline {3.6}Klassendiagramm}{20}
+\contentsline {chapter}{\numberline {4}Zusammenfassung}{21}
+\contentsline {section}{\numberline {4.1}Umsetzung}{21}
+\contentsline {section}{\numberline {4.2}Fazit}{22}
