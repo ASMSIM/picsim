@@ -1378,7 +1378,7 @@ public class GUI extends JFrame implements IGUI{
 
 		
 		for(int i=0; i<stack.size();i++){
-			Object insert[] = { stack.get(i) };
+			Object insert[] = { Integer.toHexString(stack.get(i)) };
 			stackmodel.addRow( insert);
 		}
 		
