@@ -1,5 +1,6 @@
 package de.rechnertechnik.picsim.prozessor;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.logging.Level;
@@ -75,7 +76,12 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		
 
 		// Init und Fokus auf 1. Zeile
-		gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0));
+		try{
+			gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0));
+		}
+		catch(NullPointerException e){
+			
+		}
 
 		Thread runProgram = new Thread(this);
 		runProgram.start();
@@ -651,6 +657,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			}
 		}
 
+		setSpeicherzellenWert(0x03, status.getValue(), false);
 		this.w.setWert(value);
 		gui.show_W_Register(value);	//Ausgabe auf GUI		TODO CHECK
 	}
@@ -781,6 +788,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		setPCL(0);
 		setPortA(0);
 		
+		stack.clear();
+		
 		//Status
 		setSpeicherzellenWert(0x03, 0x18, false);	
 		gui.show_Register(0x03, 0x18);
@@ -802,6 +811,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		
 		gui.setFocus(parser.getCommand_source_line().get(0));
 		
+		
+		
 		stepmode = EStepmode.hold;
 	}
 
@@ -811,8 +822,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	@Override
 	public void setPortA(Integer value) {
 		//TODO TRIS ABFRAGE I/0
-//		setSpeicherzellenWert(0x05, value, false);
-		System.out.println("NOT IMPLEMENTED");
+		setSpeicherzellenWert(0x05, value, false);
+//		System.out.println("NOT IMPLEMENTED");
 	}
 
 	/**
@@ -918,8 +929,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	@Override
 	public void setPortB(Integer value) {
 		//TODO TRIS ABFRAGE I/0
-//		setSpeicherzellenWert(0x06, value, false);
-		System.out.println("NOT IMPLEMENTED");
+		setSpeicherzellenWert(0x06, value, false);
 	}
 
 	@Override
@@ -945,6 +955,17 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		}
 		
 		gui.showStack(stack);
+	}
+
+	@Override
+	public void openFile(File file) {
+		reset();
+		System.out.println(file.getPath());
+		parser.openFile(file.getPath());
+		
+		
+		gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0));
+		programmSpeicher.loadProgramm();
 	}
 	
 }

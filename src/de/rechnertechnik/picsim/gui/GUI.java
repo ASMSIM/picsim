@@ -1038,6 +1038,7 @@ public class GUI extends JFrame implements IGUI{
                 if(returnVal == JFileChooser.APPROVE_OPTION) {
                    System.out.println("Datein gewählt: " +
                         chooser.getSelectedFile().getName());
+                   prozessor.openFile(chooser.getSelectedFile());
                 }          
             }    
         });
@@ -1130,7 +1131,7 @@ public class GUI extends JFrame implements IGUI{
 	}
 
 	@Override
-	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus) {
+	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus) throws NullPointerException {
 
 			DefaultTableModel model = new DefaultTableModel();
 			Object[][] zeilen = new Object[sourceLine.size()][sourceLine.size()+1];
@@ -1166,11 +1167,17 @@ public class GUI extends JFrame implements IGUI{
 	
 
 	@Override
-	public void setFocus(Integer fokus) {
-		Text_inp.setRowSelectionInterval(fokus, fokus);
-//		Text_inp.scrollRectToVisible(Text_inp.getCellRect(fokus, fokus, true));
-		scrollToVisible(Text_inp, fokus, 0);
-		Text_inp.repaint();
+	public void setFocus(Integer fokus){
+		try{
+			Text_inp.setRowSelectionInterval(fokus, fokus);
+			scrollToVisible(Text_inp, fokus, 0);
+			Text_inp.repaint();
+		}
+		catch ( NullPointerException e){
+			
+		}
+		
+		
 	}
 	
 	

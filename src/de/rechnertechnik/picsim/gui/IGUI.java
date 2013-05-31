@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public interface IGUI {
 
-	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus);
+	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus) throws NullPointerException;
 	public void setFocus(Integer fokus);
 	public void show_W_Register(Integer value);			//HEX?
 	public void show_Register(Integer adresse, Integer value);

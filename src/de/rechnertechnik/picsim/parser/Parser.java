@@ -44,12 +44,38 @@ public class Parser {
 		extractAssemblercode();
 
 	}
+	
+	public Parser(){
+	}
+	
+	
+	public void openFile(String pathname){
+		this.file = new File(pathname);
+		sourceLine.clear();
+		asmProg.clear();
+		
+		try {
+			readFile();
+		}
+		catch(FileNotFoundException e) {
+			System.err.println("File: " + pathname + " not found!");
+			e.printStackTrace();
+		}
+
+		extractAssemblercode();
+	}
+	
+	
+	
+	
+	
 
 	/**
 	 * Extracts the Assemblercode from the String
 	 */
 	private void extractAssemblercode() {
 
+		
 		for(int i = 0; i < sourceLine.size(); i++) {
 
 			if(!(sourceLine.get(i).charAt(0) == ' ')) {

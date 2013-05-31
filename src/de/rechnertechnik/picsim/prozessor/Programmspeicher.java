@@ -27,7 +27,7 @@ public class Programmspeicher extends Speicher {
 	/**
 	 * Load Program file from Parser into Memory
 	 */
-	private void loadProgramm() {
+	public void loadProgramm() {
 		ArrayList<Integer> asmProg = parser.getAsmProg();
 
 		if(asmProg.size() >= SPEICHERGROESSE) {
