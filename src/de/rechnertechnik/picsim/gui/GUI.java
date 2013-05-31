@@ -108,6 +108,14 @@ public class GUI extends JFrame implements IGUI{
 	private JLabel labelLaufzeitValue;
 	private JLabel lblQuartz;
 	private IPorts ports;
+	private JCheckBox chckbxA0;
+	private JCheckBox chckbxSA1;
+	private JCheckBox chckbxA2;
+	private JCheckBox checkBoxA3;
+	private JCheckBox chckbxA4;
+	private JCheckBox chckbxA5;
+	private JCheckBox chckbxA6;
+	private JCheckBox chckbxA7;
 	
 	
 	
@@ -399,28 +407,28 @@ public class GUI extends JFrame implements IGUI{
 		getContentPane().add(SchalterPanel, gbc_SchalterPanel);
 		SchalterPanel.setLayout(new GridLayout(0, 8, 0, 0));
 		
-		JCheckBox chckbxA7 = new JCheckBox("A7");
+		chckbxA7 = new JCheckBox("A7");
 		SchalterPanel.add(chckbxA7);
 		
-		JCheckBox chckbxA6 = new JCheckBox("A6");
+		chckbxA6 = new JCheckBox("A6");
 		SchalterPanel.add(chckbxA6);
 		
-		JCheckBox chckbxA5 = new JCheckBox("A5");
+		chckbxA5 = new JCheckBox("A5");
 		SchalterPanel.add(chckbxA5);
 		
-		JCheckBox chckbxA4 = new JCheckBox("A4");
+		chckbxA4 = new JCheckBox("A4");
 		SchalterPanel.add(chckbxA4);
 		
-		JCheckBox checkBoxA3 = new JCheckBox("A3");
+		checkBoxA3 = new JCheckBox("A3");
 		SchalterPanel.add(checkBoxA3);
 		
-		JCheckBox chckbxA2 = new JCheckBox("A2");
+		chckbxA2 = new JCheckBox("A2");
 		SchalterPanel.add(chckbxA2);
 		
-		JCheckBox chckbxSA1 = new JCheckBox("A1");
+		chckbxSA1 = new JCheckBox("A1");
 		SchalterPanel.add(chckbxSA1);
 		
-		final JCheckBox chckbxA0 = new JCheckBox("A0");
+		chckbxA0 = new JCheckBox("A0");
 		chckbxA0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chckbxA0.isSelected()){
@@ -999,15 +1007,18 @@ public class GUI extends JFrame implements IGUI{
 	public void show_PortA(Integer value) {
 		
 		PIC_Logger.logger.info("Showing Port A");
+		JCheckBox portA[] = { chckbxA0, chckbxSA1, chckbxA2, checkBoxA3, chckbxA4, chckbxA5, chckbxA6, chckbxA7 } ;
 		
 		int x=7;
 		for(int i = 0; i < 8; i++){
 			
 			if( (value & (int)Math.pow(2, i)) == (int)Math.pow(2, i)){
 				regA.setValueAt(1, 1, x+1);
+				portA[i].setSelected(true);
 			}
 			else{
 				regA.setValueAt(0, 1, x+1);
+				portA[i].setSelected(false);
 			}
 			x--;
 		}
@@ -1018,18 +1029,23 @@ public class GUI extends JFrame implements IGUI{
 	public void show_TrisA(Integer value) {
 
 		PIC_Logger.logger.info("Showing Tris A");
+		JCheckBox portA[] = { chckbxA0, chckbxSA1, chckbxA2, checkBoxA3, chckbxA4, chckbxA5, chckbxA6, chckbxA7 } ;
 		
+		//Tris anzeige
 		int x=7;
 		for(int i = 0; i < 8; i++){
 			
 			if( (value & (int)Math.pow(2, i)) == (int)Math.pow(2, i)){
 				regA.setValueAt("i", 0, x+1);
+				portA[i].setEnabled(true);
 			}
 			else{
 				regA.setValueAt("o", 0, x+1);
+				portA[i].setEnabled(false);
 			}
 			x--;
 		}
+		
 		
 	}
 

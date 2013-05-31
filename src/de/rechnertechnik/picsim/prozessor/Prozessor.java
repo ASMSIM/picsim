@@ -445,7 +445,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			
 			ram.writeValueToCell(indirect_address, value);
 			gui.show_Register(indirect_address, value);			
-			return;		//TODO CHECK?
+			return;		
 		}
 		
 		// TMR0
