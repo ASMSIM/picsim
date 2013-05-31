@@ -1,0 +1,128 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Packages/Dokumentart %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[ a4paper,	% Papierart
+	%       10pt,		%
+		11pt,		% Schriftgröße
+	%	12pt,		%
+		pdftex,		% PDF Umwandlung
+	%	twoside		% 2-seitig
+		] {report}	% Dokumenttyp Bericht
+
+\usepackage[ngerman]{babel}	% Deutsches Sprachpaket/Silbentrennung etc.
+%\usepackage[utf8]{inputenc}	% verwendeter Codec (für Umlaute)
+\usepackage{graphicx}		% für Bilder
+\usepackage{cite}		% für bestimmte Zitierfunktionen
+\usepackage[footnote]{acronym}	% für Abkürzungen in Fußnote
+\usepackage{caption}		% Um Bildunterschriften zu konfigurieren (mit, ohne erscheinen im Abkürzungsverzeichnis)
+\usepackage{setspace}		% für Zeilenabstand
+\usepackage{listings}
+ \usepackage{color}
+ 
+
+ \definecolor{middlegray}{rgb}{0.5,0.5,0.5}
+ \definecolor{lightgray}{rgb}{0.8,0.8,0.8}
+ \definecolor{orange}{rgb}{0.8,0.3,0.3}
+ \definecolor{yac}{rgb}{0.6,0.6,0.1}
+ \lstset{
+   basicstyle=\scriptsize\ttfamily,
+   keywordstyle=\bfseries\ttfamily\color{orange},
+   stringstyle=\color{green}\ttfamily,
+   commentstyle=\color{middlegray}\ttfamily,
+   emph={square}, 
+   emphstyle=\color{blue}\texttt,
+   emph={[2]root,base},
+   emphstyle={[2]\color{yac}\texttt},
+   showstringspaces=false,
+   flexiblecolumns=false,
+   tabsize=2,
+   numbers=left,
+   numberstyle=\tiny,
+   numberblanklines=false,
+   stepnumber=1,
+   numbersep=10pt,
+   xleftmargin=15pt
+ }
+
+
+
+
+\onehalfspacing			% ab hier Zeilenabstand 1,5
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kopfzeile %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[automark]{scrpage2}			% Package für Kopfzeile	
+\pagestyle{scrheadings} 			% Pagestyle
+\automark[section]{chapter} 			% für Anzeigen des Unterkapitels (Standard Überkapitel)
+\clearscrheadfoot \ihead{\headmark}		% ihead links, ohead rechts, chead mitte
+\setheadsepline{0.4pt}				% Linie unter Kopfzeile
+\cfoot[\pagemark]{\pagemark}			% Mitte Fußzeile Seitenzahl (selbe wie mit head (i,o,c))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Abkürzungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Persöhnlich
+
+\newcommand{\Was}{ PIC16F84A}
+
+\newcommand{\Titel}{Simulator für den Mikrocontroller }
+
+
+\begin{document}   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Titelseite %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{singlespace}							% Zeilenabstand für Titelseite verringern
+\begin{titlepage}
+\begin{center}								% Referenzpunkt Seitenmitte
+\vspace*{-2cm}								% 2 cm nach Links Platz lassen
+\hfill\includegraphics[width=4cm]{Bilder/dhbw-logo}\\[2cm] % Firmenlogo platzieren
+
+{\Huge \Titel}\\[0.5cm]							% \Huge, \Large, \large sind versch. Schriftgrößen \bfseries ist Fett gedruckt
+{\Huge \Was}\\[1cm]						% [] Inhalt ist Abstand zur nächsten Zeile
+
+\includegraphics[width=4cm]{Bilder/Microcontroller.jpg}\\[2cm]
+
+{\large von\\[0.5cm]
+{\large Michael Stahlberger und Julian Kühn}\\[0.5cm]
+
+{\large Studiengang Informationstechnik \\
+an der Dualen Hochschule Karlsruhe}\\[0.5cm]}
+
+\vfill									% ermöglicht es unterhalb der Seitengrenze zu schreiben
+\end{center}								% Referenzpunkt Mitte beenden
+
+							% Tabelle abschließen
+\end{titlepage}
+\end{singlespace}								% Titelseite abschließen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Verzeichnisse %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{singlespace}			 % Zeilenabstand für Verzeichnisse 1	
+\tableofcontents 			 % Inhaltsverzeichnis
+\listoffigures	 			 % Abbildungsverzeichnis
+\end{singlespace}	 		 % Zeilenabstand wieder ausstellen
+%\listofequations			 % Formelverzeichnis
+\lstlistoflistings
+			 % Listenverzeichnis
+
+\newpage %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kapitel einbinden %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{Kapitel/Kapitel1}
+\newpage
+
+\input{Kapitel/Kapitel2}
+\newpage
+
+\input{Kapitel/Kapitel3}
+\newpage
+
+\input{Kapitel/Kapitel4}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Literaturverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\bibliographystyle{gerabbrv}				% Zitierformat (deutsch für Großschreibung) [Häufigkeit] im Text
+\bibliography{Literaturverzeichnis}			% Pfad des Literaturverzeichnisses
+
+\end{document}  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
