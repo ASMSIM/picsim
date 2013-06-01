@@ -69,17 +69,6 @@ public class StatusregisterTest {
 
 	
 	
-	@Test
-	public void setZero() {
-		
-//		register.
-		System.out.println(register.getZero());
-		register.setZero();
-		System.out.println(register.getZero());
-		assertFalse(true);
-	}
-	
-	
 	
 	
 	

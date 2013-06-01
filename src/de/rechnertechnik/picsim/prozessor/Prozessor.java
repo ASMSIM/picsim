@@ -31,6 +31,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	private EStepmode stepmode;
 	
 	private Interrupt interruptHandler = new Interrupt();
+	private Timer_Counter timer_counter = new Timer_Counter(this);
 	private Integer megaHertz = 4;
 	
 	
@@ -59,22 +60,24 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 		gui.setLaufzeitCounter(laufzeit);
 		
-		//Option
-		setSpeicherzellenWert(0x03, 0x18, false);
-		setSpeicherzellenWert(0x83, 0x18, false);
-		
 		//Status
+		setSpeicherzellenWert(0x03, 0x18, false);
+		
+		//Option
 		setSpeicherzellenWert(0x81, 0xff, false);
 		
 		//Init Port A
 		gui.show_PortA(0x00);
-		gui.show_TrisA(0x00);
+		gui.show_TrisA(0x1f);
 		
 		//Init Port B
 		gui.show_PortB(0x00);
-		gui.show_TrisB(0x00);
+		gui.show_TrisB(0xff);
 		
-
+		//Timer Optionen setzen
+		timer_counter.modifyOptions(get_RAM_Value(0x81));
+		
+		
 		// Init und Fokus auf 1. Zeile
 		try{
 			gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0));
@@ -315,7 +318,6 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 			interruptHandler.checkInterrupt(this);
 			
 			
-			
 			if(stepmode == EStepmode.onestep) {
 				stepmode = EStepmode.hold;
 			}
@@ -462,12 +464,20 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		
 		// TMR0
 		else if( adresse == 0x01){
-			//TODO
+			//TODO OLD VAL MUSS RICHTI SEIN!=
+			Integer oldVal = get_RAM_Value(0x01);
+
+			if(oldVal == 0xFF && value == 0x00){
+				//Interrupt Tmr0
+//				setSpeicherzellenWert(0x0b, , status_effect)
+			}
+				
 		}
 		
 		//Option_REG
 		else if ( adresse == 0x81){
 			//TODO
+			timer_counter.modifyOptions(value);
 		}
 		
 		//Programmcounter
@@ -625,6 +635,16 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	}
 	
 	public void setLaufzeit(Integer laufzeit) {
+		
+		System.out.println("LAUFZEITDIFF: "+(laufzeit-this.laufzeit));
+
+		int diff = laufzeit-this.laufzeit;
+		
+		for(int i=0; i<diff; i++){
+			//Timer
+			timer_counter.time();
+		}
+		
 		this.laufzeit = laufzeit;
 	}
 	
@@ -786,16 +806,11 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		ram.initSpeicher();
 		setW(0, false);
 		setPCL(0);
-		setPortA(0);
-		
 		stack.clear();
 		
 		//Status
 		setSpeicherzellenWert(0x03, 0x18, false);	
 		gui.show_Register(0x03, 0x18);
-		
-		setSpeicherzellenWert(0x83, 0x18, false);	
-		gui.show_Register(0x83, 0x18);
 		
 		//Option
 		setSpeicherzellenWert(0x81, 0xff, false);	
@@ -809,9 +824,18 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		setSpeicherzellenWert(0x86, 0xFF, false);	
 		gui.show_Register(0x86, 0xFF);
 		
+		//Port A
+		setSpeicherzellenWert(0x05, 0x00, false);
+		gui.show_Register(0x05, 0x00);
+		
+		//Port B
+		setSpeicherzellenWert(0x06, 0x00, false);	
+		gui.show_Register(0x06, 0x00);
+		
+		
 		gui.setFocus(parser.getCommand_source_line().get(0));
-		
-		
+
+		timer_counter.modifyOptions(get_RAM_Value(0x81));
 		
 		stepmode = EStepmode.hold;
 	}
