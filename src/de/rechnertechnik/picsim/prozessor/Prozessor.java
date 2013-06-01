@@ -404,6 +404,9 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		if((value == 0) && status_effect) {
 			status.setBit(bits.Z);				//TODO STATUS AUF GUI!???
 		}
+		else if( value != 0 && status_effect){
+			status.clearBit(bits.Z);
+		}
 		else if(value > 255) {
 			value -= 256;
 			if(status_effect){
@@ -428,8 +431,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	
 
 		//GUI AUSGABE
-//		gui.show_Register(0x03, status.getValue());
-//		gui.show_Register(0x83, status.getValue());
+		gui.show_Register(0x03, status.getValue());
+		gui.show_Register(0x83, status.getValue());
 		
 		
 		
