@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
-  associations="true" dependencies="false" nesting-relationships="true">  
+<class-diagram version="1.1.2" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="de.rechnertechnik.picsim.main.Main" project="picsim" 
     file="/picsim/src/de/rechnertechnik/picsim/main/Main.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="71" y="59"/>    
+    <position height="-1" width="-1" x="97" y="215"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
@@ -12,7 +12,7 @@
   </class>  
   <interface id="2" language="java" name="de.rechnertechnik.picsim.gui.IGUI" project="picsim" 
     file="/picsim/src/de/rechnertechnik/picsim/gui/IGUI.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="671" y="92"/>    
+    <position height="-1" width="-1" x="935" y="158"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
@@ -21,7 +21,7 @@
   </interface>  
   <interface id="3" language="java" name="de.rechnertechnik.picsim.gui.IProzessor" project="picsim" 
     file="/picsim/src/de/rechnertechnik/picsim/gui/IProzessor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="672" y="209"/>    
+    <position height="-1" width="-1" x="936" y="236"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
@@ -30,7 +30,7 @@
   </interface>  
   <class id="4" language="java" name="de.rechnertechnik.picsim.gui.GUI" project="picsim" 
     file="/picsim/src/de/rechnertechnik/picsim/gui/GUI.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="877" y="211"/>    
+    <position height="-1" width="-1" x="1165" y="248"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="de.rechnertechnik.picsim.parser.Parser" project="picsim" 
     file="/picsim/src/de/rechnertechnik/picsim/parser/Parser.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="76" y="500"/>    
+    <position height="-1" width="-1" x="470" y="472"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="de.rechnertechnik.picsim.prozessor.Prozessor" project="picsim" 
     file="/picsim/src/de/rechnertechnik/picsim/prozessor/Prozessor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="437" y="251"/>    
+    <position height="-1" width="-1" x="724" y="209"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
@@ -57,7 +57,7 @@
   </class>  
   <class id="7" language="java" name="de.rechnertechnik.picsim.prozessor.Programmspeicher" project="picsim" 
     file="/picsim/src/de/rechnertechnik/picsim/prozessor/Programmspeicher.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="187" y="250"/>    
+    <position height="-1" width="-1" x="466" y="296"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="de.rechnertechnik.picsim.prozessor.Interrupt" project="picsim" 
     file="/picsim/src/de/rechnertechnik/picsim/prozessor/Interrupt.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="294" y="488"/>    
+    <position height="-1" width="-1" x="628" y="471"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
@@ -75,7 +75,7 @@
   </class>  
   <interface id="9" language="java" name="de.rechnertechnik.picsim.prozessor.IPorts" project="picsim" 
     file="/picsim/src/de/rechnertechnik/picsim/prozessor/IPorts.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="680" y="315"/>    
+    <position height="-1" width="-1" x="947" y="318"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
@@ -85,7 +85,7 @@
   <class id="10" language="java" name="de.rechnertechnik.picsim.register.SpecialFunctionRegister" project="picsim" 
     file="/picsim/src/de/rechnertechnik/picsim/register/SpecialFunctionRegister.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="488" y="492"/>    
+    <position height="-1" width="-1" x="795" y="472"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
@@ -94,7 +94,7 @@
   </class>  
   <class id="11" language="java" name="de.rechnertechnik.picsim.speicher.Speicher" project="picsim" 
     file="/picsim/src/de/rechnertechnik/picsim/speicher/Speicher.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="433" y="67"/>    
+    <position height="-1" width="-1" x="724" y="91"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
