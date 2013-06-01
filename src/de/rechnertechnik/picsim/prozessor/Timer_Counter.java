@@ -37,6 +37,8 @@ public class Timer_Counter {
 	
 	private Integer prescaler = 0;
 	
+	private boolean oldVal= false;
+	private boolean portAChanged = false;
 	
 //	private Integer prescaler[][] = { tmr0_prescale, wdt_prescale };
 	
@@ -87,17 +89,45 @@ public class Timer_Counter {
 			increment();
 		}
 		
-		//TC als Counter gesetzt
-		else{
+		if(portAChanged){
+			portAChanged = false;
+			
+			//TC als Counter gesetzt
+			if(T0CS){
+				PIC_Logger.logger.info("TC als Counter");
 				
+				Integer PortA = cpu.get_RAM_Value(0x05);
+				boolean RA4 = getBitValue(PortA, 4);
+				
+				//HIGH-LOW
+				if(T0SE && oldVal==true && RA4 == false){
+					PIC_Logger.logger.info("[COUNTER]: Detected HIGH-LOW");
+					increment();
+				}
+				//LOW-HIGH
+				else if(!T0SE && oldVal==false && RA4 == true){
+					PIC_Logger.logger.info("[COUNTER]: Detected LOW-HIGH");
+					increment();
+				}
+				
+				//NOTHING
+				else{
+					PIC_Logger.logger.info("Nothing detected");
+				}
+				
+				oldVal = RA4;
+				}
+			
 		}
 		
 	}
 	
 	
-	
-	private void count() {
+	public void changedPortA(Prozessor cpu){
+		PIC_Logger.logger.info("CHANGEDPORTA");
+		portAChanged = true;
 	}
+	
 	
 	
 	

@@ -512,6 +512,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		//Port A
 		else if(adresse == 0x05){	
 			gui.show_PortA(value);
+			timer_counter.changedPortA(this);
 		}
 		
 		//Tris A
