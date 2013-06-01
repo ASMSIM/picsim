@@ -13,6 +13,8 @@ public class Interrupt {
 		boolean INTE = ((INTCON & 0x10) == 0x10) ? true : false;
 		boolean T0IE = ((INTCON & 0x20) == 0x20) ? true : false;
 
+		System.out.println(Integer.toHexString(INTCON));
+		
 		// Global Interrupt enabled
 		if(GIE) {
 
@@ -47,7 +49,10 @@ public class Interrupt {
 		//Is Interrupt?
 		if(T0IF){
 			//Timerinterrupt
-			//TODO
+			// Interrupt hat stattgefunden
+			PIC_Logger.logger.info("TMR0 Interrupt hat stattgefunden");
+			interruptHasOccured(cpu);			
+			
 		}
 		
 	}
@@ -74,13 +79,13 @@ public class Interrupt {
 		// Found rising edge
 		if(oldValue == false && RB0 == true && INTEDG) {
 			PIC_Logger.logger.info("Interrupt Rising");
-			externerInterruptRB0(cpu, INTCON, RB0);
+			externerInterruptRB0(cpu, INTCON);
 		}
 
 		// Found falling edge
 		else if(oldValue == true && RB0 == false && !INTEDG) {
 			PIC_Logger.logger.info("Interrupt Falling");
-			externerInterruptRB0(cpu, INTCON, RB0);
+			externerInterruptRB0(cpu, INTCON);
 		}
 
 		// No Interrupt
@@ -98,21 +103,33 @@ public class Interrupt {
 	 * @param INTCON
 	 * @param RB0
 	 */
-	private void externerInterruptRB0(Prozessor cpu, Integer INTCON, boolean RB0) {
+	private void externerInterruptRB0(Prozessor cpu, Integer INTCON) {
 
 		// Interrupt hat stattgefunden
 		PIC_Logger.logger.info("RB0 Interrupt hat stattgefunden");
-		cpu.setSpeicherzellenWert(0x0b, (INTCON & 0x7F), false); // Disable GIE
+
 		cpu.setSpeicherzellenWert(0x0b, (INTCON | 0x02), false); /*
-																 * Interrupt
-																 * Flag setzen
-																 */
+		 * Interrupt
+		 * Flag setzen
+		 */
+		
+		interruptHasOccured(cpu);
+	}
+	
+	
+	private void interruptHasOccured(Prozessor cpu){
+
+		Integer INTCON = cpu.get_RAM_Value(0x0b);
+		
+		cpu.setSpeicherzellenWert(0x0b, (INTCON & 0x7F), false); // Disable GIE
 
 		Integer pcl = cpu.getPCValue(); // Programmcounter holen
 		cpu.getStack().push(pcl); // PCL auf Stack
 
 		cpu.setPCL(0x04); // Springe zum Interruptvektor
+		
 	}
+	
 	
 	
 	private static boolean getBitValue(Integer value, Integer bitNr) {

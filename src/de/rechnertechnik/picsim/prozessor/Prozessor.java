@@ -463,13 +463,14 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		}
 		
 		// TMR0
-		else if( adresse == 0x01){
-			//TODO OLD VAL MUSS RICHTI SEIN!=
+		else if( adresse == 0x01 ){
 			Integer oldVal = get_RAM_Value(0x01);
-
+			
 			if(oldVal == 0xFF && value == 0x00){
 				//Interrupt Tmr0
-//				setSpeicherzellenWert(0x0b, , status_effect)
+				System.out.println("TMR0INTERRUPT");
+				Integer INTCON = get_RAM_Value(0x0b);
+				setSpeicherzellenWert(0x0b, (INTCON | (1 << 2)), false);
 			}
 				
 		}

@@ -43,8 +43,6 @@ public class Timer_Counter {
 	
 	public Timer_Counter(Prozessor cpu) {
 		this.cpu = cpu;
-//		modifyOptions(cpu.get_RAM_Value(0x81));		//Optionen von CPU holen
-		
 	}
 	
 	/**
@@ -88,12 +86,20 @@ public class Timer_Counter {
 		if(!T0CS){
 			increment();
 		}
+		
+		//TC als Counter gesetzt
+		else{
+				
+		}
+		
 	}
 	
 	
 	
-	public void count() {
+	private void count() {
 	}
+	
+	
 	
 	
 	/**
@@ -101,9 +107,9 @@ public class Timer_Counter {
 	 */
 	private void increment() {
 		
-		//Zuordnung zum Timer
+		//Prescaler erhält zuordnung zum Timer
 		if(!PSA){
-			
+			PIC_Logger.logger.info("[TIMER/COUNTER]: Timer+Prescaler");
 			prescaler++;
 		
 			//Prescaler Overflow?
@@ -113,9 +119,14 @@ public class Timer_Counter {
 				Integer oldTMR0 = cpu.get_RAM_Value(0x01);
 				cpu.setSpeicherzellenWert(0x01, oldTMR0+1, false);
 				
-				//TODO TEST!!!
 			}
-			
+		}
+		
+		//Keine Zuordnung zum Timer des Prescalers
+		else{
+			PIC_Logger.logger.info("[TIMER/COUNTER]: Timer ohne Prescaler");
+			Integer oldTMR0 = cpu.get_RAM_Value(0x01);
+			cpu.setSpeicherzellenWert(0x01, oldTMR0+1, false);
 		}
 		
 	}
@@ -127,15 +138,5 @@ public class Timer_Counter {
 	}
 	
 	
-	public static void main(String[] args) {
-//		System.err.println("BITVALUE");
-//		
-//		Integer x = 250;
-//		System.out.println(Integer.toBinaryString(x));
-//		for( int i = 0; i< 7; i++)
-//		System.out.println(getBitValue(x, i));
-//		Integer x = PIC_Befehle.getOpcodeFromToBit(0xff, 0, 2);
-		
-	}
 	
 }
