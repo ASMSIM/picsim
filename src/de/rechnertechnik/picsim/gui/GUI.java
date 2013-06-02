@@ -1150,6 +1150,26 @@ public class GUI extends JFrame implements IGUI{
 			));
 		
 		
+		
+//		
+//		Text_inp.setModel(new DefaultTableModel(
+//				zeilen,
+//				new String[] {
+//					"NR", "", "BP"
+//				}
+//			){
+//
+//			@Override
+//		     public Class<?> getColumnClass(int columnIndex) {
+//		        if (getColumnName(columnIndex).equals("BP")) {
+//		           return Boolean.class;
+//		        }
+//		        return super.getColumnClass(columnIndex);
+//		     }
+//		  });
+//		
+		
+		
 		Text_inp.getColumnModel().getColumn(0).setMaxWidth(25);
 		Text_inp.getColumnModel().getColumn(0).setPreferredWidth(25);
 		Text_inp.getColumnModel().getColumn(1).setPreferredWidth(521);
@@ -1172,6 +1192,7 @@ public class GUI extends JFrame implements IGUI{
 			Text_inp.setRowSelectionInterval(fokus, fokus);
 			scrollToVisible(Text_inp, fokus, 0);
 			Text_inp.repaint();
+			this.repaint();
 		}
 		catch (NullPointerException e){
 			e.printStackTrace();
