@@ -80,7 +80,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		
 		// Init und Fokus auf 1. Zeile
 		try{
-			gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0));
+			gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0), parser.getCommand_source_line());
 		}
 		catch(NullPointerException e){
 			
@@ -1011,7 +1011,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		parser.openFile(file.getPath());
 		
 		
-		gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0));
+		gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0),parser.getCommand_source_line());
 		programmSpeicher.loadProgramm();
 	}
 	

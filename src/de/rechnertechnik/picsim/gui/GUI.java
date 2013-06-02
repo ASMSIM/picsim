@@ -28,6 +28,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.JCheckBox;
 import javax.swing.border.EtchedBorder;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -1095,9 +1097,21 @@ public class GUI extends JFrame implements IGUI{
 	}
 
 	@Override
-	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus) throws NullPointerException {
+	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus, HashMap<Integer, Integer> command_source_line) throws NullPointerException {
 
-			Object[][] zeilen = new Object[sourceLine.size()][sourceLine.size()+1];
+		System.out.println();
+		System.out.println(command_source_line.size());
+		
+//		for(int i=0; i<command_source_line.size(); i++){
+//			
+//			if(command_source_line.get(i) != null){
+//				
+//			}
+//		}
+		
+		
+		
+		Object[][] zeilen = new Object[sourceLine.size()][sourceLine.size()+1];
 			
 		for(int i=0; i<sourceLine.size(); i++){
 			zeilen[i][0] = i+1;
@@ -1126,8 +1140,6 @@ public class GUI extends JFrame implements IGUI{
 		     }
 		  });
 		
-				
-			
 		
 		Text_inp.getColumnModel().getColumn(0).setMaxWidth(25);
 		Text_inp.getColumnModel().getColumn(0).setPreferredWidth(25);
@@ -1362,4 +1374,5 @@ public class GUI extends JFrame implements IGUI{
 		}
 		
 	}
+
 }
