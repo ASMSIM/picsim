@@ -1120,6 +1120,13 @@ public class GUI extends JFrame implements IGUI{
 		}
 		
 		
+		/**
+		 * TODO
+		 * 
+		 * http://stackoverflow.com/questions/5798980/jtable-disable-checkbox-in-cell
+		 * 
+		 */
+		
 		Text_inp.setModel(new DefaultTableModel(
 				zeilen,
 				new String[] {
