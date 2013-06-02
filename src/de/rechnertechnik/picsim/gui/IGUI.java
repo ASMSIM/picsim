@@ -26,7 +26,4 @@ public interface IGUI {
 	public void show_TrisB(Integer value);
 	public void showStack(ArrayList<Integer> stack);
 	
-	
-//	public void showBreakpoints();
-	
 }

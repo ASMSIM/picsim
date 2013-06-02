@@ -2,10 +2,24 @@ package de.rechnertechnik.picsim.prozessor;
 
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 
+/**
+ * Stellt die Funktionen des Interrupts dar
+ * 
+ * Enthält Methoden zum Prüfen und Ausführen des Timer0 Interrupts und des
+ * Externen Interrupts
+ * 
+ * @author michael
+ * 
+ */
 public class Interrupt {
 
+	//Speichere alten Wert zur Flankenerkennung
 	private boolean oldValue = false;
 
+	/**
+	 * Überprüft, ob ein Interrupt stattgefunden hat
+	 * @param cpu
+	 */
 	public void checkInterrupt(Prozessor cpu) {
 
 		Integer INTCON = cpu.get_RAM_Value(0x0b);
@@ -14,7 +28,7 @@ public class Interrupt {
 		boolean T0IE = ((INTCON & 0x20) == 0x20) ? true : false;
 
 		System.out.println(Integer.toHexString(INTCON));
-		
+
 		// Global Interrupt enabled
 		if(GIE) {
 
@@ -37,24 +51,25 @@ public class Interrupt {
 
 	}
 
+	
 	/**
-	 * Prüft auf externen Interrupt
+	 * Prüft auf Timer0 Interrupt
 	 * 
 	 * @param cpu
 	 * @param iNTCON
 	 */
 	private void checkTimer0Interrupt(Prozessor cpu, Integer INTCON) {
 		boolean T0IF = getBitValue(INTCON, 2);
-		
-		//Is Interrupt?
-		if(T0IF){
-			//Timerinterrupt
+
+		// Is Interrupt?
+		if(T0IF) {
+			// Timerinterrupt
 			// Interrupt hat stattgefunden
 			PIC_Logger.logger.info("TMR0 Interrupt hat stattgefunden");
-			interruptHasOccured(cpu);			
-			
+			interruptHasOccured(cpu);
+
 		}
-		
+
 	}
 
 	/**
@@ -109,30 +124,33 @@ public class Interrupt {
 		PIC_Logger.logger.info("RB0 Interrupt hat stattgefunden");
 
 		cpu.setSpeicherzellenWert(0x0b, (INTCON | 0x02), false); /*
-		 * Interrupt
-		 * Flag setzen
-		 */
-		
+																 * Interrupt
+																 * Flag setzen
+																 */
+
 		interruptHasOccured(cpu);
 	}
-	
-	
-	private void interruptHasOccured(Prozessor cpu){
+
+	/**
+	 * Wird aufgerufen, nachdem ein Interrupt stattgefunden hat
+	 * 
+	 * @param cpu
+	 */
+	private void interruptHasOccured(Prozessor cpu) {
 
 		Integer INTCON = cpu.get_RAM_Value(0x0b);
-		
+
 		cpu.setSpeicherzellenWert(0x0b, (INTCON & 0x7F), false); // Disable GIE
 
 		Integer pcl = cpu.getPCValue(); // Programmcounter holen
 		cpu.getStack().push(pcl); // PCL auf Stack
 
 		cpu.setPCL(0x04); // Springe zum Interruptvektor
-		
+
 	}
-	
-	
+
 	
 	private static boolean getBitValue(Integer value, Integer bitNr) {
-		return  ((value & ( 1 << bitNr) ) == (1 << bitNr)) ? true : false;
+		return ((value & (1 << bitNr)) == (1 << bitNr)) ? true : false;
 	}
 }

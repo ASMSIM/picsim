@@ -19,6 +19,14 @@ import de.rechnertechnik.picsim.speicher.Speicher.Bank;
 import de.rechnertechnik.picsim.speicher.Speicherzelle.bits;
 import de.rechnertechnik.picsim.prozessor.EStepmode;
 
+/**
+ * Stellt alle Methoden bereit, die der Prozessor benötigt, zum zu arbeiten
+ * 
+ * Überprüft auf Befehl und führt den jeweiligen Befehl aus
+ * 
+ * @author michael
+ * 
+ */
 public class Prozessor implements Runnable, IProzessor, IPorts {
 
 	private boolean stopProgram = false;
@@ -27,14 +35,20 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	private Speicher ram;
 	private IGUI gui;
 	private Integer laufzeit = 0;
-	
+
 	private EStepmode stepmode;
-	
+
+	// Erzeugt Interrupthandler
 	private Interrupt interruptHandler = new Interrupt();
+
+	// Erzeugt Timer/Counter Einheit
 	private Timer_Counter timer_counter = new Timer_Counter(this);
+
+	// Taktung des Prozessors für Laufzeit
 	private Integer megaHertz = 4;
-	
-	
+
+	// Verbindung zum Parser
+	private Parser parser;
 
 	/**
 	 * Programmcounter
@@ -42,7 +56,6 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	private Speicherzelle pc;
 	private Speicherzelle status;
 	private SpecialFunctionRegister w = new SpecialFunctionRegister(0);
-	private Parser parser;
 	private Stack<Integer> stack = new Stack<Integer>();
 
 	public Prozessor(BefehlAdressraumZuordnung cmdTable, Programmspeicher programmSpeicher, Speicher ram, IGUI gui, Parser parser) {
@@ -58,32 +71,32 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		status = ram.getStatus(true);
 		pc = ram.getPCL(true);
 
+		// Init Laufzeitcnt
 		gui.setLaufzeitCounter(laufzeit);
-		
-		//Status
+
+		// Status init
 		setSpeicherzellenWert(0x03, 0x18, false);
-		
-		//Option
+
+		// Option init
 		setSpeicherzellenWert(0x81, 0xff, false);
-		
-		//Init Port A
+
+		// Init Port A
 		gui.show_PortA(0x00);
 		gui.show_TrisA(0x1f);
-		
-		//Init Port B
+
+		// Init Port B
 		gui.show_PortB(0x00);
 		gui.show_TrisB(0xff);
-		
-		//Timer Optionen setzen
+
+		// Timer Optionen init
 		timer_counter.modifyOptions(get_RAM_Value(0x81));
-		
-		
-		// Init und Fokus auf 1. Zeile
-		try{
+
+		// GUI init und Fokus auf 1. Zeile
+		try {
 			gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0), parser.getCommand_source_line());
 		}
-		catch(NullPointerException e){
-			
+		catch(NullPointerException e) {
+
 		}
 
 		Thread runProgram = new Thread(this);
@@ -92,11 +105,15 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 	/**
 	 * Enthält die Befehlsverarbeitunsschleife
+	 * 
+	 * Prüft, welcher Befehl ausgeführt werden muss und führt diesen dann mit
+	 * Hilfe der Statischen Klasse PIC-Befehle aus
+	 * 
 	 */
 	@Override
 	public void run() {
-		
-		while(stepmode==EStepmode.hold){
+
+		while(stepmode == EStepmode.hold) {
 			try {
 				Thread.sleep(100);
 			}
@@ -104,15 +121,17 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 				e.printStackTrace();
 			}
 		}
-		
+
 		// INIT
 		while(!stopProgram) {
 
+			//Lade nächsten Befehl
 			Integer akt_Befehl = nextCommand();
 
 			PIC_Logger.logger.log(Level.INFO, "Next command: 0x"
 					+ Integer.toHexString(akt_Befehl));
 
+			
 			// GOTO
 			if(isIntegerCommand(ECommands.GOTO, akt_Befehl)) {
 				System.out.println("GOTO");
@@ -309,15 +328,19 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 				this.stopProgram = true;
 			}
 
+			//Springe zum Befehl in der GUI
 			gui.setFocus(parser.getCommand_source_line().get(pc.getValue()));
+			
+			//Aktualisiere Programmcounter auf GUI
 			gui.show_Register(0x02, pc.getValue());
 			gui.show_Register(0x82, pc.getValue());
-			gui.setLaufzeitCounter(laufzeit);		//Laufzeit aktualisieren
 			
-			//Check Interrupt
+			//Aktualisiere Laufzeitcnt
+			gui.setLaufzeitCounter(laufzeit); // Laufzeit aktualisieren
+
+			// Check Interrupt
 			interruptHandler.checkInterrupt(this);
-			
-			
+
 			if(stepmode == EStepmode.onestep) {
 				stepmode = EStepmode.hold;
 			}
@@ -343,53 +366,47 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 	}
 
-	
-	
 	public Integer getMegaHertz() {
 		return megaHertz;
 	}
-	
-	
-	
+
 	/**
 	 * Inkrementiere Programmcounter
 	 */
 	public void incPC() {
-		Integer value =pc.getValue();
+		Integer value = pc.getValue();
 		setPCL(value + 1);
-		gui.show_PC(value);			//TODO CHECK?
+		gui.show_PC(value); // TODO CHECK?
 		gui.show_Register(0x02, value);
 		gui.show_Register(0x82, value);
+		gui.showStatus(status.getValue());
 	}
 
-	
 	/**
 	 * Liefert den Wert einer Speicherzelle zurück
+	 * 
 	 * @param adresse
 	 * @return
 	 */
-	public Integer getSpeicherzellenWert(Integer adresse){
-		
-		if(adresse == 0x00){
-				String logprefix = "[INDIREKTE ADRESSIERUNG]: ";
-				
-				Integer indirect_address = get_RAM_Value(0x04);		//FSR
-				Integer indirect_value = get_RAM_Value(indirect_address);
-				
-				PIC_Logger.logger.info(logprefix+"Ind. Adresse= "+indirect_address);
-				PIC_Logger.logger.info(logprefix+"Ind. Wert= "+indirect_value);
-				
-				return indirect_value;					//TODO CHECK
+	public Integer getSpeicherzellenWert(Integer adresse) {
+
+		if(adresse == 0x00) {
+			String logprefix = "[INDIREKTE ADRESSIERUNG]: ";
+
+			Integer indirect_address = get_RAM_Value(0x04); // FSR
+			Integer indirect_value = get_RAM_Value(indirect_address);
+
+			PIC_Logger.logger.info(logprefix + "Ind. Adresse= "
+					+ indirect_address);
+			PIC_Logger.logger.info(logprefix + "Ind. Wert= " + indirect_value);
+
+			return indirect_value; // TODO CHECK
 		}
-		else{
+		else {
 			return ram.getValueFromCell(adresse);
 		}
 	}
-	
-	
-	
-	
-	
+
 	/**
 	 * Schreibt einen Wert in eine Speicherzelle
 	 * 
@@ -397,62 +414,56 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	 * @param value
 	 * @param status_effect
 	 */
-	public void setSpeicherzellenWert(Integer adresse, Integer value, boolean status_effect){
-		
-		
-		//Passive Beeinträchtigung des Statusregister
-		//Überlauf wird abgefangen 
-	
+	public void setSpeicherzellenWert(Integer adresse, Integer value, boolean status_effect) {
+
+		// Passive Beeinträchtigung des Statusregister
+		// Überlauf wird abgefangen
+
 		if((value == 0) && status_effect) {
-			status.setBit(bits.Z);				//TODO STATUS AUF GUI!???
+			status.setBit(bits.Z); // TODO STATUS AUF GUI!???
 		}
-		else if( value != 0 && status_effect){
+		else if(value != 0 && status_effect) {
 			status.clearBit(bits.Z);
 		}
-		
-		
+
 		if(value > 255) {
 			value -= 256;
-			
-			if(value == 0 && status_effect){
+
+			if(value == 0 && status_effect) {
 				status.setBit(bits.Z);
 			}
-			else if(value != 0 && status_effect){
+			else if(value != 0 && status_effect) {
 				status.clearBit(bits.Z);
 			}
-			                                                                                                                                                                                                                                
-			if(status_effect){
+
+			if(status_effect) {
 				status.setBit(bits.C);
 			}
 		}
-		
-		else if(value <= 255 && status_effect){
+
+		else if(value <= 255 && status_effect) {
 			status.clearBit(bits.C);
 		}
-		
-		
+
 		if(value > 15 && status_effect) {
-				status.setBit(bits.DC);
+			status.setBit(bits.DC);
 		}
-		else if(value <= 15 && status_effect){
-				status.clearBit(bits.DC);
+		else if(value <= 15 && status_effect) {
+			status.clearBit(bits.DC);
 		}
 
-		
-		//Adresse bei Bank 1 erhöhen
-		if(ram.getBank() == Bank.BANK1){
-			adresse += 0x80;							//Bank 1 startet bei 0x80h
-			PIC_Logger.logger.info("BANK1: Adresse += 0x80 ==>"+Integer.toHexString(adresse));
+		// Adresse bei Bank 1 erhöhen
+		if(ram.getBank() == Bank.BANK1) {
+			adresse += 0x80; // Bank 1 startet bei 0x80h
+			PIC_Logger.logger.info("BANK1: Adresse += 0x80 ==>"
+					+ Integer.toHexString(adresse));
 		}
-		
-		
-	
 
-		//GUI AUSGABE
+		// GUI AUSGABE
 		gui.show_Register(0x03, status.getValue());
 		gui.show_Register(0x83, status.getValue());
-		
-		
+
+		PIC_Logger.logger.warning("SHOW STATUS: "+Integer.toHexString(status.getValue()));
 		
 		/**
 		 * 
@@ -468,216 +479,209 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		 * 
 		 * 
 		 */
-		
-		//Indirect. Adress
-		if(adresse == 0x00 || adresse == 0x80){		//Indirekte Adressierung
+
+		// Indirect. Adress
+		if(adresse == 0x00 || adresse == 0x80) { // Indirekte Adressierung
 			String logprefix = "[SPECIALFUNCTIONREGISTER]: ";
-			
-			Integer indirect_address = get_RAM_Value(0x04);		//FSR
-			
-			PIC_Logger.logger.info(logprefix+"Ind. Adresse= "+indirect_address);
-			PIC_Logger.logger.info(logprefix+"Setze Wert= "+value);
-			
+
+			Integer indirect_address = get_RAM_Value(0x04); // FSR
+
+			PIC_Logger.logger.info(logprefix + "Ind. Adresse= "
+					+ indirect_address);
+			PIC_Logger.logger.info(logprefix + "Setze Wert= " + value);
+
 			ram.writeValueToCell(indirect_address, value);
-			gui.show_Register(indirect_address, value);			
-			return;		
+			gui.show_Register(indirect_address, value);
+			return;
 		}
-		
+
 		// TMR0
-		else if( adresse == 0x01 ){
+		else if(adresse == 0x01) {
 			Integer oldVal = get_RAM_Value(0x01);
-			
-			if(oldVal == 0xFF && value == 0x00){
-				//Interrupt Tmr0
+
+			if(oldVal == 0xFF && value == 0x00) {
+				// Interrupt Tmr0
 				System.out.println("TMR0INTERRUPT");
 				Integer INTCON = get_RAM_Value(0x0b);
 				setSpeicherzellenWert(0x0b, (INTCON | (1 << 2)), false);
 			}
-				
+
 		}
-		
-		//Option_REG
-		else if ( adresse == 0x81){
-			//TODO
+
+		// Option_REG
+		else if(adresse == 0x81) {
+			// TODO
 			timer_counter.modifyOptions(value);
 		}
-		
-		//Programmcounter
-		else if(adresse == 0x02 || adresse == 0x82){
+
+		// Programmcounter
+		else if(adresse == 0x02 || adresse == 0x82) {
 			setPCL(value);
 		}
-		
-		//Status
-		else if(adresse == 0x03 || adresse == 0x83){
+
+		// Status
+		else if(adresse == 0x03 || adresse == 0x83) {
 			checkStatusActive(adresse, value);
-			
-			ram.writeValueToCell(0x03, value);	
-			gui.show_Register(0x03, value);		
-			ram.writeValueToCell(0x83, value);	
-			gui.show_Register(0x83, value);		
-			
+
+			ram.writeValueToCell(0x03, value);
+			gui.show_Register(0x03, value);
+			ram.writeValueToCell(0x83, value);
+			gui.show_Register(0x83, value);
+
 			return;
-			
+
 		}
-		
-		//FSR
-		else if( adresse == 0x04 || adresse == 0x84){	
-			ram.writeValueToCell(0x04, value);		//In beide Bänke schreiben
-			ram.writeValueToCell(0x84, value);	
-			gui.show_Register(0x04, value);		
-			gui.show_Register(0x84, value);	
+
+		// FSR
+		else if(adresse == 0x04 || adresse == 0x84) {
+			ram.writeValueToCell(0x04, value); // In beide Bänke schreiben
+			ram.writeValueToCell(0x84, value);
+			gui.show_Register(0x04, value);
+			gui.show_Register(0x84, value);
 			gui.showFSR(value);
-			return;	
+			return;
 		}
-		
-		//Port A
-		else if(adresse == 0x05){	
+
+		// Port A
+		else if(adresse == 0x05) {
 			gui.show_PortA(value);
 			timer_counter.changedPortA(this);
 		}
-		
-		//Tris A
-		else if(adresse == 0x85){	
+
+		// Tris A
+		else if(adresse == 0x85) {
 			gui.show_TrisA(value);
 		}
-		
-		//Port B
-		else if (adresse == 0x06){
+
+		// Port B
+		else if(adresse == 0x06) {
 			gui.show_PortB(value);
 		}
-		
-		//Tris B ueberpruefen
-		else if(adresse == 0x86){	
+
+		// Tris B ueberpruefen
+		else if(adresse == 0x86) {
 			gui.show_TrisB(value);
 		}
-		
-		//INTCON
-		else if( adresse == 0x0B || adresse == 0x8B ){
-			ram.writeValueToCell(0x0B, value);		//In beide Bänke schreiben
-			ram.writeValueToCell(0x8B, value);	
-			gui.show_Register(0x0B, value);		
-			gui.show_Register(0x8B, value);	
-			return;	//TODO CHECK IF OK=
-		}
-		
-		
-		
-		ram.writeValueToCell(adresse, value);	
-		gui.show_Register(adresse, value);		//TODO CHECK?
-	}
-	
-	
-	
-	
-//	/**
-//	 * Schreibt einen Wert in eine Speicherzelle und gibt diesen auf der GUI aus
-//	 * 
-//	 * @param adresse
-//	 * @param value
-//	 * @param status_effect
-//	 */
-//	public void setSpeicherzellenWertAndShow(Integer adresse, Integer value, boolean status_effect){
-//		setSpeicherzellenWert(adresse, value, status_effect);
-//		gui.show_Register(Integer.toHexString(adresse), Integer.toHexString(value));
-//	}
 
-	
+		// INTCON
+		else if(adresse == 0x0B || adresse == 0x8B) {
+			ram.writeValueToCell(0x0B, value); // In beide Bänke schreiben
+			ram.writeValueToCell(0x8B, value);
+			gui.show_Register(0x0B, value);
+			gui.show_Register(0x8B, value);
+			return; // TODO CHECK IF OK=
+		}
+
+		ram.writeValueToCell(adresse, value);
+		gui.show_Register(adresse, value); // TODO CHECK?
+	}
+
+	// /**
+	// * Schreibt einen Wert in eine Speicherzelle und gibt diesen auf der GUI
+	// aus
+	// *
+	// * @param adresse
+	// * @param value
+	// * @param status_effect
+	// */
+	// public void setSpeicherzellenWertAndShow(Integer adresse, Integer value,
+	// boolean status_effect){
+	// setSpeicherzellenWert(adresse, value, status_effect);
+	// gui.show_Register(Integer.toHexString(adresse),
+	// Integer.toHexString(value));
+	// }
+
 	/**
-	 * Überprüft beim Setzen eines Wertes, ob das Statusregisters direkt angesprochen und geändert wurde
-	 *
+	 * Überprüft beim Setzen eines Wertes, ob das Statusregisters direkt
+	 * angesprochen und geändert wurde
+	 * 
 	 * Bsp: bsf status,5
-	 *
+	 * 
 	 * @param adresse
 	 * @param value
 	 */
 	private void checkStatusActive(Integer adresse, Integer value) {
-			
-			String logstring = "[Aktive Beeinträchtigung des Statusregisters]: ";
-			
-			//CARRY
-			if( (value & 0x01) == 0x01){	//Carrybit manuell gesetzt
-				status.setBit(bits.C);
-				PIC_Logger.logger.info(logstring+"Set C");
-			}
-			else{	//Carrybit gelöscht
-				status.clearBit(bits.C);
-				PIC_Logger.logger.info(logstring+"Clear C");
-			}
-			
-			
-			//DC BIT
-			if( (value & 0x02) == 0x02){	//DC GESETZT
-				status.setBit(bits.DC);
-				PIC_Logger.logger.info(logstring+"Set DC");
-			}	
-			else{						//DC GELÖSCHT
-				status.clearBit(bits.DC);
-				PIC_Logger.logger.info(logstring+"Clear DC");
-			}
-			
-			
-			//Z
-			if( (value & 0x04) == 0x04){	//Z GESETZT
-				status.setBit(bits.Z);
-				PIC_Logger.logger.info(logstring+"Set Z");
-			}	
-			else{						//Z GELÖSCHT
-				status.clearBit(bits.Z);
-				PIC_Logger.logger.info(logstring+"Clear Z");
-			}
-			
-			//RP0
-			if( (value & 0x20) == 0x20){	//RP0 GESETZT
-				status.setBit(bits.RP0);
-				ram.setBank(Bank.BANK1);
-				PIC_Logger.logger.info(logstring+"Switched to Bank1");
-			}	
-			else{						//RP0 GELÖSCHT
-				status.clearBit(bits.RP0);
-				ram.setBank(Bank.BANK0);
-				PIC_Logger.logger.info(logstring+"Switched to Bank0");
-			}
-			
-			gui.showStatus(status.getValue());
-			
+
+		String logstring = "[Aktive Beeinträchtigung des Statusregisters]: ";
+
+		// CARRY
+		if((value & 0x01) == 0x01) { // Carrybit manuell gesetzt
+			status.setBit(bits.C);
+			PIC_Logger.logger.info(logstring + "Set C");
+		}
+		else { // Carrybit gelöscht
+			status.clearBit(bits.C);
+			PIC_Logger.logger.info(logstring + "Clear C");
+		}
+
+		// DC BIT
+		if((value & 0x02) == 0x02) { // DC GESETZT
+			status.setBit(bits.DC);
+			PIC_Logger.logger.info(logstring + "Set DC");
+		}
+		else { // DC GELÖSCHT
+			status.clearBit(bits.DC);
+			PIC_Logger.logger.info(logstring + "Clear DC");
+		}
+
+		// Z
+		if((value & 0x04) == 0x04) { // Z GESETZT
+			status.setBit(bits.Z);
+			PIC_Logger.logger.info(logstring + "Set Z");
+		}
+		else { // Z GELÖSCHT
+			status.clearBit(bits.Z);
+			PIC_Logger.logger.info(logstring + "Clear Z");
+		}
+
+		// RP0
+		if((value & 0x20) == 0x20) { // RP0 GESETZT
+			status.setBit(bits.RP0);
+			ram.setBank(Bank.BANK1);
+			PIC_Logger.logger.info(logstring + "Switched to Bank1");
+		}
+		else { // RP0 GELÖSCHT
+			status.clearBit(bits.RP0);
+			ram.setBank(Bank.BANK0);
+			PIC_Logger.logger.info(logstring + "Switched to Bank0");
+		}
+
+		gui.showStatus(status.getValue());
+
 	}
-	
 
 	/**
 	 * Liefert den Wert des W Registers zurück
+	 * 
 	 * @return
 	 */
 	public Integer getW() {
 		return w.getWert();
 	}
 
-	
-	
 	public Integer getLaufzeit() {
 		return laufzeit;
 	}
-	
-	public void setLaufzeit(Integer laufzeit) {
-		
-		System.out.println("LAUFZEITDIFF: "+(laufzeit-this.laufzeit));
 
-		int diff = laufzeit-this.laufzeit;
-		
-		for(int i=0; i<diff; i++){
-			//Timer
+	public void setLaufzeit(Integer laufzeit) {
+
+		int diff = laufzeit - this.laufzeit;
+
+		for(int i = 0; i < diff; i++) {
+			// Timer
 			timer_counter.time();
 		}
-		
+
 		this.laufzeit = laufzeit;
 	}
-	
-	
-	
+
 	/**
 	 * Setzt einen Wert in W und gibt diesen auf der GUI aus
 	 * 
-	 * @param value zu setzender Wert
-	 * @param status_effect Wenn Status gesetzt werden soll
+	 * @param value
+	 *            zu setzender Wert
+	 * @param status_effect
+	 *            Wenn Status gesetzt werden soll
 	 */
 	public void setW(Integer value, boolean status_effect) {
 
@@ -687,14 +691,14 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		}
 		else if(value > 255) {
 			value -= 256;
-			if(status_effect){
+			if(status_effect) {
 				status.setBit(bits.C);
 				PIC_Logger.logger.info("Flag: C");
 			}
 		}
 		else if(value < 0) {
 			value += 256;
-			if(status_effect){
+			if(status_effect) {
 				status.setBit(bits.DC);
 				PIC_Logger.logger.info("Flag: DC");
 			}
@@ -702,78 +706,74 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 		setSpeicherzellenWert(0x03, status.getValue(), false);
 		this.w.setWert(value);
-		gui.show_W_Register(value);	//Ausgabe auf GUI		TODO CHECK
+		gui.show_W_Register(value); // Ausgabe auf GUI TODO CHECK
 	}
 
-
-	
 	/**
-	 * Liefert true, wenn das gewünschte Bit gesetzt ist
-	 * sonst false
+	 * Liefert true, wenn das gewünschte Bit gesetzt ist sonst false
 	 * 
 	 * @param bit
 	 * @return
 	 */
-	public boolean getStatus(bits bit){
-		if(status.getBit(bit)){
+	public boolean getStatus(bits bit) {
+		if(status.getBit(bit)) {
 			return true;
 		}
-		else{
+		else {
 			return false;
 		}
 	}
-	
-	
-	//TODO STATUSREGISTER AUF GUI ausgeben
+
+	// TODO STATUSREGISTER AUF GUI ausgeben
 	public void setStatus(bits bit) {
 		status.setBit(bit);
-		//AUSGABE GUI TODO
+		setSpeicherzellenWert(0x03, status.getValue(), true);
+		// AUSGABE GUI TODO
 	}
 
-	//TODO STATUSREGISTER AUF GUI ausgeben
-	public void clearStatus(bits bit){
+	// TODO STATUSREGISTER AUF GUI ausgeben
+	public void clearStatus(bits bit) {
 		status.clearBit(bit);
-		//TODO ausgabe GUI
+		setSpeicherzellenWert(0x03, status.getValue(), true);
+		// TODO ausgabe GUI
 	}
-	
-	
+
 	/**
 	 * Liefert den Stack zurück
+	 * 
 	 * @return
 	 */
 	public Stack<Integer> getStack() {
 		return stack;
 	}
-	
-	
+
 	/**
 	 * Liefert den Wert des Programmcounters zurück
+	 * 
 	 * @return
 	 */
 	public Integer getPCValue() {
 		return pc.getValue();
 	}
 
-	
 	/**
 	 * Übernimmt den value wert für den Programmcounter
 	 * 
-	 * @param value Neuer Programmcounterwert
+	 * @param value
+	 *            Neuer Programmcounterwert
 	 */
 	public void setPCL(Integer value) {
 		pc.setWert(value);
-		
-		//Ausgabe auf GUI
-		gui.show_PC(value);			//Extralabel
-		gui.show_Register(0x02, value);	//Speicher Bank0
-		gui.show_Register(0x82, value);	//Speicher Bank1
+
+		// Ausgabe auf GUI
+		gui.show_PC(value); // Extralabel
+		gui.show_Register(0x02, value); // Speicher Bank0
+		gui.show_Register(0x82, value); // Speicher Bank1
 	}
 
-	
-	
 	/**
-	 * Testet, ob einen Integerwert auf einen bestimmten Befehl.
-	 * Liefert true, wenn der Wert im Befehlsadressraum liegt, sonst false
+	 * Testet, ob einen Integerwert auf einen bestimmten Befehl. Liefert true,
+	 * wenn der Wert im Befehlsadressraum liegt, sonst false
 	 * 
 	 * @param command_enum
 	 * @param actual_cmd
@@ -789,7 +789,6 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 	}
 
-	
 	/**
 	 * Holt den naechsten Befehl, auf den der Programmcounter zeigt
 	 * 
@@ -800,13 +799,12 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	}
 
 	/**
-	 * Ein Programmschritt	TODO LAUFZEITZAEHLER ERHOEHEN
+	 * Ein Programmschritt TODO LAUFZEITZAEHLER ERHOEHEN
 	 */
 	@Override
 	public void nextStep() {
 		stepmode = EStepmode.onestep;
 	}
-	
 
 	/**
 	 * Programm läuft automatisch weiter
@@ -830,36 +828,35 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		setW(0, false);
 		setPCL(0);
 		stack.clear();
-		
-		//Status
-		setSpeicherzellenWert(0x03, 0x18, false);	
+
+		// Status
+		setSpeicherzellenWert(0x03, 0x18, false);
 		gui.show_Register(0x03, 0x18);
-		
-		//Option
-		setSpeicherzellenWert(0x81, 0xff, false);	
+
+		// Option
+		setSpeicherzellenWert(0x81, 0xff, false);
 		gui.show_Register(0x81, 0xff);
-		
-		//Tris A
+
+		// Tris A
 		setSpeicherzellenWert(0x85, 0x1F, false);
 		gui.show_Register(0x85, 0x1F);
-		
-		//Tris B
-		setSpeicherzellenWert(0x86, 0xFF, false);	
+
+		// Tris B
+		setSpeicherzellenWert(0x86, 0xFF, false);
 		gui.show_Register(0x86, 0xFF);
-		
-		//Port A
+
+		// Port A
 		setSpeicherzellenWert(0x05, 0x00, false);
 		gui.show_Register(0x05, 0x00);
-		
-		//Port B
-		setSpeicherzellenWert(0x06, 0x00, false);	
+
+		// Port B
+		setSpeicherzellenWert(0x06, 0x00, false);
 		gui.show_Register(0x06, 0x00);
-		
-		
+
 		gui.setFocus(parser.getCommand_source_line().get(0));
 
 		timer_counter.modifyOptions(get_RAM_Value(0x81));
-		
+
 		stepmode = EStepmode.hold;
 	}
 
@@ -868,9 +865,9 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	 */
 	@Override
 	public void setPortA(Integer value) {
-		//TODO TRIS ABFRAGE I/0
+		// TODO TRIS ABFRAGE I/0
 		setSpeicherzellenWert(0x05, value, false);
-//		System.out.println("NOT IMPLEMENTED");
+		// System.out.println("NOT IMPLEMENTED");
 	}
 
 	/**
@@ -897,7 +894,6 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		return get_RAM_Value(0x85);
 	}
 
-	
 	/**
 	 * Speicherzelle wird direkt von der GUI verändert
 	 */
@@ -907,8 +903,8 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	}
 
 	/**
-	 * Wird von der GUI benötigt, um bei Falscheingabe den alten
-	 * Wert zu erhalten
+	 * Wird von der GUI benötigt, um bei Falscheingabe den alten Wert zu
+	 * erhalten
 	 */
 	@Override
 	public Integer get_RAM_Value(Integer adresse) {
@@ -920,62 +916,57 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		return megaHertz;
 	}
 
-	
 	@Override
 	public void setBitPortA(Integer bitNr) {
 		setBitPort(bitNr, 0x05);
 	}
-	
-	public void setBitPort(Integer bitNr, Integer adresse){
-		Integer tris = get_RAM_Value(adresse+0x80);
+
+	public void setBitPort(Integer bitNr, Integer adresse) {
+		Integer tris = get_RAM_Value(adresse + 0x80);
 		Integer port = get_RAM_Value(adresse);
-		
-		boolean trisBit =  PIC_Befehle.getBit(tris, bitNr);
-		Integer setValue = port | (int)Math.pow(2, bitNr);
-		
-		//Nur verändern wenn Tris richtig gesetzt ist
-		if(trisBit){
-			setSpeicherzellenWert(adresse, setValue , false);
+
+		boolean trisBit = PIC_Befehle.getBit(tris, bitNr);
+		Integer setValue = port | (int) Math.pow(2, bitNr);
+
+		// Nur verändern wenn Tris richtig gesetzt ist
+		if(trisBit) {
+			setSpeicherzellenWert(adresse, setValue, false);
 		}
 	}
-	
 
 	@Override
 	public void clearBitPortA(Integer bitNr) {
 		clearBitPort(bitNr, 0x05);
 	}
-	
 
 	private void clearBitPort(Integer bitNr, Integer adresse) {
-		Integer tris = get_RAM_Value(adresse+0x80);
+		Integer tris = get_RAM_Value(adresse + 0x80);
 		Integer port = get_RAM_Value(adresse);
-		
-		boolean trisBit =  PIC_Befehle.getBit(tris, bitNr);
-		Integer setValue = (int)Math.pow(2, bitNr);
+
+		boolean trisBit = PIC_Befehle.getBit(tris, bitNr);
+		Integer setValue = (int) Math.pow(2, bitNr);
 		setValue = 255 - setValue;
 		setValue = port & setValue;
-		
-		//Tris als input gesetzt
-		if(trisBit){
-			setSpeicherzellenWert(adresse, setValue , false);
+
+		// Tris als input gesetzt
+		if(trisBit) {
+			setSpeicherzellenWert(adresse, setValue, false);
 		}
 	}
 
-
-
 	@Override
 	public void clearBitPortB(Integer bitNr) {
-		clearBitPort(bitNr, 0x06);		
+		clearBitPort(bitNr, 0x06);
 	}
 
 	@Override
 	public void setBitPortB(Integer bitNr) {
-		setBitPort(bitNr, 0x06);		
+		setBitPort(bitNr, 0x06);
 	}
 
 	@Override
 	public void setPortB(Integer value) {
-		//TODO TRIS ABFRAGE I/0
+		// TODO TRIS ABFRAGE I/0
 		setSpeicherzellenWert(0x06, value, false);
 	}
 
@@ -993,14 +984,14 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	public Integer getTrisB() {
 		return getSpeicherzellenWert(0x86);
 	}
-	
+
 	public void showStackOnGUI() {
 		ArrayList<Integer> stack = new ArrayList<Integer>();
-		
-		for(int i=0; i<this.stack.size(); i++){
+
+		for(int i = 0; i < this.stack.size(); i++) {
 			stack.add(this.stack.get(i));
 		}
-		
+
 		gui.showStack(stack);
 	}
 
@@ -1009,10 +1000,9 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		reset();
 		System.out.println(file.getPath());
 		parser.openFile(file.getPath());
-		
-		
-		gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0),parser.getCommand_source_line());
+
+		gui.showSourcecode(parser.getSourceLine(), parser.getCommand_source_line().get(0), parser.getCommand_source_line());
 		programmSpeicher.loadProgramm();
 	}
-	
+
 }

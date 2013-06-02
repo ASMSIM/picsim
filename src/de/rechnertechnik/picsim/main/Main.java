@@ -18,38 +18,49 @@ public class Main {
 
 	private static Parser parser;
 	private static Prozessor prozessor;
-	private static PIC_Logger logger;
 	private static BefehlAdressraumZuordnung commandTable;
 	private static Programmspeicher programmSpeicher;
 	private static Speicher ram;
 
+	/**
+	 * Startet Programm
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
-		
 		System.out.println("#############################");
 		System.out.println("######## PICSIMULATOR #######");
 		System.out.println("#############################");
 
-		// Init
+		// Erzeuge GUI
 		GUI gui = new GUI();
+
+		// Initialisiere Logger
 		PIC_Logger.initLogger("logfile.txt");
+
+		// Erzeuge Befehlsadressräume
 		commandTable = new BefehlAdressraumZuordnung();
-		parser = new Parser(); // TODO mit GUI öffnen
-												// verknüpfen
+
+		// Erzeuge Parser
+		parser = new Parser();
+
+		// Erzeuge leeren Programmspeicher
 		programmSpeicher = new Programmspeicher(parser); // Legt den
 															// Programmspeicher
 															// an und befüllt
 															// diesen mit dem
 															// Programmcode
 
+		// Erzeuge leeren RAM-Speicher
 		ram = new Speicher();
-		// programmSpeicher.printDump();
+
+		// Erzeuge Prozessor
 		prozessor = new Prozessor(commandTable, programmSpeicher, ram, gui, parser);
 
-		// GUI öffnen
+		// GUI anzeigen
 		showGUI(gui, prozessor);
-		gui.connectProzessor(prozessor,prozessor);	//Interfaceverknüpfung
-
+		gui.connectProzessor(prozessor, prozessor); // Interfaceverknüpfung
 	}
 
 	/**

@@ -49,6 +49,10 @@ public class Parser {
 	}
 	
 	
+	/**
+	 * Öffnet eine LST Datei und initialisert den Simulator
+	 * @param pathname
+	 */
 	public void openFile(String pathname){
 		this.file = new File(pathname);
 		sourceLine.clear();
@@ -64,8 +68,6 @@ public class Parser {
 
 		extractAssemblercode();
 	}
-	
-	
 	
 	
 	
@@ -94,6 +96,7 @@ public class Parser {
 		PIC_Logger.logger.info("Finished Parsing");
 	}
 
+	
 	/**
 	 * Reads single line and puts its Content into the progLine Arraylist
 	 * 

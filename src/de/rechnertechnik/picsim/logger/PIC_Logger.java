@@ -6,8 +6,13 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
+
+/**
+ * Erstellt eine Logdatei für Debugging Zwecke
+ * @author michael
+ *
+ */
 public class PIC_Logger {
 
 	public static Logger logger = Logger.getLogger(PIC_Logger.class.getName());

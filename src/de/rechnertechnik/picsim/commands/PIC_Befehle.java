@@ -1,5 +1,7 @@
 package de.rechnertechnik.picsim.commands;
 
+import java.util.logging.Logger;
+
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 import de.rechnertechnik.picsim.prozessor.Prozessor;
 import de.rechnertechnik.picsim.speicher.Speicherzelle.bits;
@@ -368,7 +370,6 @@ public class PIC_Befehle {
 	 * @param cpu
 	 */
 	public static void asm_rlf(Integer befehl, Prozessor cpu) {
-		// TODO
 		Integer f = getOpcodeFromToBit(befehl, 0, 6);
 		Integer d = getOpcodeFromToBit(befehl, 7, 7);
 	
@@ -396,8 +397,16 @@ public class PIC_Befehle {
 
 
 
+	/**
+	 * RRF
+	 * 
+	 * 00 1100 dfff ffff
+	 * 
+	 * 
+	 * @param befehl
+	 * @param cpu
+	 */
 	public static void asm_rrf(Integer befehl, Prozessor cpu) {
-		// TODO
 		Integer f = getOpcodeFromToBit(befehl, 0, 6);
 		Integer d = getOpcodeFromToBit(befehl, 7, 7);
 	
@@ -442,35 +451,43 @@ public class PIC_Befehle {
 		Integer w = cpu.getW();
 		Integer result = cpu.getSpeicherzellenWert(f) - w;
 	
+		PIC_Logger.logger.warning("SUBWF: Result="+result);
+		
+		//Zero
+		if(result == 0){
+			cpu.setStatus(bits.Z);
+			PIC_Logger.logger.warning("SUBWF: Set Zero");
+		}
+		else{
+			cpu.clearStatus(bits.Z);
+			PIC_Logger.logger.warning("SUBWF: Clear Zero");
+		}
+		
+		//Carry
+		if(result < 0){
+			result+=256;
+			cpu.clearStatus(bits.C);
+			PIC_Logger.logger.warning("SUBWF: Clear Carry");
+		}
+		else{
+			cpu.setStatus(bits.C);
+			PIC_Logger.logger.warning("SUBWF: Set Carry");
+		}
+		
+		//DC
+		if(result < 15){
+			cpu.clearStatus(bits.DC);
+			PIC_Logger.logger.warning("SUBWF: Clear DC");
+		}
+		else{
+			cpu.setStatus(bits.DC);
+			PIC_Logger.logger.warning("SUBWF: Set DC");
+		}
+		
+		
 		// Speicherort abfragen
 		if(getOpcodeFromToBit(akt_Befehl, 7, 7) == 1) {
 			// in f Register speichern
-			
-			//Zero
-			if(result == 0){
-				cpu.setStatus(bits.Z);
-			}
-			else{
-				cpu.clearStatus(bits.Z);
-			}
-			
-			//Carry
-			if(result < 0){
-				result+=256;
-				cpu.clearStatus(bits.C);
-			}
-			else{
-				cpu.setStatus(bits.C);
-			}
-			
-			//DC
-			if(result < 15){
-				cpu.clearStatus(bits.DC);
-			}
-			else{
-				cpu.setStatus(bits.DC);
-			}
-			
 			cpu.setSpeicherzellenWert(f, result, false);
 		}
 		else {
@@ -478,6 +495,8 @@ public class PIC_Befehle {
 			cpu.setW(result, false);
 		}
 	
+		PIC_Logger.logger.warning("SUBWF: Status="+cpu.get_RAM_Value(0x03));
+		
 		// PC ++
 		cpu.incPC();
 		erhoeheLaufzeit(cpu,1);
@@ -650,11 +669,12 @@ public class PIC_Befehle {
 		Integer bitNr = getOpcodeFromToBit(akt_Befehl, 7, 9);
 	
 		Integer k = cpu.getSpeicherzellenWert(f);
+		
+		
 		boolean bitIsSet = getBit(k, bitNr);
 	
 		// Bit is set
 		if(bitIsSet) {
-	
 		}
 		// Bit not set
 		else {
@@ -757,10 +777,13 @@ public class PIC_Befehle {
 
 
 
-	/*
+	/**
 	 * CALL Befehl
 	 * 
 	 * 10 0kkk kkkk kkkk
+	 * 
+	 * @param akt_Befehl
+	 * @param cpu
 	 */
 	public static void asm_call(Integer akt_Befehl, Prozessor cpu) {
 	
@@ -832,7 +855,7 @@ public class PIC_Befehle {
 
 
 	/**
-	 *  Befehl 11 00xx kkkk kkkk
+	 *  MOVLW 11 00xx kkkk kkkk
 	 * 
 	 * @param befehl
 	 * @param cpu
@@ -846,6 +869,10 @@ public class PIC_Befehle {
 
 
 	/**
+	 * RETFIE
+	 * 
+	 * 00 0000 0000 1001
+	 * 	  
 	 * Wird nach ISR aufgerufen
 	 * 
 	 * @param akt_Befehl
@@ -892,6 +919,8 @@ public class PIC_Befehle {
 	/**
 	 * RETURN
 	 * 
+	 * 00 0000 0000 1000
+	 * 
 	 * @param akt_Befehl
 	 * @param cpu
 	 */
@@ -935,9 +964,6 @@ public class PIC_Befehle {
 		// K - W
 		Integer result = k - w;
 	
-		// Ergebnis in W
-		cpu.setW(result, false);
-		
 		
 		//Zero
 		if(result == 0){
@@ -964,7 +990,9 @@ public class PIC_Befehle {
 			cpu.setStatus(bits.DC);
 		}
 		
-	
+		// Ergebnis in W
+		cpu.setW(result, false);
+		
 		// PC++
 		cpu.incPC();
 		erhoeheLaufzeit(cpu,1);
