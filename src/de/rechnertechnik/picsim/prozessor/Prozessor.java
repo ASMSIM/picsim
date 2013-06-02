@@ -399,25 +399,43 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	 */
 	public void setSpeicherzellenWert(Integer adresse, Integer value, boolean status_effect){
 		
+		
 		//Passive Beeinträchtigung des Statusregister
 		//Überlauf wird abgefangen 
+	
 		if((value == 0) && status_effect) {
 			status.setBit(bits.Z);				//TODO STATUS AUF GUI!???
 		}
 		else if( value != 0 && status_effect){
 			status.clearBit(bits.Z);
 		}
-		else if(value > 255) {
+		
+		
+		if(value > 255) {
 			value -= 256;
+			
+			if(value == 0 && status_effect){
+				status.setBit(bits.Z);
+			}
+			else if(value != 0 && status_effect){
+				status.clearBit(bits.Z);
+			}
+			                                                                                                                                                                                                                                
 			if(status_effect){
 				status.setBit(bits.C);
 			}
 		}
-		else if(value < 0) {
-			value += 256;
-			if(status_effect){
+		
+		else if(value <= 255 && status_effect){
+			status.clearBit(bits.C);
+		}
+		
+		
+		if(value > 15 && status_effect) {
 				status.setBit(bits.DC);
-			}
+		}
+		else if(value <= 15 && status_effect){
+				status.clearBit(bits.DC);
 		}
 
 		
