@@ -390,6 +390,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 	 */
 	public Integer getSpeicherzellenWert(Integer adresse) {
 
+		//Bei indirekter Adressierung anderes Verfahren
 		if(adresse == 0x00) {
 			String logprefix = "[INDIREKTE ADRESSIERUNG]: ";
 
@@ -400,15 +401,21 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 					+ indirect_address);
 			PIC_Logger.logger.info(logprefix + "Ind. Wert= " + indirect_value);
 
-			return indirect_value; // TODO CHECK
+			return indirect_value; 
 		}
+		
+		//Normaler Ram-Fetch Vorgang
 		else {
 			return ram.getValueFromCell(adresse);
 		}
 	}
 
+	
 	/**
 	 * Schreibt einen Wert in eine Speicherzelle
+	 * 
+	 * überprüft auf Überlauf, setzt Statusflags und führt 
+	 * Methoden aus, die bei verschiedenen Specialfunctionregistern von Nöten sind
 	 * 
 	 * @param adresse
 	 * @param value
@@ -418,7 +425,6 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 		// Passive Beeinträchtigung des Statusregister
 		// Überlauf wird abgefangen
-
 		if((value == 0) && status_effect) {
 			status.setBit(bits.Z); // TODO STATUS AUF GUI!???
 		}
@@ -479,10 +485,10 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		 * 
 		 * 
 		 */
+		String logprefix = "[SPECIALFUNCTIONREGISTER]: ";
 
 		// Indirect. Adress
 		if(adresse == 0x00 || adresse == 0x80) { // Indirekte Adressierung
-			String logprefix = "[SPECIALFUNCTIONREGISTER]: ";
 
 			Integer indirect_address = get_RAM_Value(0x04); // FSR
 
@@ -501,7 +507,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 
 			if(oldVal == 0xFF && value == 0x00) {
 				// Interrupt Tmr0
-				System.out.println("TMR0INTERRUPT");
+				PIC_Logger.logger.info(logprefix +"TMR0INTERRUPT");
 				Integer INTCON = get_RAM_Value(0x0b);
 				setSpeicherzellenWert(0x0b, (INTCON | (1 << 2)), false);
 			}
@@ -576,20 +582,7 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		gui.show_Register(adresse, value); // TODO CHECK?
 	}
 
-	// /**
-	// * Schreibt einen Wert in eine Speicherzelle und gibt diesen auf der GUI
-	// aus
-	// *
-	// * @param adresse
-	// * @param value
-	// * @param status_effect
-	// */
-	// public void setSpeicherzellenWertAndShow(Integer adresse, Integer value,
-	// boolean status_effect){
-	// setSpeicherzellenWert(adresse, value, status_effect);
-	// gui.show_Register(Integer.toHexString(adresse),
-	// Integer.toHexString(value));
-	// }
+	 
 
 	/**
 	 * Überprüft beim Setzen eines Wertes, ob das Statusregisters direkt
@@ -663,6 +656,12 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		return laufzeit;
 	}
 
+	/**
+	 * Erhöht die Laufzeit des Simulators
+	 * Hierbei wird gleichzeitig der Timer angesprochen
+	 * 
+	 * @param laufzeit
+	 */
 	public void setLaufzeit(Integer laufzeit) {
 
 		int diff = laufzeit - this.laufzeit;
@@ -724,18 +723,22 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		}
 	}
 
-	// TODO STATUSREGISTER AUF GUI ausgeben
+	/**
+	 * Setzt ein gewünschtes Status Bit
+	 * @param bit
+	 */
 	public void setStatus(bits bit) {
 		status.setBit(bit);
 		setSpeicherzellenWert(0x03, status.getValue(), true);
-		// AUSGABE GUI TODO
 	}
 
-	// TODO STATUSREGISTER AUF GUI ausgeben
+	/**
+	 * Löscht ein gewünschtes Status Bit
+	 * @param bit
+	 */
 	public void clearStatus(bits bit) {
 		status.clearBit(bit);
 		setSpeicherzellenWert(0x03, status.getValue(), true);
-		// TODO ausgabe GUI
 	}
 
 	/**
@@ -921,6 +924,12 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		setBitPort(bitNr, 0x05);
 	}
 
+	/**
+	 * Setzt ein Bit eines Ports, aber nur, wenn Tris Register auf input stehen
+	 * 
+	 * @param bitNr
+	 * @param adresse
+	 */
 	public void setBitPort(Integer bitNr, Integer adresse) {
 		Integer tris = get_RAM_Value(adresse + 0x80);
 		Integer port = get_RAM_Value(adresse);
@@ -939,6 +948,12 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		clearBitPort(bitNr, 0x05);
 	}
 
+	/**
+	 * Löscht ein Bit eines Ports, aber nur, wenn Tris Register auf input stehen
+	 * 
+	 * @param bitNr
+	 * @param adresse
+	 */
 	private void clearBitPort(Integer bitNr, Integer adresse) {
 		Integer tris = get_RAM_Value(adresse + 0x80);
 		Integer port = get_RAM_Value(adresse);
@@ -985,6 +1000,9 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		return getSpeicherzellenWert(0x86);
 	}
 
+	/**
+	 * Stackausgabe
+	 */
 	public void showStackOnGUI() {
 		ArrayList<Integer> stack = new ArrayList<Integer>();
 

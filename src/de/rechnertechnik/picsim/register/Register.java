@@ -1,5 +1,11 @@
 package de.rechnertechnik.picsim.register;
 
+
+/**
+ * Stellt ein Register dar
+ * @author michael
+ *
+ */
 public class Register {
 
 	protected Integer wert;
@@ -13,9 +19,6 @@ public class Register {
 	}
 
 	public void setWert(Integer wert) {
-		// TODO
-		// Ueberlauf
-		// ueberpruefen
 		this.wert = wert;
 
 	}

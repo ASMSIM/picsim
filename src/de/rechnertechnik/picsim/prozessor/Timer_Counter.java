@@ -3,6 +3,13 @@ package de.rechnertechnik.picsim.prozessor;
 import de.rechnertechnik.picsim.commands.PIC_Befehle;
 import de.rechnertechnik.picsim.logger.PIC_Logger;
 
+
+/**
+ * Enthält die Funktionen des Timer/Counter Modules
+ * 
+ * @author michael
+ *
+ */
 public class Timer_Counter {
 
 	
@@ -32,16 +39,14 @@ public class Timer_Counter {
 	 * 
 	 */
 	private boolean PSA = true;
-	private Integer PS_VALUE = 0;		//Scalervalue von 0 - 7
+	private Integer PS_VALUE = 0;				//Scalervalue von 0 - 7
+	
+	private Integer prescaler = 0;				
+	
+	private boolean oldVal= false;			//Speicher für Flankenerkennung
+	private boolean portAChanged = false;		//Änderung erst bei nächstem Simulatorstep
+	
 	private Prozessor cpu;
-	
-	private Integer prescaler = 0;
-	
-	private boolean oldVal= false;
-	private boolean portAChanged = false;
-	
-//	private Integer prescaler[][] = { tmr0_prescale, wdt_prescale };
-	
 	
 	public Timer_Counter(Prozessor cpu) {
 		this.cpu = cpu;
@@ -122,7 +127,10 @@ public class Timer_Counter {
 		
 	}
 	
-	
+	/**
+	 * Für Externen Takt benutzt
+	 * @param cpu
+	 */
 	public void changedPortA(Prozessor cpu){
 		PIC_Logger.logger.info("CHANGEDPORTA");
 		portAChanged = true;

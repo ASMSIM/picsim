@@ -1,5 +1,10 @@
 package de.rechnertechnik.picsim.speicher;
 
+/**
+ * Stellt eine Speicherzelle im Speicher dar
+ * @author michael
+ *
+ */
 public class Speicherzelle {
 	
 	public enum bits{
@@ -21,7 +26,11 @@ public class Speicherzelle {
 		this.speicherzelle = value;
 	}
 
-	
+	/**
+	 * Liefert ein entsprechendes Bit zurück
+	 * @param bit
+	 * @return
+	 */
 	public boolean getBit(bits bit)  {
 		switch(bit) {
 			case C:
