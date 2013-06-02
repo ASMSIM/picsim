@@ -63,6 +63,7 @@ public class Timer_Counter {
 		PSA = getBitValue(optenRegisterValue, 3);
 		PS_VALUE = PIC_Befehle.getOpcodeFromToBit(optenRegisterValue, 0, 2);
 		
+		cpu.showPrescalerOnGui(tmr0_prescale[PS_VALUE]);
 		String logstring = "[TIMER/COUNTER]: ";
 		PIC_Logger.logger.info(logstring+"T0CS="+T0CS+"; T0SE="+T0SE+"; PSA="+PSA+"; PS2:PS0="+PS_VALUE);
 	}

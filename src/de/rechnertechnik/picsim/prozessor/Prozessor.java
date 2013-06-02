@@ -1023,4 +1023,10 @@ public class Prozessor implements Runnable, IProzessor, IPorts {
 		programmSpeicher.loadProgramm();
 	}
 
+	
+	
+	public void showPrescalerOnGui(Integer toValue) {
+		gui.showPrescaler(toValue);
+	}
+	
 }

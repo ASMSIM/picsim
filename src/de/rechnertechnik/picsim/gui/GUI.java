@@ -47,6 +47,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.border.BevelBorder;
+import javax.swing.SwingConstants;
 
 
 
@@ -169,6 +170,8 @@ public class GUI extends JFrame implements IGUI{
 	private JCheckBox chckbxB0;
 	private JCheckBox chckbxB6;
 	private JTable table_stack;
+	private JLabel PCL_inp;
+	private JLabel lblPrescaler;
 	
 	
 	
@@ -340,6 +343,12 @@ public class GUI extends JFrame implements IGUI{
 		RegBTab.getColumnModel().getColumn(8).setMinWidth(20);
 		RegBTab.getColumnModel().getColumn(8).setMaxWidth(30);
 		RegBPanel.setViewportView(RegBTab);
+		
+		lblPrescaler = new JLabel("Prescaler: 1:x");
+		GridBagConstraints gbc_lblPrescaler = new GridBagConstraints();
+		gbc_lblPrescaler.gridx = 0;
+		gbc_lblPrescaler.gridy = 3;
+		RegisterPanel.add(lblPrescaler, gbc_lblPrescaler);
 		
 		JPanel SpeicherPanel = new JPanel();
 		SpeicherPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -746,9 +755,9 @@ public class GUI extends JFrame implements IGUI{
 		getContentPane().add(SpzRegPanel, gbc_SpzRegPanel);
 		GridBagLayout gbl_SpzRegPanel = new GridBagLayout();
 		gbl_SpzRegPanel.columnWidths = new int[]{86, 0, 0, 0, 0};
-		gbl_SpzRegPanel.rowHeights = new int[]{15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_SpzRegPanel.rowHeights = new int[]{15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_SpzRegPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_SpzRegPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_SpzRegPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		SpzRegPanel.setLayout(gbl_SpzRegPanel);
 		
 		JLabel lblSpezialfunktionsregister = new JLabel("Spezialfunktionsregister");
@@ -808,7 +817,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_lblPcl.gridy = 4;
 		SpzRegPanel.add(lblPcl, gbc_lblPcl);
 		
-		JLabel PCL_inp = new JLabel("00");
+		PCL_inp = new JLabel("00");
 		GridBagConstraints gbc_PCL_inp = new GridBagConstraints();
 		gbc_PCL_inp.anchor = GridBagConstraints.WEST;
 		gbc_PCL_inp.insets = new Insets(0, 0, 5, 5);
@@ -870,7 +879,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_PlatzhalterSpz.insets = new Insets(0, 0, 5, 5);
 		gbc_PlatzhalterSpz.fill = GridBagConstraints.BOTH;
 		gbc_PlatzhalterSpz.gridx = 0;
-		gbc_PlatzhalterSpz.gridy = 8;
+		gbc_PlatzhalterSpz.gridy = 9;
 		SpzRegPanel.add(PlatzhalterSpz, gbc_PlatzhalterSpz);
 		
 		JPanel StatusPanel = new JPanel();
@@ -879,7 +888,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_StatusPanel.gridwidth = 3;
 		gbc_StatusPanel.fill = GridBagConstraints.BOTH;
 		gbc_StatusPanel.gridx = 0;
-		gbc_StatusPanel.gridy = 9;
+		gbc_StatusPanel.gridy = 11;
 		SpzRegPanel.add(StatusPanel, gbc_StatusPanel);
 		StatusPanel.setLayout(new GridLayout(2, 8, 5, 0));
 		
@@ -936,7 +945,7 @@ public class GUI extends JFrame implements IGUI{
 		gbc_panel_stack.insets = new Insets(0, 0, 0, 5);
 		gbc_panel_stack.fill = GridBagConstraints.BOTH;
 		gbc_panel_stack.gridx = 1;
-		gbc_panel_stack.gridy = 10;
+		gbc_panel_stack.gridy = 12;
 		SpzRegPanel.add(panel_stack, gbc_panel_stack);
 		
 		table_stack = new JTable();
@@ -1262,6 +1271,7 @@ public class GUI extends JFrame implements IGUI{
 	@Override
 	public void show_PC(Integer value) {
 		PC_inp.setText(Integer.toHexString(value));
+		PCL_inp.setText(Integer.toHexString(value));
 	}
 
 	@Override
@@ -1403,6 +1413,11 @@ public class GUI extends JFrame implements IGUI{
 			stackmodel.addRow( insert);
 		}
 		
+	}
+
+	@Override
+	public void showPrescaler(Integer toValue) {
+		lblPrescaler.setText("Prescaler: 1:"+toValue);
 	}
 
 }
