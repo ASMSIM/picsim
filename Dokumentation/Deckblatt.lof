@@ -6,8 +6,11 @@
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Github\relax }}{8}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces GUI\relax }}{9}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Datei öffnen\relax }}{10}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Datei \"offnen\relax }}{10}
 \contentsline {figure}{\numberline {3.3}{\ignorespaces Kontroll-Buttons\relax }}{10}
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Register und Spezialfunktionsregister\relax }}{11}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Textfeld für den Quelltext\relax }}{11}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Textfeld f\"ur den Quelltext\relax }}{11}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Sequenzdiagramm f\"ur das \"Offnen und Parsen einer Datei\relax }}{12}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Sequenzdiagramm f\"ur das Erkennen eines Befehls\relax }}{13}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Klassendiagramm\relax }}{25}
 \addvspace {10\p@ }

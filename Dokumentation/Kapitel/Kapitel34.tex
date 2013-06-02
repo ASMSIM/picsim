@@ -1,10 +1,19 @@
 \newpage
 \section{Interrupt}
-
-Bei einem Interrupt verlässt der PIC16F seine normale Routine und springt in eine Interruptroutine, die er abarbeitet um dann wieder an die Stelle des normalen Ablaufs zurückzukehren.
+Bei einem Interrupt verl\"asst der PIC16F seine normale Routine und springt in eine Interruptroutine, die er abarbeitet um dann wieder an die Stelle des normalen Ablaufs zur\"uckzukehren.
 \\
-\noindent Im Simulator wird zwischen jedem Funktionsaufruf der einen Befehl beschreibt überprüft ob ein Interrupt stattfindet.
-
+\noindent Im Simulator wird zwischen jedem Funktionsaufruf der einen Befehl beschreibt \"uberpr\"uft ob ein Interrupt stattfindet.
+\\
 \lstinputlisting[language=java]{Listings/Interrupt.java}
-
-\noindent Bevor der Interrupt ausgeführt wird muss zuerst geprüft werden ob das GIE (Global Interrupt enable) und das INTCON Bit gesetzt worden ist. 
+\noindent Bevor der Interrupt ausgef\"uhrt wird muss zuerst gepr\"uft werden ob das GIE (Global Interrupt enable), das INTE Bit im INTCON Register oder das T01E Bit f\"ur den Timer0 Interrupt gesetzt worden ist.
+\\
+\\Ist das INTE Bit gesetzt wird die Methode checkExternalInterrupt ausgef\"uhrt. In dieser Methode wird zun\"achst \"uberpr\"uft ob es sich um eine steigende oder fallende Flanke handelt (oldValue speichert immer den vorherigen Zustand von RB0). Nach der \"Uberpr\"ufung wird die Methode externerInteruptRB0 ausgef\"uhrt.
+\\
+\lstinputlisting[language=java]{Listings/InterruptRB0.java}
+In dieser Methode  wird das Interrupt Flag gesetzt und die Methode InterruptHasOccured aufgerufen in der der eigentliche Interruptvorgang ausgef\"uhrt wird. Dort wird zun\"achst das GIE Bit auf 0 gesetzt, der Programm Counter auf dem Stack gespeichert und zum eigentlichen Interruptvektor gesprungen.
+\\
+\lstinputlisting[language=java]{Listings/InterruptOcc.java}
+\newpage
+\noindent F\"ur den Timer 0 Interrupt wird in der checkInterrupt Methode nach erfolgreicher \"Uberpr\"ufung checkTimer0Interrupt aufgerufen in der zun\"achst \"uberpr\"uft wird ob ein Timer 0 Interrupt stattgefunden hat. Daraufhin wird die Methode InterruptHasOccured aufgerufen wird (wie bei RB0). 
+\lstinputlisting[language=java]{Listings/InterruptTime.java}
+\\

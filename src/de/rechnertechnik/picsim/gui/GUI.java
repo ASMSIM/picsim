@@ -10,6 +10,8 @@ import javax.swing.JViewport;
 
 import javax.swing.JTable;
 import javax.swing.JMenuBar;
+
+import java.awt.Desktop;
 import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -41,6 +43,9 @@ import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.border.BevelBorder;
 
 
@@ -1077,13 +1082,32 @@ public class GUI extends JFrame implements IGUI{
         });
         
 		initRegisterModel();
-        /*
-        helpMenu.addActionListener(new ActionListener() {
+        
+		menuItemHelpHelp .addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("Hilfe geklickt");
+                try {
+                	File pdfFile = new File("Dokumentation/Dokumentation.pdf");
+            		if (pdfFile.exists()) {
+             
+            			if (Desktop.isDesktopSupported()) {
+            				Desktop.getDesktop().open(pdfFile);
+            			} else {
+            				System.out.println("Awt Desktop is not supported!");
+            			}
+             
+            		} else {
+            			System.out.println("File is not exists!");
+            		}
+             
+            		System.out.println("Done");
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
             }
         });
-        */
+        
 	}
 
 

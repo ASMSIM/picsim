@@ -2,40 +2,30 @@
 interruptHandler.checkInterrupt(this);
 
 //in der Interrupt Klasse
-public void checkInterrupt(Prozessor cpu) {
-		
-		Integer INTCON = cpu.get_RAM_Value(0x0b);
-		boolean GIE = ( ( INTCON & 0x80) == 0x80 )?true:false;
-		boolean INTE = ( ( INTCON & 0x10) == 0x10 )?true:false;
-		
-		//Global Interrupt enabled
-		if(GIE){
+	public void checkInterrupt(Prozessor cpu) {
 
-			//RB0 Interrupt enabled
-			if(INTE){
+		Integer INTCON = cpu.get_RAM_Value(0x0b);
+		boolean GIE = ((INTCON & 0x80) == 0x80) ? true : false;
+		boolean INTE = ((INTCON & 0x10) == 0x10) ? true : false;
+		boolean T0IE = ((INTCON & 0x20) == 0x20) ? true : false;
+
+		System.out.println(Integer.toHexString(INTCON));
+		
+		// Global Interrupt enabled
+		if(GIE) {
+
+			// RB0 Interrupt enabled
+			if(INTE) {
 				PIC_Logger.logger.info("RB0 Interrupt check...");
-				
-				Integer PortB = cpu.get_RAM_Value(0x06);
-				boolean RB0 = ( ( PortB & 0x01) == 0x01 )?true:false;
-				
-				//TODO rising oder faling edge
-				Integer OPTION_REG  = cpu.get_RAM_Value(0x81);
-				boolean INTEDG  = ( ( OPTION_REG & 0x40) == 0x40 )?true:false;	//true = rising, false = faling edge
-				
-					if(oldValue == false && RB0 == true && INTEDG){
-						externerInterruptRB0(cpu, INTCON, RB0);
-					}
-					
-					else if(oldValue == true && RB0 == false && !INTEDG){
-						externerInterruptRB0(cpu, INTCON, RB0);
-					}
-					
-					//No Interrupt
-					else{
-					}
-				
-					//Save old Value
-					oldValue = RB0;					
-			}			
-		}		
+				checkExternalInterrupt(cpu, INTCON);
+			}
+
+			// Timer0 Interrupt enabled
+			if(T0IE) {
+				PIC_Logger.logger.info("TMR0 Interrupt check...");
+				checkTimer0Interrupt(cpu, INTCON);
+			}
+
+		}
+
 	}

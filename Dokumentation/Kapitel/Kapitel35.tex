@@ -1,1 +1,6 @@
 \section{TRIS-Register}
+Die TRIS-Register (TRI-State Enable) ist ein programmierbares 8 Bit Register welches einen Pin als Input oder Output konfiguriert. Jeder Port besitzt ein TRIS Register welches deren Pinzust\"ande beschreibt.
+\\
+\\Im Simulator wird bevor ein Port-Bit gesetzt wird zun\"achst sein TRIS-Status \"uberpr\"uft. Der gew\"unscht Pin wird nur ver\"andert wenn der richtige Zustand im TRIS Register steht.
+\\
+\lstinputlisting[language=java]{Listings/TRIS.java}

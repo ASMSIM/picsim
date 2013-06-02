@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.5.31)  31 MAY 2013 10:54
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=latex 2013.6.1)  1 JUN 2013 21:40
 entering extended mode
 **Kapitel11.tex
 
-("E:\Studium\DH\Unterlagen\4. Semester\Rechnerarchitekturen II\Dokumentation\Do
-kumentation\Kapitel\Kapitel11.tex"
+("E:\Studium\DH\Unterlagen\4. Semester\Rechnerarchitekturen II\Dokumentation\Ka
+pitel\Kapitel11.tex"
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -60,7 +60,7 @@ Missing character: There is no r in font nullfont!
 Missing character: There is no ? in font nullfont!
 
 Overfull \hbox (20.0pt too wide) in paragraph at lines 1--2
-[]
+[][]
  []
 
 
@@ -473,11 +473,11 @@ Missing character: There is no . in font nullfont!
 
  
 Here is how much of TeX's memory you used:
- 7 strings out of 493921
- 388 string characters out of 3144870
+ 7 strings out of 493922
+ 346 string characters out of 3144894
  49031 words of memory out of 3000000
  3400 multiletter control sequences out of 15000+200000
  3640 words of font info for 14 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 5i,0n,4p,463b,14s stack positions out of 5000i,500n,10000p,200000b,50000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 6i,0n,4p,463b,14s stack positions out of 5000i,500n,10000p,200000b,50000s
+No pages of output.

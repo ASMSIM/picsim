@@ -1,21 +1,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Packages/Dokumentart %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[ a4paper,	% Papierart
 	%       10pt,		%
-		11pt,		% Schriftgröße
+		11pt,		% Schriftgr\"oße
 	%	12pt,		%
 		pdftex,		% PDF Umwandlung
 	%	twoside		% 2-seitig
 		] {report}	% Dokumenttyp Bericht
 
 \usepackage[ngerman]{babel}	% Deutsches Sprachpaket/Silbentrennung etc.
-%\usepackage[utf8]{inputenc}	% verwendeter Codec (für Umlaute)
-\usepackage{graphicx}		% für Bilder
-\usepackage{cite}		% für bestimmte Zitierfunktionen
-\usepackage[footnote]{acronym}	% für Abkürzungen in Fußnote
-\usepackage{caption}		% Um Bildunterschriften zu konfigurieren (mit, ohne erscheinen im Abkürzungsverzeichnis)
-\usepackage{setspace}		% für Zeilenabstand
+%\usepackage[utf8]{inputenc}	% verwendeter Codec (f\"ur Umlaute)
+\usepackage{graphicx}		% f\"ur Bilder
+\usepackage{cite}		% f\"ur bestimmte Zitierfunktionen
+\usepackage[footnote]{acronym}	% f\"ur Abk\"urzungen in Fußnote
+\usepackage{caption}		% Um Bildunterschriften zu konfigurieren (mit, ohne erscheinen im Abk\"urzungsverzeichnis)
+\usepackage{setspace}		% f\"ur Zeilenabstand
 \usepackage{listings}
 \usepackage{color}
+
  
 
  \definecolor{middlegray}{rgb}{0.5,0.5,0.5}
@@ -49,42 +50,42 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kopfzeile %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[automark]{scrpage2}			% Package für Kopfzeile	
+\usepackage[automark]{scrpage2}			% Package f\"ur Kopfzeile	
 \pagestyle{scrheadings} 			% Pagestyle
-\automark[section]{chapter} 			% für Anzeigen des Unterkapitels (Standard Überkapitel)
+\automark[section]{chapter} 			% f\"ur Anzeigen des Unterkapitels (Standard Überkapitel)
 \clearscrheadfoot \ihead{\headmark}		% ihead links, ohead rechts, chead mitte
 \setheadsepline{0.4pt}				% Linie unter Kopfzeile
 \cfoot[\pagemark]{\pagemark}			% Mitte Fußzeile Seitenzahl (selbe wie mit head (i,o,c))
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Abkürzungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Persöhnlich
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Abk\"urzungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pers\"ohnlich
 
 \newcommand{\Was}{ PIC16F84A}
 
-\newcommand{\Titel}{Simulator für den Mikrocontroller }
+\newcommand{\Titel}{Simulator f\"ur den Mikrocontroller }
 
 
 \begin{document}   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Titelseite %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{singlespace}							% Zeilenabstand für Titelseite verringern
+\begin{singlespace}							% Zeilenabstand f\"ur Titelseite verringern
 \begin{titlepage}
 \begin{center}								% Referenzpunkt Seitenmitte
 \vspace*{-2cm}								% 2 cm nach Links Platz lassen
 \hfill\includegraphics[width=4cm]{Bilder/dhbw-logo}\\[2cm] % Firmenlogo platzieren
 
-{\Huge \Titel}\\[0.5cm]							% \Huge, \Large, \large sind versch. Schriftgrößen \bfseries ist Fett gedruckt
+{\Huge \Titel}\\[0.5cm]							% \Huge, \Large, \large sind versch. Schriftgr\"oßen \bfseries ist Fett gedruckt
 {\Huge \Was}\\[1cm]						% [] Inhalt ist Abstand zur nächsten Zeile
 
 \includegraphics[width=4cm]{Bilder/Microcontroller.jpg}\\[2cm]
 
 {\large von\\[0.5cm]
-{\large Michael Stahlberger und Julian Kühn}\\[0.5cm]
+{\large Michael Stahlberger und Julian K\"uhn}\\[0.5cm]
 
 {\large Studiengang Informationstechnik \\
 an der Dualen Hochschule Karlsruhe}\\[0.5cm]}
 
-\vfill									% ermöglicht es unterhalb der Seitengrenze zu schreiben
+\vfill									% erm\"oglicht es unterhalb der Seitengrenze zu schreiben
 \end{center}								% Referenzpunkt Mitte beenden
 
 							% Tabelle abschließen
@@ -97,7 +98,7 @@ an der Dualen Hochschule Karlsruhe}\\[0.5cm]}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Verzeichnisse %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\begin{singlespace}			 % Zeilenabstand für Verzeichnisse 1	
+\begin{singlespace}			 % Zeilenabstand f\"ur Verzeichnisse 1	
 \tableofcontents 			 % Inhaltsverzeichnis
 \listoffigures	 			 % Abbildungsverzeichnis
 \end{singlespace}	 		 % Zeilenabstand wieder ausstellen
@@ -121,7 +122,7 @@ an der Dualen Hochschule Karlsruhe}\\[0.5cm]}
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Literaturverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}
-\bibliographystyle{gerabbrv}				% Zitierformat (deutsch für Großschreibung) [Häufigkeit] im Text
+\bibliographystyle{gerabbrv}				% Zitierformat (deutsch f\"ur Großschreibung) [Häufigkeit] im Text
 \bibliography{Literaturverzeichnis}			% Pfad des Literaturverzeichnisses
 
 \end{document}  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
