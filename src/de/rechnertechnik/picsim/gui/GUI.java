@@ -1123,16 +1123,6 @@ public class GUI extends JFrame implements IGUI{
 	@Override
 	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus, HashMap<Integer, Integer> command_source_line) throws NullPointerException {
 
-		System.out.println();
-		System.out.println(command_source_line.size());
-		
-//		for(int i=0; i<command_source_line.size(); i++){
-//			
-//			if(command_source_line.get(i) != null){
-//				
-//			}
-//		}
-		
 		
 		
 		Object[][] zeilen = new Object[sourceLine.size()][sourceLine.size()+1];
@@ -1140,7 +1130,8 @@ public class GUI extends JFrame implements IGUI{
 		for(int i=0; i<sourceLine.size(); i++){
 			zeilen[i][0] = i+1;
 			zeilen[i][1] = sourceLine.get(i);
-			zeilen[i][2] = new Boolean(false);
+//			zeilen[i][2] = new Boolean(false);
+			zeilen[i][2] = "BP";
 		}
 		
 		
@@ -1156,20 +1147,7 @@ public class GUI extends JFrame implements IGUI{
 				new String[] {
 					"NR", "", "BP"
 				}
-			){
-		     /**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-			@Override
-		     public Class<?> getColumnClass(int columnIndex) {
-		        if (getColumnName(columnIndex).equals("BP")) {
-		           return Boolean.class;
-		        }
-		        return super.getColumnClass(columnIndex);
-		     }
-		  });
+			));
 		
 		
 		Text_inp.getColumnModel().getColumn(0).setMaxWidth(25);
@@ -1195,8 +1173,8 @@ public class GUI extends JFrame implements IGUI{
 			scrollToVisible(Text_inp, fokus, 0);
 			Text_inp.repaint();
 		}
-		catch ( NullPointerException e){
-			
+		catch (NullPointerException e){
+			e.printStackTrace();
 		}
 		
 		
