@@ -1097,13 +1097,12 @@ public class GUI extends JFrame implements IGUI{
 	@Override
 	public void showSourcecode(ArrayList<String> sourceLine, Integer fokus) throws NullPointerException {
 
-			DefaultTableModel model = new DefaultTableModel();
 			Object[][] zeilen = new Object[sourceLine.size()][sourceLine.size()+1];
 			
 		for(int i=0; i<sourceLine.size(); i++){
 			zeilen[i][0] = i+1;
 			zeilen[i][1] = sourceLine.get(i);
-			zeilen[i][2] = "BP";
+			zeilen[i][2] = new Boolean(false);
 		}
 		
 		
@@ -1112,7 +1111,23 @@ public class GUI extends JFrame implements IGUI{
 				new String[] {
 					"NR", "", "BP"
 				}
-			));
+			){
+		     /**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+			@Override
+		     public Class<?> getColumnClass(int columnIndex) {
+		        if (getColumnName(columnIndex).equals("BP")) {
+		           return Boolean.class;
+		        }
+		        return super.getColumnClass(columnIndex);
+		     }
+		  });
+		
+				
+			
 		
 		Text_inp.getColumnModel().getColumn(0).setMaxWidth(25);
 		Text_inp.getColumnModel().getColumn(0).setPreferredWidth(25);
